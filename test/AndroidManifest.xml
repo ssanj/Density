@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.robodreamz.density.test"
+          android:versionName="1.0.0-SNAPSHOT">
+    <application>
+        <uses-library android:name="android.test.runner"/>
+    </application>
+    <!--
+            This declares that this application uses the instrumentation test runner targeting
+            the package of com.android.example.spinner.  To run the tests use the command:
+            "adb shell am instrument -w \
+             com.robodreamz.density.test/android.test.InstrumentationTestRunner"
+        -->
+    <instrumentation android:name="android.test.InstrumentationTestRunner"
+                     android:targetPackage="com.robodreamz.density"
+                     android:label="Tests for Density."/>
+</manifest>
