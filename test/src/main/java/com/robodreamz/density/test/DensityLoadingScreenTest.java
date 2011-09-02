@@ -4,8 +4,12 @@
  */
 package com.robodreamz.density.test;
 
+import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.MoreAsserts;
 import android.test.ViewAsserts;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -29,13 +33,16 @@ public final class DensityLoadingScreenTest extends ActivityInstrumentationTestC
     }
 
     public void testDisplayLoadingText() {
-        assertEquals("Loading text is not as expected.", loadingText.getText(), "Medium Density");
+        assertEquals("Loading text is not as expected.", loadingText.getText(), activity.getResources().getString(R.string.app_name));
     }
 
     public void testLoadingTextOnScreen() {
         final Window window = activity.getWindow();
         final View decorView = window.getDecorView();
         ViewAsserts.assertOnScreen(decorView, loadingText);
+    }
+    public void testLoadingTextIsCentredOnScreen() {
+        assertEquals("Gravity", loadingText.getGravity(), Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
     }
 
     public void testPreconditions() {
