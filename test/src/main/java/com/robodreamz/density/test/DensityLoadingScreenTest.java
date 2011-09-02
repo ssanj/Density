@@ -4,11 +4,8 @@
  */
 package com.robodreamz.density.test;
 
-import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.MoreAsserts;
 import android.test.ViewAsserts;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
