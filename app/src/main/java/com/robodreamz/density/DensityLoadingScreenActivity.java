@@ -24,18 +24,18 @@ public class DensityLoadingScreenActivity extends AbstractDensityActivty {
     @Override protected void onStart() {
         Log.i(TAG, "Calling start");
         super.onStart();
-        if (!isFinishing()  && !getDensityApp().isAppLaunched()) {
-            if (timer == null) {
-                Log.i(TAG, "creating timer");
-                timer = new Timer("LoadingScreenSpinner");
+        if (!isFinishing()) {
+            if(!getDensityApp().isAppLaunched()) {
+                if (timer == null) {
+                    Log.i(TAG, "creating timer");
+                    timer = new Timer("LoadingScreenSpinner");
+                }
+
+                callAppWhenTimerExpires();
+            } else {
+                finish(); //if we scheduled the app then finish this Activity.
             }
-
-            callAppWhenTimerExpires();
-        }
-
-        if (!isFinishing() && getDensityApp().isAppLaunched()) { //if we scheduled the app then finish this Activity.
-            finish();
-        }
+        } else { /*  this activity is finishing so do nothing. */}
     }
 
     private void callAppWhenTimerExpires() {
