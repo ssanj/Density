@@ -4,10 +4,9 @@
  */
 package com.robodreamz.density;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-public final class DensityAppActivity extends Activity {
+public final class DensityAppActivity extends AbstractDensityActivty {
 
     @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -33,9 +33,23 @@ public final class DensityLoadingScreenWithRotationsRobTest extends ActivityInst
 
         final int currentOrientation = solo.getCurrentActivity().getRequestedOrientation();
         switch (currentOrientation) {
-            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE: solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                                                            break;
-            default: solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                solo.sleep(100);
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                solo.sleep(100);
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                solo.sleep(100);
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                break;
+            default:
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                solo.sleep(100);
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                solo.sleep(100);
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                solo.sleep(100);
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
         assertTrue("DensityAppActivity did not show up", solo.waitForActivity("DensityAppActivity", 2000));

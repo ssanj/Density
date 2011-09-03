@@ -27,6 +27,10 @@ public final class DensityLoadingScreenRobTest extends ActivityInstrumentationTe
 
     public void testAppIsStartedAfterLoadingScreen() {
         assertTrue("DensityAppActivity did not show up", solo.waitForActivity("DensityAppActivity", 2000));
+    }
+
+    public void testAppExistsWhenBackButtonPressed() {
+        assertTrue("DensityAppActivity did not show up", solo.waitForActivity("DensityAppActivity", 2000));
         //when we go back the  DensityLoadingScreenActivity should have finished.
         solo.goBack();
         assertTrue(solo.getActivityMonitor().getLastActivity().getClass().getSimpleName().equals("DensityAppActivity"));

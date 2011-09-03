@@ -28,6 +28,6 @@ public final class DensityLoadingScreenActivityTest {
 
     @Test public void shouldDisplayTextOnTheLoadingScreen() {
         assertThat("Loading screen text is null.", text, notNullValue());
-        assertThat(text.getText().toString(), equalTo("Density"));
+        assertThat(text.getText().toString(), equalTo(activity.getResources().getString(R.string.app_name)));
     }
 }
