@@ -19,19 +19,14 @@ public final class DensityLoadingScreenRobTest extends ActivityInstrumentationTe
     @Override protected void setUp() throws Exception {
         super.setUp();
         solo = new Solo(getInstrumentation(), getActivity());
-    }
-
-    public void testLoadingScreen() {
-        assertTrue("DensityLoadingScreenActivity did not show up after 2s.", solo.waitForActivity("DensityLoadingScreenActivity", 500));
+        assertTrue("DensityLoadingScreenActivity did not show up.", solo.waitForActivity("DensityLoadingScreenActivity", 500));
     }
 
     public void testAppIsStartedAfterLoadingScreen() {
-        solo.waitForActivity("DensityLoadingScreenActivity", 500);
-        assertTrue("DensityAppActivity did not show up after 2s.", solo.waitForActivity("DensityAppActivity", 2000));
+        assertTrue("DensityAppActivity did not show up", solo.waitForActivity("DensityAppActivity", 2000));
+        //when we go back the  DensityLoadingScreenActivity should have finished.
         solo.goBack();
-        solo.waitForActivity("DensityLoadingScreenActivity", 500);
-        assertFalse("The application should have exited after back was pressed.",
-                solo.getCurrentActivity().getClass().getSimpleName().equals("DensityLoadingScreenActivity"));
+        assertTrue(solo.getActivityMonitor().getLastActivity().getClass().getSimpleName().equals("DensityAppActivity"));
     }
 
     @Override protected void tearDown() throws Exception {
@@ -40,7 +35,7 @@ public final class DensityLoadingScreenRobTest extends ActivityInstrumentationTe
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        getActivity().finish();
+        //we don't call getActivity.finish() here because the above test already kills the activity.
         super.tearDown();
     }
 }
