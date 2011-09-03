@@ -5,6 +5,7 @@
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="8"/>
     <application android:label="${deployment.stage}"
+                 android:name=".DensityApplication"
                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                  android:debuggable="${android.debuggable}">
         <activity android:name=".DensityLoadingScreenActivity"
