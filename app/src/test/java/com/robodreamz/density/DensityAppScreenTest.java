@@ -4,6 +4,8 @@
  */
 package com.robodreamz.density;
 
+import android.view.View;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
@@ -23,6 +25,7 @@ public final class DensityAppScreenTest {
     private ProgressBar screenSizeDecimalProgress;
     private TextView screenSizeValueText;
     private TextView screenSizeUnitText;
+    private ListView resolutionList;
 
     @Before public void setup() throws Exception {
         activity = new DensityAppActivity();
@@ -32,19 +35,28 @@ public final class DensityAppScreenTest {
         screenSizeDecimalProgress = (ProgressBar) activity.findViewById(R.id.app_screen_screensize_decimal_progress);
         screenSizeValueText = (TextView) activity.findViewById(R.id.app_screen_screensize_value_text);
         screenSizeUnitText = (TextView) activity.findViewById(R.id.app_screen_screensize_unit_text);
+        resolutionList = (ListView) activity.findViewById(R.id.app_screen_resolution_list);
     }
 
     @Test public void shouldContainScreenSizeWidgets() {
-        assertNotNull("app_screen_screensize_label_text is null", screenSizeLabelText);
-        assertNotNull("app_screen_screensize_integer_progress is null", screenSizeIntegerProgress);
-        assertNotNull("app_screen_screensize_decimal_progress is null", screenSizeDecimalProgress);
-        assertNotNull("app_screen_screensize_value_text is null", screenSizeValueText);
-        assertNotNull("app_screen_screensize_unit_text is null", screenSizeUnitText);
+        assertViewNotNull(screenSizeLabelText, "app_screen_screensize_label_text");
+        assertViewNotNull(screenSizeIntegerProgress, "app_screen_screensize_integer_progress");
+        assertViewNotNull(screenSizeDecimalProgress, "app_screen_screensize_decimal_progress");
+        assertViewNotNull(screenSizeValueText, "app_screen_screensize_value_text");
+        assertViewNotNull(screenSizeUnitText, "app_screen_screensize_unit_text");
+    }
+
+    @Test public void shouldContainResolutionWidgets() {
+        assertViewNotNull(resolutionList, "app_screen_resolution_list");
     }
 
     @Test public void screenSizeWidgetsShouldHaveExpectedDefaults() {
         assertDefaultStringValue(R.string.screen_size_label_text, screenSizeLabelText.getText(), "app_screen_screensize_label_text");
         assertDefaultStringValue(R.string.app_screen_screensize_unit_text, screenSizeUnitText.getText(), "app_screen_screensize_unit_text");
+    }
+
+    private void assertViewNotNull(final View view, final String viewName) {
+        assertNotNull(viewName + " is null", view);
     }
 
     private void assertDefaultStringValue(final int resourceId, final CharSequence text, final String resourceName) {

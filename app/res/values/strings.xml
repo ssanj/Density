@@ -3,4 +3,5 @@
     <string name="app_name">Density</string>
     <string name="screen_size_label_text">Screen Size</string>
     <string name="app_screen_screensize_unit_text">\"</string>
+    <string name="resolution_separator">X</string>
 </resources>

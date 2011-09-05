@@ -5,8 +5,11 @@
 package com.robodreamz.density;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import com.robodreamz.density.resolution.ResolutionListAdapter;
 
 public final class DensityAppActivity extends AbstractDensityActivty {
 
@@ -16,6 +19,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_screen);
         initScreenSize();
+        initResolutions();
     }
 
     private void initScreenSize() {
@@ -36,6 +40,11 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         });
 
         setInitialProgress(integerBar, decimalBar);
+    }
+
+    private void initResolutions() {
+        final ListView resolutionList = (ListView) findViewById(R.id.app_screen_resolution_list);
+        resolutionList.setAdapter(new ResolutionListAdapter(this));
     }
 
     private void setInitialProgress(final SeekBar integerBar, final SeekBar decimalBar) {
