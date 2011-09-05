@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
@@ -34,10 +35,15 @@ public final class DensityAppScreenTest {
     }
 
     @Test public void shouldContainScreenSizeWidgets() {
-        assertNotNull(screenSizeLabelText);
-        assertNotNull(screenSizeIntegerProgress);
-        assertNotNull(screenSizeDecimalProgress);
-        assertNotNull(screenSizeValueText);
-        assertNotNull(screenSizeUnitText);
+        assertNotNull("app_screen_screensize_label_text is null", screenSizeLabelText);
+        assertNotNull("app_screen_screensize_integer_progress is null", screenSizeIntegerProgress);
+        assertNotNull("app_screen_screensize_decimal_progress is null", screenSizeDecimalProgress);
+        assertNotNull("app_screen_screensize_value_text is null", screenSizeValueText);
+        assertNotNull("app_screen_screensize_unit_text is null", screenSizeUnitText);
+    }
+
+    @Test public void screenSizeWidgetsShouldHaveExpectedDefaults() {
+        assertEquals("app_screen_screensize_label_text does not match default",
+                activity.getResources().getString(R.string.screen_size_label_text), screenSizeLabelText.getText());
     }
 }
