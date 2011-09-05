@@ -43,7 +43,15 @@ public final class DensityAppScreenTest {
     }
 
     @Test public void screenSizeWidgetsShouldHaveExpectedDefaults() {
-        assertEquals("app_screen_screensize_label_text does not match default",
-                activity.getResources().getString(R.string.screen_size_label_text), screenSizeLabelText.getText());
+        assertDefaultStringValue(R.string.screen_size_label_text, screenSizeLabelText.getText(), "app_screen_screensize_label_text");
+        assertDefaultStringValue(R.string.app_screen_screensize_unit_text, screenSizeUnitText.getText(), "app_screen_screensize_unit_text");
+    }
+
+    private void assertDefaultStringValue(final int resourceId, final CharSequence text, final String resourceName) {
+        assertEquals(resourceName + " does not match default", activity.getResources().getString(resourceId), text);
+    }
+
+    private void assertDefaultIntegerValue(final int resourceId, final int value, final String resourceName) {
+        assertEquals(resourceName + " does not match default", activity.getResources().getInteger(resourceId), value);
     }
 }

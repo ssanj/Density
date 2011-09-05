@@ -4,11 +4,8 @@
  */
 package com.robodreamz.density.test;
 
-import android.app.Instrumentation;
-import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
 import com.jayway.android.robotium.solo.Solo;
-import com.robodreamz.density.DensityAppActivity;
 import com.robodreamz.density.DensityLoadingScreenActivity;
 
 public final class DensityLoadingScreenRobTest extends ActivityInstrumentationTestCase2<DensityLoadingScreenActivity> {

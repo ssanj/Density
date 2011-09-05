@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Density</string>
+    <string name="screen_size_label_text">Screen Size</string>
+    <string name="app_screen_screensize_unit_text">\"</string>
 </resources>
