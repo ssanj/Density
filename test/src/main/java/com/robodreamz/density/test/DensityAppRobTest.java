@@ -4,6 +4,8 @@
  */
 package com.robodreamz.density.test;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ProgressBar;
 import com.jayway.android.robotium.solo.Solo;
@@ -31,18 +33,22 @@ public final class DensityAppRobTest extends ActivityInstrumentationTestCase2<De
     }
 
     public void testShouldUpdateScreenSizeOnMovingSliders() {
-        assertTrue("DensityAppActivity did not show up", solo.waitForActivity("DensityAppActivity", 2000));
-        final ArrayList<ProgressBar> currentProgressBars = solo.getCurrentProgressBars();
-        assertEquals("Incorrect number of progress bars on screen", 2, currentProgressBars.size());
+        final ArrayList<ProgressBar> currentProgressBars = waitForActivityAndAssertProgressBars();
+
         solo.setProgressBar(currentProgressBars.get(0), 5);
         solo.setProgressBar(currentProgressBars.get(1), 4);
         assertTrue("Did not find expected screen size of 7.4", solo.searchText("7.4"));
     }
 
-    public void testShouldUpdateScreenSizeOnBoundaries() {
+    private ArrayList<ProgressBar> waitForActivityAndAssertProgressBars() {
         assertTrue("DensityAppActivity did not show up", solo.waitForActivity("DensityAppActivity", 2000));
         final ArrayList<ProgressBar> currentProgressBars = solo.getCurrentProgressBars();
         assertEquals("Incorrect number of progress bars on screen", 2, currentProgressBars.size());
+        return currentProgressBars;
+    }
+
+    public void testShouldUpdateScreenSizeOnBoundaries() {
+        final ArrayList<ProgressBar> currentProgressBars = waitForActivityAndAssertProgressBars();
 
         solo.setProgressBar(currentProgressBars.get(0), 10);
         solo.setProgressBar(currentProgressBars.get(1), 9);
@@ -51,5 +57,24 @@ public final class DensityAppRobTest extends ActivityInstrumentationTestCase2<De
         solo.setProgressBar(currentProgressBars.get(0), 0);
         solo.setProgressBar(currentProgressBars.get(1), 0);
         assertTrue("Did not find expected screen size of 7.4", solo.searchText("2.0"));
+    }
+
+    public void testShouldMaintainProgressValuesOnRotation() {
+        final ArrayList<ProgressBar> currentProgressBars = waitForActivityAndAssertProgressBars();
+
+        solo.setProgressBar(currentProgressBars.get(0), 1);
+        solo.setProgressBar(currentProgressBars.get(1), 2);
+        assertTrue("Did not find expected screen size of 7.4", solo.searchText("3.2"));
+
+        final Activity currentActivity = solo.getCurrentActivity();
+        switch (currentActivity.getRequestedOrientation()) {
+            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                break;
+            default:
+                solo.setActivityOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+
+        assertTrue("Did not find expected screen size of 7.4", solo.searchText("3.2"));
     }
 }
