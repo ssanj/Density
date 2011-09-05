@@ -38,4 +38,18 @@ public final class DensityAppRobTest extends ActivityInstrumentationTestCase2<De
         solo.setProgressBar(currentProgressBars.get(1), 4);
         assertTrue("Did not find expected screen size of 7.4", solo.searchText("7.4"));
     }
+
+    public void testShouldUpdateScreenSizeOnBoundaries() {
+        assertTrue("DensityAppActivity did not show up", solo.waitForActivity("DensityAppActivity", 2000));
+        final ArrayList<ProgressBar> currentProgressBars = solo.getCurrentProgressBars();
+        assertEquals("Incorrect number of progress bars on screen", 2, currentProgressBars.size());
+
+        solo.setProgressBar(currentProgressBars.get(0), 10);
+        solo.setProgressBar(currentProgressBars.get(1), 9);
+        assertTrue("Did not find expected screen size of 7.4", solo.searchText("12.9"));
+
+        solo.setProgressBar(currentProgressBars.get(0), 0);
+        solo.setProgressBar(currentProgressBars.get(1), 0);
+        assertTrue("Did not find expected screen size of 7.4", solo.searchText("2.0"));
+    }
 }
