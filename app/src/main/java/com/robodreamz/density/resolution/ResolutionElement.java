@@ -9,12 +9,12 @@ import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
 
-public final class Resolution implements ResolutionItem {
+public final class ResolutionElement implements ResolutionItem {
     public int width;
     public int height;
 
-    public static Resolution resolution(int width, int height) {
-        final Resolution resolution = new Resolution();
+    public static ResolutionElement resolutionElement(int width, int height) {
+        final ResolutionElement resolution = new ResolutionElement();
         resolution.width = width;
         resolution.height = height;
         return resolution;
@@ -26,8 +26,9 @@ public final class Resolution implements ResolutionItem {
 
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
         ViewDelegate viewDelegate;
-        if (view.isNull()) {
+        if (view.isNull() || !view.hasTag(ViewType.ELEMENT)) {
             viewDelegate = layoutInflater.inflate(R.layout.resolution_list_view);
+            viewDelegate.setTag(ViewType.ELEMENT);
         } else {
             viewDelegate = view;
         }

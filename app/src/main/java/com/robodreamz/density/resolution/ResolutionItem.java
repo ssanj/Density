@@ -9,7 +9,10 @@ import com.robodreamz.density.delegate.ViewDelegate;
 
 public interface ResolutionItem {
 
+    enum ViewType {ELEMENT, HEADER}
+
     boolean isEnabled();
 
     ViewDelegate getView(LayoutInflaterDelegate layoutInflater, ViewDelegate view);
+
 }

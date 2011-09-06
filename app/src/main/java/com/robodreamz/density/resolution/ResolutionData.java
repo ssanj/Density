@@ -4,23 +4,28 @@
  */
 package com.robodreamz.density.resolution;
 
-import static com.robodreamz.density.resolution.Resolution.resolution;
+import static com.robodreamz.density.resolution.ResolutionElement.resolutionElement;
 
 public final class ResolutionData {
 
-    private static final Resolution[] RESOLUTIONS = {
-        resolution(320, 240) /* Sony Xperia x10 mini pro*/,
-        resolution(400, 240) /* Samsung Gem*/,
-        resolution(480, 320),
-        resolution(540, 960),
-        resolution(800, 480),
-        resolution(854, 480),
-        resolution(960, 540),
-        resolution(1024, 600) /* Samsung Galaxy Tab*/,
-        resolution(1200, 800),
+    private static final ResolutionItem[] RESOLUTIONS = {
+        resolutionHeader(),
+        resolutionElement(320, 240) /* Sony Xperia x10 mini pro*/,
+        resolutionElement(400, 240) /* Samsung Gem*/,
+        resolutionElement(480, 320),
+        resolutionElement(540, 960),
+        resolutionElement(800, 480),
+        resolutionElement(854, 480),
+        resolutionElement(960, 540),
+        resolutionElement(1024, 600) /* Samsung Galaxy Tab*/,
+        resolutionElement(1200, 800),
     };
 
-    public static Resolution[] getData() {
+    private static ResolutionItem resolutionHeader() {
+        return new ResolutionHeader();
+    }
+
+    public static ResolutionItem[] getData() {
         return RESOLUTIONS;
     }
 }

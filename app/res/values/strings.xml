@@ -4,4 +4,5 @@
     <string name="screen_size_label_text">Screen Size</string>
     <string name="app_screen_screensize_unit_text">\"</string>
     <string name="resolution_separator">X</string>
+    <string name="resolution_list_header_element_title">Common</string>
 </resources>

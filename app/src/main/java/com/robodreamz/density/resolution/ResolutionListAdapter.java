@@ -14,11 +14,11 @@ import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 
 public final class ResolutionListAdapter extends BaseAdapter {
 
-    private Resolution[] resolutions;
+    private ResolutionItem[] resolutions;
     private DelegateFactory delegateFactory;
     private LayoutInflaterDelegate layoutInflater;
 
-    public ResolutionListAdapter(final Context context, final Resolution[] resolutions, final DelegateFactory delegateFactory) {
+    public ResolutionListAdapter(final Context context, final ResolutionItem[] resolutions, final DelegateFactory delegateFactory) {
         this.resolutions = resolutions;
         this.delegateFactory = delegateFactory;
         layoutInflater = delegateFactory.createContextDelegate(context).getLayoutInflater();
@@ -37,7 +37,7 @@ public final class ResolutionListAdapter extends BaseAdapter {
     }
 
     @Override public View getView(final int position, final View convertView, final ViewGroup parent) {
-        final Resolution resolution = resolutions[position];
+        final ResolutionItem resolution = resolutions[position];
         return resolution.getView(layoutInflater, delegateFactory.createViewDelegate(convertView)).getDelegate();
     }
 

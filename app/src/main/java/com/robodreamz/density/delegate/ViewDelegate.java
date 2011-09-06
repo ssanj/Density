@@ -28,6 +28,16 @@ public class ViewDelegate implements Delegate<View> {
         }
     }
 
+    public boolean hasTag(Object tag) {
+        return !isNull() && view.getTag() != null && view.getTag().equals(tag);
+    }
+
+    public void setTag(Object tag) {
+        if (!isNull()) {
+            view.setTag(tag);
+        }
+    }
+
     public boolean isNull() {
         return view == null;
     }
