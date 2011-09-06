@@ -13,6 +13,10 @@ public interface ResolutionItem {
 
     boolean isEnabled();
 
+    ViewType getElementType();
+
+    int getElementLayoutId();
+
     ViewDelegate getView(LayoutInflaterDelegate layoutInflater, ViewDelegate view);
 
 }

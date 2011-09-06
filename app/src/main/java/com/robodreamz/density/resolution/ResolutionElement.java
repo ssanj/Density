@@ -22,11 +22,19 @@ public final class ResolutionElement implements ResolutionItem {
         return true;
     }
 
+    @Override public ViewType getElementType() {
+        return ViewType.ELEMENT;
+    }
+
+    @Override public int getElementLayoutId() {
+        return R.layout.resolution_list_view;
+    }
+
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
         ViewDelegate viewDelegate;
-        if (view.isNull() || !view.hasTag(ViewType.ELEMENT)) {
-            viewDelegate = layoutInflater.inflate(R.layout.resolution_list_view);
-            viewDelegate.setTag(ViewType.ELEMENT);
+        if (view.isNull() || !view.hasTag(getElementType())) {
+            viewDelegate = layoutInflater.inflate(getElementLayoutId());
+            viewDelegate.setTag(getElementType());
         } else {
             viewDelegate = view;
         }

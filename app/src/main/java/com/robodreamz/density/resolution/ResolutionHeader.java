@@ -14,11 +14,19 @@ public final class ResolutionHeader implements ResolutionItem {
         return false;
     }
 
+    @Override public ViewType getElementType() {
+        return ViewType.HEADER;
+    }
+
+    @Override public int getElementLayoutId() {
+        return R.layout.resolution_list_header_element;
+    }
+
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
         ViewDelegate viewDelegate;
-        if (view.isNull() || !view.hasTag(ViewType.HEADER)) {
-            viewDelegate = layoutInflater.inflate(R.layout.resolution_list_header_element);
-            viewDelegate.setTag(ViewType.HEADER);
+        if (view.isNull() || !view.hasTag(getElementType())) {
+            viewDelegate = layoutInflater.inflate(getElementLayoutId());
+            viewDelegate.setTag(getElementType());
         } else {
             viewDelegate = view;
         }
