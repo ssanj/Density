@@ -9,17 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
-import com.robodreamz.density.R;
+import com.robodreamz.density.delegate.DelegateFactory;
+import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 
 public final class ResolutionListAdapter extends BaseAdapter {
 
-    private LayoutInflater layoutInflater;
     private Resolution[] resolutions;
+    private DelegateFactory delegateFactory;
+    private LayoutInflaterDelegate layoutInflater;
 
-    public ResolutionListAdapter(final Context context, final Resolution[] resolutions) {
+    public ResolutionListAdapter(final Context context, final Resolution[] resolutions, final DelegateFactory delegateFactory) {
         this.resolutions = resolutions;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.delegateFactory = delegateFactory;
+        layoutInflater = delegateFactory.createContextDelegate(context).getLayoutInflater();
     }
 
     @Override public int getCount() {
@@ -35,18 +37,11 @@ public final class ResolutionListAdapter extends BaseAdapter {
     }
 
     @Override public View getView(final int position, final View convertView, final ViewGroup parent) {
-        View view = convertView;
-        if (view == null) {
-            view = layoutInflater.inflate(R.layout.resolution_list_view, null);
-        } else { /* view is not null so reuse it. */}
-
-        TextView width = (TextView) view.findViewById(R.id.resolution_list_view_width);
-        TextView height = (TextView) view.findViewById(R.id.resolution_list_view_height);
-
         final Resolution resolution = resolutions[position];
-        width.setText(String.valueOf(resolution.width));
-        height.setText(String.valueOf(resolution.height));
+        return resolution.getView(layoutInflater, delegateFactory.createViewDelegate(convertView)).getDelegate();
+    }
 
-        return view;
+    @Override public boolean isEnabled(final int position) {
+        return resolutions[position].isEnabled();
     }
 }
