@@ -42,4 +42,30 @@ public final class ResolutionHeaderTest {
 
         verify(mockViewDelegateOutput).setTag(ResolutionItem.ViewType.HEADER);
     }
+
+    @Test public void shouldReturnANewViewWhenViewIsOfTheWrongTag() throws Exception {
+        final LayoutInflaterDelegate mockLayoutInflaterDelegate = mock(LayoutInflaterDelegate.class);
+        final ViewDelegate mockViewDelegateInput = mock(ViewDelegate.class);
+        final ViewDelegate mockViewDelegateOutput = mock(ViewDelegate.class);
+
+        when(mockViewDelegateInput.isNull()).thenReturn(false);
+        when(mockViewDelegateInput.hasTag(ResolutionItem.ViewType.HEADER)).thenReturn(false);
+        when(mockLayoutInflaterDelegate.inflate(R.layout.resolution_list_header_element)).thenReturn(mockViewDelegateOutput);
+
+        assertThat("Incorrect ViewDelegate returned.",
+                header.getView(mockLayoutInflaterDelegate, mockViewDelegateInput), IsSame.sameInstance(mockViewDelegateOutput));
+
+        verify(mockViewDelegateOutput).setTag(ResolutionItem.ViewType.HEADER);
+    }
+
+    @Test public void shouldReuseViewIfViewIsNotNullAndOfCorrectTag() throws Exception {
+        final LayoutInflaterDelegate mockLayoutInflaterDelegate = mock(LayoutInflaterDelegate.class);
+        final ViewDelegate mockViewDelegateInput = mock(ViewDelegate.class);
+
+        when(mockViewDelegateInput.isNull()).thenReturn(false);
+        when(mockViewDelegateInput.hasTag(ResolutionItem.ViewType.HEADER)).thenReturn(true);
+
+        assertThat("Incorrect ViewDelegate returned.",
+                header.getView(mockLayoutInflaterDelegate, mockViewDelegateInput), IsSame.sameInstance(mockViewDelegateInput));
+    }
 }

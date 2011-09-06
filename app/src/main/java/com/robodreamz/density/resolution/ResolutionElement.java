@@ -13,11 +13,9 @@ public final class ResolutionElement implements ResolutionItem {
     public int width;
     public int height;
 
-    public static ResolutionElement resolutionElement(int width, int height) {
-        final ResolutionElement resolution = new ResolutionElement();
-        resolution.width = width;
-        resolution.height = height;
-        return resolution;
+    public ResolutionElement(final int width, final int height) {
+        this.width = width;
+        this.height = height;
     }
 
     @Override public boolean isEnabled() {

@@ -4,8 +4,6 @@
  */
 package com.robodreamz.density.resolution;
 
-import static com.robodreamz.density.resolution.ResolutionElement.resolutionElement;
-
 public final class ResolutionData {
 
     private static final ResolutionItem[] RESOLUTIONS = {
@@ -23,6 +21,10 @@ public final class ResolutionData {
 
     private static ResolutionItem resolutionHeader() {
         return new ResolutionHeader();
+    }
+
+    private static ResolutionElement resolutionElement(int width, int height) {
+        return new ResolutionElement(width, height);
     }
 
     public static ResolutionItem[] getData() {
