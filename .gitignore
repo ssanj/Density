@@ -1,4 +1,4 @@
 *.iml
 density-parent-pom.i??
 */target/*
-*/tmp/*
+tmp

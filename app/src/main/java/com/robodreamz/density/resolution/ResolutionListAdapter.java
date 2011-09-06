@@ -4,24 +4,24 @@
  */
 package com.robodreamz.density.resolution;
 
-import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 
+//TODO: Reuse this class by providing a type-annotation.
 public final class ResolutionListAdapter extends BaseAdapter {
 
     private ResolutionItem[] resolutions;
     private DelegateFactory delegateFactory;
     private LayoutInflaterDelegate layoutInflater;
 
-    public ResolutionListAdapter(final Context context, final ResolutionItem[] resolutions, final DelegateFactory delegateFactory) {
+    public ResolutionListAdapter(final LayoutInflaterDelegate layoutInflater, final DelegateFactory delegateFactory,
+                                 final ResolutionItem[] resolutions) {
         this.resolutions = resolutions;
         this.delegateFactory = delegateFactory;
-        layoutInflater = delegateFactory.createContextDelegate(context).getLayoutInflater();
+        this.layoutInflater = layoutInflater;
     }
 
     @Override public int getCount() {

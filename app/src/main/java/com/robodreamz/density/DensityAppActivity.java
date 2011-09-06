@@ -10,9 +10,11 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.robodreamz.density.delegate.DelegateFactory;
+import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
 
+//TODO: This class does too much. Refactor into separate classes.
 public final class DensityAppActivity extends AbstractDensityActivty {
 
     private static final int INTEGRAL_SCREENSIZE_OFFSET = 2;
@@ -46,7 +48,9 @@ public final class DensityAppActivity extends AbstractDensityActivty {
 
     private void initResolutions() {
         final ListView resolutionList = (ListView) findViewById(R.id.app_screen_resolution_list);
-        resolutionList.setAdapter(new ResolutionListAdapter(this, ResolutionData.getData(), new DelegateFactory()));
+        final DelegateFactory factory = DensityApplication.getFactory();
+        final LayoutInflaterDelegate layoutInflater = factory.createContextDelegate(this).getLayoutInflater();
+        resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
     }
 
     private void setInitialProgress(final SeekBar integerBar, final SeekBar decimalBar) {

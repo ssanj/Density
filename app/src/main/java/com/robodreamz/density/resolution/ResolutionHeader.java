@@ -4,7 +4,6 @@
  */
 package com.robodreamz.density.resolution;
 
-import android.text.StaticLayout;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;

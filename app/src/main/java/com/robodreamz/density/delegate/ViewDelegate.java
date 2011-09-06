@@ -41,8 +41,4 @@ public class ViewDelegate implements Delegate<View> {
     public boolean isNull() {
         return view == null;
     }
-
-    public <T> boolean isOfType(Class<T> clazz) {
-        return !isNull() && view.getClass().isAssignableFrom(clazz);
-    }
 }
