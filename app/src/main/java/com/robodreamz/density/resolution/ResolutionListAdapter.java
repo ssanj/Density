@@ -12,34 +12,22 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.robodreamz.density.R;
 
-import static com.robodreamz.density.resolution.Resolution.resolution;
-
 public final class ResolutionListAdapter extends BaseAdapter {
 
-    private static final Resolution[] RESOLUTIONS = {
-        resolution(320, 240) /* Sony Xperia x10 mini pro*/,
-        resolution(400, 240) /* Samsung Gem*/,
-        resolution(480, 320),
-        resolution(540, 960),
-        resolution(800, 480),
-        resolution(854, 480),
-        resolution(960, 540),
-        resolution(1024, 600) /* Samsung Galaxy Tab*/,
-        resolution(1200, 800),
-    };
-
     private LayoutInflater layoutInflater;
+    private Resolution[] resolutions;
 
-    public ResolutionListAdapter(Context context) {
+    public ResolutionListAdapter(final Context context, final Resolution[] resolutions) {
+        this.resolutions = resolutions;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override public int getCount() {
-        return RESOLUTIONS.length;
+        return resolutions.length;
     }
 
     @Override public Object getItem(final int position) {
-        return RESOLUTIONS[position];
+        return resolutions[position];
     }
 
     @Override public long getItemId(final int position) {
@@ -55,7 +43,7 @@ public final class ResolutionListAdapter extends BaseAdapter {
         TextView width = (TextView) view.findViewById(R.id.resolution_list_view_width);
         TextView height = (TextView) view.findViewById(R.id.resolution_list_view_height);
 
-        final Resolution resolution = RESOLUTIONS[position];
+        final Resolution resolution = resolutions[position];
         width.setText(String.valueOf(resolution.width));
         height.setText(String.valueOf(resolution.height));
 
