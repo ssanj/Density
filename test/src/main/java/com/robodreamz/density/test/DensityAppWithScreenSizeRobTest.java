@@ -13,11 +13,11 @@ import com.robodreamz.density.DensityAppActivity;
 
 import java.util.ArrayList;
 
-public final class DensityAppRobTest extends ActivityInstrumentationTestCase2<DensityAppActivity> {
+public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentationTestCase2<DensityAppActivity> {
 
     private Solo solo;
 
-    public DensityAppRobTest() {
+    public DensityAppWithScreenSizeRobTest() {
         super("com.robodreamz.density", DensityAppActivity.class);
     }
 
@@ -76,5 +76,14 @@ public final class DensityAppRobTest extends ActivityInstrumentationTestCase2<De
         }
 
         assertTrue("Did not find expected screen size of 7.4", solo.searchText("3.2"));
+    }
+
+    @Override protected void tearDown() throws Exception {
+        try {
+            solo.finalize();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        super.tearDown();
     }
 }
