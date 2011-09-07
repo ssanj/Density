@@ -13,6 +13,7 @@ import com.robodreamz.density.DensityAppActivity;
 
 import java.util.ArrayList;
 
+//TODO: This class can't extend AbstractDensityAppTest. It current segfaults.Seems to work this way though.
 public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentationTestCase2<DensityAppActivity> {
 
     private Solo solo;
