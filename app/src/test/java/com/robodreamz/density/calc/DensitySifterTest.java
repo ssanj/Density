@@ -34,6 +34,32 @@ public final class DensitySifterTest {
         assertdpi(DensitySifter.DPI.XHDPI);
     }
 
+    @Test public void shouldJumpDpiBoundaries() {
+        assertBoundaryShiftUp(DensitySifter.DPI.LDPI, DensitySifter.DPI.MDPI);
+        assertBoundaryShiftUp(DensitySifter.DPI.MDPI, DensitySifter.DPI.HDPI);
+        assertBoundaryShiftUp(DensitySifter.DPI.HDPI, DensitySifter.DPI.XHDPI);
+        assertBoundaryShiftUp(DensitySifter.DPI.XHDPI, DensitySifter.DPI.NODPI);
+
+        assertBoundaryShiftDown(DensitySifter.DPI.XHDPI, DensitySifter.DPI.HDPI);
+        assertBoundaryShiftDown(DensitySifter.DPI.HDPI, DensitySifter.DPI.MDPI);
+        assertBoundaryShiftDown(DensitySifter.DPI.MDPI, DensitySifter.DPI.LDPI);
+        assertBoundaryShiftDown(DensitySifter.DPI.LDPI, DensitySifter.DPI.NODPI);
+    }
+
+    private void assertBoundaryShiftUp(final DensitySifter.DPI targetDpi, final DensitySifter.DPI expectedDPI) {
+        final int maxDpi = targetDpi.getMax();
+        final DensitySifter.DPI sift = sifter.sift(maxDpi + 1); //one over the boundary
+        assertThat("Incorrect dpi value", sifter.sift(targetDpi.getMax()), equalTo(targetDpi));
+        assertThat("Incorrect dpi value", sift, equalTo(expectedDPI));
+    }
+
+    private void assertBoundaryShiftDown(final DensitySifter.DPI targetDpi, final DensitySifter.DPI expectedDPI) {
+        final int minDpi = targetDpi.getMin();
+        final DensitySifter.DPI sift = sifter.sift(minDpi - 1); //one under the boundary
+        assertThat("Incorrect dpi value", sifter.sift(targetDpi.getMin()), equalTo(targetDpi));
+        assertThat("Incorrect dpi value", sift, equalTo(expectedDPI));
+    }
+
     @Test public void shouldSiftNodpiDensities() {
         assertNodpi(-1);
         assertNodpi(3201);
