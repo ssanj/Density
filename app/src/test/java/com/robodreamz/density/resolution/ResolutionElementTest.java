@@ -4,16 +4,14 @@
  */
 package com.robodreamz.density.resolution;
 
-import android.view.View;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
-import org.hamcrest.core.IsSame;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.core.IsSame.*;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;

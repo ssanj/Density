@@ -16,7 +16,6 @@ import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionElement;
-import com.robodreamz.density.resolution.ResolutionItem;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
 
 //TODO: This class does too much. Refactor into separate classes.
