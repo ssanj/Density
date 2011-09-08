@@ -22,8 +22,6 @@ import com.robodreamz.density.resolution.ResolutionListAdapter;
 //TODO: This class does too much. Refactor into separate classes.
 public final class DensityAppActivity extends AbstractDensityActivty {
 
-    private static final int INTEGRAL_SCREENSIZE_OFFSET = 2;
-
     @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_screen);
@@ -38,13 +36,13 @@ public final class DensityAppActivity extends AbstractDensityActivty {
 
         integerBar.setOnSeekBarChangeListener(new DefaultSeekBarChangeListener() {
             @Override public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-                screenSizeTextView.setText(getScreenSizeText(progress, decimalBar.getProgress()));
+                screenSizeTextView.setText(DensityApplication.getResolver().resolve(progress, decimalBar.getProgress()));
             }
         });
 
         decimalBar.setOnSeekBarChangeListener(new DefaultSeekBarChangeListener() {
             @Override public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-                screenSizeTextView.setText(getScreenSizeText(integerBar.getProgress(), progress));
+                screenSizeTextView.setText(DensityApplication.getResolver().resolve(integerBar.getProgress(), progress));
             }
         });
 
@@ -76,7 +74,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
     private double getScreenDiagonal() {
         final SeekBar integerBar = (SeekBar) findViewById(R.id.app_screen_screensize_integer_progress);
         final SeekBar decimalBar = (SeekBar) findViewById(R.id.app_screen_screensize_decimal_progress);
-        final CharSequence screenDiagonal = getScreenSizeText(integerBar.getProgress(), decimalBar.getProgress());
+        final CharSequence screenDiagonal = DensityApplication.getResolver().resolve(integerBar.getProgress(), decimalBar.getProgress());
         try {
             return Double.parseDouble(screenDiagonal.toString());
         } catch (NumberFormatException e) {
@@ -87,10 +85,6 @@ public final class DensityAppActivity extends AbstractDensityActivty {
     private void setInitialProgress(final SeekBar integerBar, final SeekBar decimalBar) {
         integerBar.setProgress(0); //2
         decimalBar.setProgress(5); //.5
-    }
-
-    private CharSequence getScreenSizeText(final int integral, final int decimal) {
-        return new StringBuilder(String.valueOf(INTEGRAL_SCREENSIZE_OFFSET + integral)).append('.').append(decimal);
     }
 
     private static class DefaultSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
