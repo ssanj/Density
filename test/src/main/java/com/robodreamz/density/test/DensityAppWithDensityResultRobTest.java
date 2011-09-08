@@ -29,7 +29,8 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         final List<ListView> currentListViews = solo.getCurrentListViews();
         assertEquals("The number of ListsViews on the screen is incorrect", 1, currentListViews.size());
         assertTrue("The number of resolutions is incorrect", currentListViews.get(0).getCount() > 1);
-        assertDensityCalc(2, new ScreenSize(0, 2), new Resolution(320, 240), new DensityResult(182, "MDPI"));
+        assertDensityCalc(2, new ScreenSize(1, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
+        assertDensityCalc(4, new ScreenSize(1, 1), new Resolution(480, 320), new DensityResult(186, "MDPI"));
     }
 
     private void assertDensityCalc(final int index, final ScreenSize screenSize, final Resolution reso, final DensityResult densityResult) {
