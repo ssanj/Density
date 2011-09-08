@@ -6,7 +6,7 @@ package com.robodreamz.density.screen;
 
 public final class ScreenSizeResolver {
 
-    private static final int INTEGRAL_SCREENSIZE_OFFSET = 2;
+    public static final int INTEGRAL_SCREENSIZE_OFFSET = 2;
 
     public CharSequence resolve(final int integral, final int decimal) {
         return new StringBuilder(String.valueOf(INTEGRAL_SCREENSIZE_OFFSET + integral)).append('.').append(decimal);

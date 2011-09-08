@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.robodreamz.density.DensityApplication;
 import com.robodreamz.density.R;
+import com.robodreamz.density.screen.ScreenSizeResolver;
 
 import java.util.List;
 
@@ -29,8 +30,10 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         final List<ListView> currentListViews = solo.getCurrentListViews();
         assertEquals("The number of ListsViews on the screen is incorrect", 1, currentListViews.size());
         assertTrue("The number of resolutions is incorrect", currentListViews.get(0).getCount() > 1);
-        assertDensityCalc(2, new ScreenSize(1, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
-        assertDensityCalc(4, new ScreenSize(1, 1), new Resolution(480, 320), new DensityResult(186, "MDPI"));
+        assertDensityCalc(2, new ScreenSize(3, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
+        assertDensityCalc(4, new ScreenSize(3, 1), new Resolution(480, 320), new DensityResult(186, "MDPI"));
+        assertDensityCalc(6, new ScreenSize(3, 1), new Resolution(800, 480), new DensityResult(301, "HDPI"));
+        assertDensityCalc(9, new ScreenSize(3, 5), new Resolution(1024, 600), new DensityResult(339, "XHDPI"));
     }
 
     private void assertDensityCalc(final int index, final ScreenSize screenSize, final Resolution reso, final DensityResult densityResult) {
@@ -39,14 +42,14 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         solo.setProgressBar(currentProgressBars.get(1), screenSize.decimal);
         assertTrue("Did not find expected screen size of " + screenSize.getScreenSize(), solo.searchText(screenSize.getScreenSize()));
 
-        final List<TextView> textViews = solo.clickInList(index, 0);//select the first item. Assume for now that it's 320x240
+        final List<TextView> textViews = solo.clickInList(index, 0);
 
         assertEquals("Incorrect number of TextViews returned", 3, textViews.size());
-        assertEquals("Incorrect Width returned", reso.getWidthAsString(), textViews.get(0).getText());
+        assertEquals("Incorrect Width returned: " + reso.getWidthAsString(), reso.getWidthAsString(), textViews.get(0).getText());
         assertEquals("Incorrect separator returned", getActivity().getResources().getString(R.string.resolution_separator), textViews.get(1).getText());
-        assertEquals("Incorrect Height returned", reso.getHeightAsString(), textViews.get(2).getText());
-        assertTrue("Incorrect density value", solo.waitForText(densityResult.getValueAsString(), 1, 2000));
-        assertTrue("Incorrect density value category", solo.waitForText(densityResult.category, 1, 2000));
+        assertEquals("Incorrect Height returned: " + reso.getHeightAsString(), reso.getHeightAsString(), textViews.get(2).getText());
+        assertTrue("Incorrect density value: " + densityResult.getValueAsString(), solo.waitForText(densityResult.getValueAsString(), 1, 2000));
+        assertTrue("Incorrect density value category: " + densityResult.category, solo.waitForText(densityResult.category, 1, 2000));
     }
 
     private final static class ScreenSize {
@@ -54,7 +57,7 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         private final int decimal;
 
         private ScreenSize(final int integral, final int decimal) {
-            this.integral = integral;
+            this.integral = integral - ScreenSizeResolver.INTEGRAL_SCREENSIZE_OFFSET;
             this.decimal = decimal;
         }
 
