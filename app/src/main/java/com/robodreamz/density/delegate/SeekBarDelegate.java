@@ -6,7 +6,7 @@ package com.robodreamz.density.delegate;
 
 import android.widget.SeekBar;
 
-public final class SeekBarDelegate extends ViewDelegate {
+public class SeekBarDelegate extends ViewDelegate {
 
     public SeekBarDelegate(final SeekBar seekBar, final DelegateFactory delegateFactory) {
         super(seekBar, delegateFactory);

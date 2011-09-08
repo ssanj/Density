@@ -5,6 +5,7 @@
 package com.robodreamz.density.delegate;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 
@@ -36,5 +37,19 @@ public class ActivityDelegate implements Delegate<Activity> {
 
     public boolean isNull() {
         return activityRef == null || activityRef.get() == null;
+    }
+
+    public void makeLongToast(String message) {
+        makeToast(message, Toast.LENGTH_LONG);
+    }
+
+    public void makeShortToast(String message) {
+        makeToast(message, Toast.LENGTH_SHORT);
+    }
+
+    private void makeToast(String message, int length) {
+        if (!isNull()) {
+            Toast.makeText(activityRef.get(), message, length);
+        }
     }
 }
