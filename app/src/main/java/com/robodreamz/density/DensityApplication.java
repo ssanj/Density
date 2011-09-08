@@ -6,6 +6,7 @@ package com.robodreamz.density;
 
 import android.app.Application;
 import android.util.Log;
+import com.robodreamz.density.calc.DensityCalculator;
 import com.robodreamz.density.delegate.DelegateFactory;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -14,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class DensityApplication extends Application {
 
     private static final DelegateFactory FACTORY = new DelegateFactory();
+    private static final DensityCalculator CALCUALTOR = new DensityCalculator();
     public static final String TAG = "DensityApplication";
 
     private final AtomicInteger windowCount = new AtomicInteger(0);
@@ -50,4 +52,7 @@ public final class DensityApplication extends Application {
         return FACTORY;
     }
 
+    public static DensityCalculator getCalcualtor() {
+        return CALCUALTOR;
+    }
 }

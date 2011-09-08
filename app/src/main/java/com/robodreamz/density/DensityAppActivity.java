@@ -10,9 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.robodreamz.density.calc.DensityCalculator;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
+import com.robodreamz.density.resolution.ResolutionElement;
+import com.robodreamz.density.resolution.ResolutionItem;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
 
 //TODO: This class does too much. Refactor into separate classes.
@@ -56,11 +60,28 @@ public final class DensityAppActivity extends AbstractDensityActivty {
             @Override public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
                 TextView value = (TextView) findViewById(R.id.density_result_density_value_text);
                 TextView category = (TextView) findViewById(R.id.density_result_density_value_category);
-                //calculate density (value, category)
-                value.setText("125");
-                category.setText("ldpi");
+                final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(position);
+                final DensityCalculator.DensityCaluclation caluclation =
+                        DensityApplication.getCalcualtor().getDensityFor(item.width, item.height, getScreenDiagonal());
+                if (caluclation.isValid()) {
+                    value.setText(String.valueOf(caluclation.getResult()));
+                    category.setText("ldpi");
+                } else {
+                    Toast.makeText(DensityAppActivity.this, "Invalid values chosen for screen size and/or resolution.", Toast.LENGTH_LONG);
+                }
             }
         });
+    }
+
+    private double getScreenDiagonal() {
+        final SeekBar integerBar = (SeekBar) findViewById(R.id.app_screen_screensize_integer_progress);
+        final SeekBar decimalBar = (SeekBar) findViewById(R.id.app_screen_screensize_decimal_progress);
+        final CharSequence screenDiagonal = getScreenSizeText(integerBar.getProgress(), decimalBar.getProgress());
+        try {
+            return Double.parseDouble(screenDiagonal.toString());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     private void setInitialProgress(final SeekBar integerBar, final SeekBar decimalBar) {
