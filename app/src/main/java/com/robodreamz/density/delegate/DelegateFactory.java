@@ -6,6 +6,7 @@ package com.robodreamz.density.delegate;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class DelegateFactory {
@@ -13,6 +14,8 @@ public class DelegateFactory {
     public ViewDelegate createViewDelegate(View view) {
         if (view instanceof TextView) {
             return new TextViewDelegate((TextView) view, this);
+        } else if (view instanceof SeekBar) {
+            return new SeekBarDelegate((SeekBar) view, this);
         } else {
             return new ViewDelegate(view, this);
         }
