@@ -8,10 +8,12 @@ public final class DensityCalculator {
 
     public static final int ERROR_VALUE = -9999;
     public static final String NONE = "NONE";
+
     //We don't really know how big resolutions will go. Integer.MAX_VALUE is a decent guess.
     static final int MAX_RESOLUTION_SIZE = Integer.MAX_VALUE;
     //Given that we have max screen sizes of around 10-12", a x1000 should be enough.
     static final double MAX_SCREEN_DIAGONAL_SIZE = 10000.0d;
+
     static final String WIDTH = "Width";
     static final String HEIGHT = "Height";
     static final String SCREEN_DIAGONAL = "Screen diagonal";
@@ -53,7 +55,6 @@ public final class DensityCalculator {
     public static final class DensityCaluclation {
         private final int result;
         private final String error;
-
 
         public DensityCaluclation(final int result) {
             this.result = result;
