@@ -65,7 +65,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
                         DensityApplication.getCalcualtor().getDensityFor(item.width, item.height, getScreenDiagonal());
                 if (caluclation.isValid()) {
                     value.setText(String.valueOf(caluclation.getResult()));
-                    category.setText("ldpi");
+                    category.setText(DensityApplication.getSifter().sift(caluclation.getResult()).toString());
                 } else {
                     Toast.makeText(DensityAppActivity.this, "Invalid values chosen for screen size and/or resolution.", Toast.LENGTH_LONG);
                 }

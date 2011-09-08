@@ -29,9 +29,9 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         waitForApplicationActivity();
         final List<ProgressBar> currentProgressBars = solo.getCurrentProgressBars();
 
-        solo.setProgressBar(currentProgressBars.get(0), 1);
+        solo.setProgressBar(currentProgressBars.get(0), 0);
         solo.setProgressBar(currentProgressBars.get(1), 2);
-        assertTrue("Did not find expected screen size of 3.2", solo.searchText("3.2"));
+        assertTrue("Did not find expected screen size of 2.2", solo.searchText("2.2"));
 
         final List<ListView> currentListViews = solo.getCurrentListViews();
         assertEquals("The number of ListsViews on the screen is incorrect", 1, currentListViews.size());
@@ -42,7 +42,7 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         assertEquals("Incorrect Width returned", "320", textViews.get(0).getText());
         assertEquals("Incorrect separator returned", getActivity().getResources().getString(R.string.resolution_separator), textViews.get(1).getText());
         assertEquals("Incorrect Height returned", "240", textViews.get(2).getText());
-        assertTrue("Incorrect density value", solo.waitForText("125", 1, 2000));
-        assertTrue("Incorrect density value category", solo.waitForText("ldpi", 1, 2000));
+        assertTrue("Incorrect density value", solo.waitForText("182", 1, 2000));
+        assertTrue("Incorrect density value category", solo.waitForText("MDPI", 1, 2000));
     }
 }

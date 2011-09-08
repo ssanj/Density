@@ -13,9 +13,10 @@ public final class DensitySifter {
         HDPI(230, 310) /* ~ 240 */,
         XHDPI(311, 3200) /* ~ 320  */,
         NODPI(-1, -1) /* catch all value for when there is no match*/;
-        private int min;
 
+        private int min;
         private int max;
+
         DPI(final int min, final int upper) {
             this.min = min;
             this.max = upper;
