@@ -14,6 +14,7 @@ public final class DensityCalculator {
     static final double MAX_SCREEN_DIAGONAL_SIZE = 10000.0d;
     static final String WIDTH = "Width";
     static final String HEIGHT = "Height";
+    static final String SCREEN_DIAGONAL = "Screen diagonal";
 
     public DensityCaluclation getDensityFor(final int width, final int height, final double screenLength) {
         final ValidationResult widthValidation = validateInteger(WIDTH, width);
@@ -32,8 +33,8 @@ public final class DensityCalculator {
     private ValidationResult validateDouble(final double screenLength) {
         final boolean invalid = screenLength <= 0 || screenLength >= MAX_SCREEN_DIAGONAL_SIZE;
         if (invalid) {
-            return new ValidationResult(screenLength <= 0 ? "Screen diagonal is less than 1" :
-                    "Screen diagonal is greater than max value: " + MAX_SCREEN_DIAGONAL_SIZE);
+            return new ValidationResult(screenLength <= 0 ? SCREEN_DIAGONAL + " is less than 1" :
+                    SCREEN_DIAGONAL + " is greater than max value: " + MAX_SCREEN_DIAGONAL_SIZE);
         } else {
             return new ValidationResult();
         }
