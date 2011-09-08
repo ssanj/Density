@@ -6,6 +6,7 @@ package com.robodreamz.density;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -51,6 +52,15 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         final DelegateFactory factory = DensityApplication.getFactory();
         final LayoutInflaterDelegate layoutInflater = factory.createContextDelegate(this).getLayoutInflater();
         resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
+        resolutionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+                TextView value = (TextView) findViewById(R.id.density_result_density_value_text);
+                TextView category = (TextView) findViewById(R.id.density_result_density_value_category);
+                //calculate density (value, category)
+                value.setText("125");
+                category.setText("ldpi");
+            }
+        });
     }
 
     private void setInitialProgress(final SeekBar integerBar, final SeekBar decimalBar) {
