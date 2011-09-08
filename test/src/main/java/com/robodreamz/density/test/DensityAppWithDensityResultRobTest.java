@@ -62,7 +62,7 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         }
 
         String getScreenSize() {
-            return DensityApplication.getResolver().resolve(integral, decimal).toString();
+            return DensityApplication.getResolver().convertProgressValueToActualString(integral, decimal).toString();
         }
     }
 

@@ -18,11 +18,26 @@ public final class ScreenSizeResolverTest {
         resolver = new ScreenSizeResolver();
     }
 
-    @Test public void shouldResolveAGivenIntegralAndDecimalValue() throws Exception {
-        assertThat("Incorrect screen resolution", resolver.resolve(100, 2).toString(), equalTo("102.2"));
+    @Test public void shouldconvertProgressValueToActualString() throws Exception {
+        assertThat("Incorrect screen resolution", resolver.convertProgressValueToActualString(100, 2).toString(), equalTo("102.2"));
     }
 
-    @Test public void shouldOffsetIntegralValue() throws Exception {
-        assertThat("Incorrect screen resolution", resolver.resolve(0, 7).toString(), equalTo("2.7"));
+    @Test public void shoulConvertProgressValueToActualStringWhenProgressValueIsZero() throws Exception {
+        assertThat("Incorrect screen resolution", resolver.convertProgressValueToActualString(0, 7).toString(), equalTo("2.7"));
+    }
+
+    @Test public void shouldConvertProgressValueToActualInt() {
+        for (int count = 0; count < 10; count++) {
+            assertThat("Incorrect integral actual int for: " + count, resolver.convertProgressValueToActualInt(count),
+                    equalTo(count + ScreenSizeResolver.INTEGRAL_SCREENSIZE_OFFSET));
+        }
+    }
+
+    @Test public void shouldConvertActualValueToProgressInt() {
+        for (int count = ScreenSizeResolver.INTEGRAL_SCREENSIZE_OFFSET; count < 10 + ScreenSizeResolver.INTEGRAL_SCREENSIZE_OFFSET; count++) {
+            assertThat("Incorrect integral progress for: " + count, resolver.convertActualValueToProgressInt(count),
+                    equalTo(count - ScreenSizeResolver.INTEGRAL_SCREENSIZE_OFFSET));
+        }
+
     }
 }

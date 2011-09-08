@@ -35,13 +35,13 @@ public final class DensityAppActivity extends AbstractDensityActivty {
 
         integerBar.setOnSeekBarChangeListener(new DefaultSeekBarChangeListener() {
             @Override public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-                screenSizeTextView.setText(DensityApplication.getResolver().resolve(progress, decimalBar.getProgress()));
+                screenSizeTextView.setText(DensityApplication.getResolver().convertProgressValueToActualString(progress, decimalBar.getProgress()));
             }
         });
 
         decimalBar.setOnSeekBarChangeListener(new DefaultSeekBarChangeListener() {
             @Override public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-                screenSizeTextView.setText(DensityApplication.getResolver().resolve(integerBar.getProgress(), progress));
+                screenSizeTextView.setText(DensityApplication.getResolver().convertProgressValueToActualString(integerBar.getProgress(), progress));
             }
         });
 
@@ -73,7 +73,8 @@ public final class DensityAppActivity extends AbstractDensityActivty {
     private double getScreenDiagonal() {
         final SeekBar integerBar = (SeekBar) findViewById(R.id.app_screen_screensize_integer_progress);
         final SeekBar decimalBar = (SeekBar) findViewById(R.id.app_screen_screensize_decimal_progress);
-        final CharSequence screenDiagonal = DensityApplication.getResolver().resolve(integerBar.getProgress(), decimalBar.getProgress());
+        final CharSequence screenDiagonal = DensityApplication.getResolver().convertProgressValueToActualString(integerBar.getProgress(),
+                decimalBar.getProgress());
         try {
             return Double.parseDouble(screenDiagonal.toString());
         } catch (NumberFormatException e) {
@@ -82,7 +83,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
     }
 
     private void setInitialProgress(final SeekBar integerBar, final SeekBar decimalBar) {
-        integerBar.setProgress(0); //2
+        integerBar.setProgress(DensityApplication.getResolver().convertActualValueToProgressInt(2));
         decimalBar.setProgress(5); //.5
     }
 
