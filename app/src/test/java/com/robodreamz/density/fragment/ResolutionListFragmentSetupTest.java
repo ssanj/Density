@@ -40,6 +40,7 @@ public final class ResolutionListFragmentSetupTest {
         fragmentSetup.setup();
 
         verify(mockList).setAdapter(isA(ResolutionListAdapter.class));
+        verify(mockList).setOnItemClickListener(isA(ResolutionListFragmentSetup.ResolutionListClickListener.class));
         verifyZeroInteractions(mockLayoutInflater);
     }
 }

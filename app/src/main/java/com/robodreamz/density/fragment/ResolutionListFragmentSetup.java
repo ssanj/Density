@@ -32,27 +32,37 @@ public final class ResolutionListFragmentSetup {
         final DelegateFactory factory = DensityApplication.getFactory();
         final LayoutInflaterDelegate layoutInflater = delegate.getLayoutInflater();
         resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
-
-        resolutionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-                calculateDensity(position, resolutionList);
-            }
-        });
+        resolutionList.setOnItemClickListener(new ResolutionListClickListener(delegate, resolutionList));
     }
 
-    private void calculateDensity(final int position, final ListViewDelegate resolutionList) {
-        TextViewDelegate value = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_text);
-        TextViewDelegate category = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_category);
+    final static class ResolutionListClickListener implements AdapterView.OnItemClickListener {
 
-        final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(position);
-        final DensityCalculator.DensityCaluclation caluclation =
-                DensityApplication.getCalcualtor().getDensityFor(item.width, item.height, DensityApplication.getResolver().getScreenDiagonal(delegate));
+            private final ActivityDelegate delegate;
+            private final ListViewDelegate resolutionList;
 
-        if (caluclation.isValid()) {
-            value.setText(String.valueOf(caluclation.getResult()));
-            category.setText(DensityApplication.getSifter().sift(caluclation.getResult()).toString());
-        } else {
-            delegate.makeLongToast("Invalid values chosen for screen size and/or resolution.");
+        public ResolutionListClickListener(final ActivityDelegate delegate, final ListViewDelegate resolutionList) {
+            this.resolutionList = resolutionList;
+            this.delegate = delegate;
+        }
+
+        @Override public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+            calculateDensity(position, resolutionList);
+        }
+
+        void calculateDensity(final int position, final ListViewDelegate resolutionList) {
+            TextViewDelegate value = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_text);
+            TextViewDelegate category = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_category);
+
+            final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(position);
+            final DensityCalculator.DensityCaluclation caluclation =
+                    DensityApplication.getCalcualtor().getDensityFor(item.width, item.height, DensityApplication.getResolver().getScreenDiagonal(delegate));
+
+            if (caluclation.isValid()) {
+                value.setText(String.valueOf(caluclation.getResult()));
+                category.setText(DensityApplication.getSifter().sift(caluclation.getResult()).toString());
+            } else {
+                delegate.makeLongToast("Invalid values chosen for screen size and/or resolution.");
+            }
         }
     }
 }
