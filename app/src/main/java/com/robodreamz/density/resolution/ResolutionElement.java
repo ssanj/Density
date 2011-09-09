@@ -9,7 +9,7 @@ import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
 
-public final class ResolutionElement implements ResolutionItem {
+public class ResolutionElement implements ResolutionItem {
     public int width;
     public int height;
 

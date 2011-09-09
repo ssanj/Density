@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import com.robodreamz.density.DensityApplication;
 import com.robodreamz.density.R;
 import com.robodreamz.density.calc.DensityCalculator;
+import com.robodreamz.density.calc.DensitySifter;
 import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
@@ -17,6 +18,7 @@ import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionElement;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
+import com.robodreamz.density.screen.ScreenSizeResolver;
 
 public final class ResolutionListFragmentSetup {
 
@@ -32,17 +34,29 @@ public final class ResolutionListFragmentSetup {
         final DelegateFactory factory = DensityApplication.getFactory();
         final LayoutInflaterDelegate layoutInflater = delegate.getLayoutInflater();
         resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
-        resolutionList.setOnItemClickListener(new ResolutionListClickListener(delegate, resolutionList));
+        resolutionList.setOnItemClickListener(new ResolutionListClickListener(delegate, resolutionList,
+                DensityApplication.getCalcualtor(), DensityApplication.getResolver(), DensityApplication.getSifter()));
     }
 
     final static class ResolutionListClickListener implements AdapterView.OnItemClickListener {
 
-            private final ActivityDelegate delegate;
-            private final ListViewDelegate resolutionList;
+        private final ActivityDelegate delegate;
+        private final ListViewDelegate resolutionList;
+        private final DensityCalculator calculator;
+        private final ScreenSizeResolver resolver;
+        private final DensitySifter sifter;
 
-        public ResolutionListClickListener(final ActivityDelegate delegate, final ListViewDelegate resolutionList) {
+
+        public ResolutionListClickListener(final ActivityDelegate delegate,
+                                           final ListViewDelegate resolutionList,
+                                           final DensityCalculator calculator,
+                                           final ScreenSizeResolver resolver,
+                                           final DensitySifter sifter) {
             this.resolutionList = resolutionList;
             this.delegate = delegate;
+            this.calculator = calculator;
+            this.resolver = resolver;
+            this.sifter = sifter;
         }
 
         @Override public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
@@ -55,11 +69,11 @@ public final class ResolutionListFragmentSetup {
 
             final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(position);
             final DensityCalculator.DensityCaluclation caluclation =
-                    DensityApplication.getCalcualtor().getDensityFor(item.width, item.height, DensityApplication.getResolver().getScreenDiagonal(delegate));
+                    calculator.getDensityFor(item.width, item.height, resolver.getScreenDiagonal(delegate));
 
             if (caluclation.isValid()) {
                 value.setText(String.valueOf(caluclation.getResult()));
-                category.setText(DensityApplication.getSifter().sift(caluclation.getResult()).toString());
+                category.setText(sifter.sift(caluclation.getResult()).toString());
             } else {
                 delegate.makeLongToast("Invalid values chosen for screen size and/or resolution.");
             }

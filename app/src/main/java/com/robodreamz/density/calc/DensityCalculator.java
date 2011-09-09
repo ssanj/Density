@@ -13,7 +13,7 @@ package com.robodreamz.density.calc;
  * Always call  <code>DensityCaluclation#isValid</code> to learn the current state of the result.
  * @see  DensityCaluclation
  */
-public final class DensityCalculator {
+public class DensityCalculator {
 
     public static final int ERROR_VALUE = -9999;
     public static final String NONE = "NONE";
@@ -78,7 +78,7 @@ public final class DensityCalculator {
          * If this object is valid then the result can be retrieved through <code>getResult</code>. Calling <code>getError</code> in this state will return the value
          *   of <code>DensityCalculator#NONE</code>.
      */
-    public static final class DensityCaluclation {
+    public static class DensityCaluclation {
         private final int result;
         private final String error;
 

@@ -26,7 +26,7 @@ public final class ResolutionListFragmentSetupTest {
     private ActivityDelegate mockActivity;
     private ResolutionListFragmentSetup fragmentSetup;
 
-    @Before public void setup() {
+    @Before public void setup() throws Exception {
         mockActivity = mock(ActivityDelegate.class);
         fragmentSetup = new ResolutionListFragmentSetup(mockActivity);
     }

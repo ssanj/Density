@@ -4,7 +4,7 @@
  */
 package com.robodreamz.density.calc;
 
-public final class DensitySifter {
+public class DensitySifter {
 
     //ranges were calculated by multiplying through 0.125 for a given range. Eg. If the range was 40 points, then the min boundary would be (40x0.125) => next value -5 points.
     public enum DPI {
