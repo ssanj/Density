@@ -23,6 +23,9 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         assertNotNull("Could not find density result value", resultValueText);
         assertNotNull("Could not find density result unit", resultValueUnit);
         assertNotNull("Could not find density result category", resultValueCategory);
+
+        assertEquals("Incorrect density value", "0", resultValueText.getText());
+        assertEquals("Incorrect density category", "NODPI", resultValueCategory.getText());
     }
 
     public void testShouldCalculateDensityWhenResolutionIsChosen() {

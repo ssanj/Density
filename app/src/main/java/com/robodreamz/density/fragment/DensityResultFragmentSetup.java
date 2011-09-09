@@ -1,0 +1,28 @@
+/*
+ * Copyright 2009 Sanjiv Sahayam
+ * Licensed under the Apache License, Version 2.0
+ */
+package com.robodreamz.density.fragment;
+
+import com.robodreamz.density.R;
+import com.robodreamz.density.calc.DensitySifter;
+import com.robodreamz.density.delegate.ActivityDelegate;
+import com.robodreamz.density.delegate.TextViewDelegate;
+
+public final class DensityResultFragmentSetup {
+
+
+    private ActivityDelegate activity;
+
+    public DensityResultFragmentSetup(final ActivityDelegate activity) {
+        this.activity = activity;
+    }
+
+    public void setup() {
+        final TextViewDelegate value = (TextViewDelegate) activity.findViewById(R.id.density_result_density_value_text);
+        final TextViewDelegate category = (TextViewDelegate) activity.findViewById(R.id.density_result_density_value_category);
+
+        value.setText("0");
+        category.setText(DensitySifter.DPI.NODPI.toString());
+    }
+}
