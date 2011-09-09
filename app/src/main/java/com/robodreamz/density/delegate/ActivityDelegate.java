@@ -5,6 +5,7 @@
 package com.robodreamz.density.delegate;
 
 import android.app.Activity;
+import android.text.Layout;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
@@ -32,6 +33,14 @@ public class ActivityDelegate implements Delegate<Activity> {
             return delegateFactory.createViewDelegate(null);
         } else {
             return delegateFactory.createViewDelegate(activityRef.get().findViewById(id));
+        }
+    }
+
+    public LayoutInflaterDelegate getLayoutInflater() {
+        if (!isNull()) {
+            return new LayoutInflaterDelegate(getDelegate().getLayoutInflater(), delegateFactory);
+        } else {
+            return null;
         }
     }
 

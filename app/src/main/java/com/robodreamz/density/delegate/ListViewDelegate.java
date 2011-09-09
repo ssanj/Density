@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-public final class ListViewDelegate extends ViewDelegate {
+public class ListViewDelegate extends ViewDelegate {
 
     public ListViewDelegate(final ListView view, final DelegateFactory delegateFactory) {
         super(view, delegateFactory);

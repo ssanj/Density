@@ -30,7 +30,7 @@ public final class ResolutionListFragmentSetup {
     public void setup() {
         final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
         final DelegateFactory factory = DensityApplication.getFactory();
-        final LayoutInflaterDelegate layoutInflater = factory.createContextDelegate(delegate.getDelegate()).getLayoutInflater();
+        final LayoutInflaterDelegate layoutInflater = delegate.getLayoutInflater();
         resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
 
         resolutionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
