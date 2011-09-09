@@ -13,7 +13,7 @@ public class ScreenSizeResolver {
     public static final int INTEGRAL_SCREENSIZE_OFFSET = 2;
 
     public CharSequence convertProgressValueToActualString(final int integral, final int decimal) {
-        return new StringBuilder(String.valueOf(INTEGRAL_SCREENSIZE_OFFSET + integral)).append('.').append(decimal);
+        return new StringBuilder(String.valueOf(INTEGRAL_SCREENSIZE_OFFSET + integral)).append('.').append(decimal).toString();
     }
 
     public int convertProgressValueToActualInt(final int integral) {

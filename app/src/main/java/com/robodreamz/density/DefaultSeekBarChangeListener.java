@@ -5,10 +5,22 @@
 package com.robodreamz.density;
 
 import android.widget.SeekBar;
+import com.robodreamz.density.delegate.DelegateFactory;
+import com.robodreamz.density.delegate.SeekBarDelegate;
 
-public class DefaultSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+public abstract class DefaultSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
-    @Override public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) { }
+    private final DelegateFactory delegateFactory;
+
+    public DefaultSeekBarChangeListener(final DelegateFactory delegateFactory) {
+        this.delegateFactory = delegateFactory;
+    }
+
+    @Override public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
+        onProgressChanged((SeekBarDelegate) delegateFactory.createViewDelegate(seekBar), progress, fromUser);
+    }
+
+    public abstract void onProgressChanged(final SeekBarDelegate seekBar, final int progress, final boolean fromUser);
 
     @Override public void onStartTrackingTouch(final SeekBar seekBar) { }
 
