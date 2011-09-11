@@ -18,6 +18,7 @@ import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionElement;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
+import com.robodreamz.density.screen.DensityResultCalculator;
 import com.robodreamz.density.screen.ScreenSizeResolver;
 
 public final class ResolutionListFragmentSetup {
@@ -33,50 +34,34 @@ public final class ResolutionListFragmentSetup {
         final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
         final DelegateFactory factory = DensityApplication.getFactory();
         final LayoutInflaterDelegate layoutInflater = delegate.getLayoutInflater();
+        final DensityResultCalculator densityResultCalculator =
+                new DensityResultCalculator(
+                        delegate,
+                        DensityApplication.getCalcualtor(),
+                        DensityApplication.getResolver(),
+                        DensityApplication.getSifter());
+
         resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
-        resolutionList.setOnItemClickListener(new ResolutionListClickListener(delegate, resolutionList,
-                DensityApplication.getCalcualtor(), DensityApplication.getResolver(), DensityApplication.getSifter()));
+        resolutionList.setOnItemClickListener(new ResolutionListClickListener(densityResultCalculator, resolutionList));
     }
 
     final static class ResolutionListClickListener implements AdapterView.OnItemClickListener {
 
-        private final ActivityDelegate delegate;
+        private final DensityResultCalculator densityResultCalculator;
         private final ListViewDelegate resolutionList;
-        private final DensityCalculator calculator;
-        private final ScreenSizeResolver resolver;
-        private final DensitySifter sifter;
 
 
-        public ResolutionListClickListener(final ActivityDelegate delegate,
-                                           final ListViewDelegate resolutionList,
-                                           final DensityCalculator calculator,
-                                           final ScreenSizeResolver resolver,
-                                           final DensitySifter sifter) {
+        public ResolutionListClickListener(DensityResultCalculator densityResultCalculator, final ListViewDelegate resolutionList) {
+            this.densityResultCalculator = densityResultCalculator;
             this.resolutionList = resolutionList;
-            this.delegate = delegate;
-            this.calculator = calculator;
-            this.resolver = resolver;
-            this.sifter = sifter;
         }
 
         @Override public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-            calculateDensity(position, resolutionList);
+            doOnItemClick(position);
         }
 
-        void calculateDensity(final int position, final ListViewDelegate resolutionList) {
-            TextViewDelegate value = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_text);
-            TextViewDelegate category = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_category);
-
-            final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(position);
-            final DensityCalculator.DensityCaluclation caluclation =
-                    calculator.getDensityFor(item.width, item.height, resolver.getScreenDiagonal(delegate));
-
-            if (caluclation.isValid()) {
-                value.setText(String.valueOf(caluclation.getResult()));
-                category.setText(sifter.sift(caluclation.getResult()).toString());
-            } else {
-                delegate.makeLongToast("Invalid values chosen for screen size and/or resolution.");
-            }
+        void doOnItemClick(final int position) {
+            densityResultCalculator.calculateDensity(position, resolutionList);
         }
     }
 }
