@@ -8,18 +8,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import com.robodreamz.density.DensityApplication;
 import com.robodreamz.density.R;
-import com.robodreamz.density.calc.DensityCalculator;
-import com.robodreamz.density.calc.DensitySifter;
 import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ListViewDelegate;
-import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
-import com.robodreamz.density.resolution.ResolutionElement;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
+import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.DensityResultCalculator;
-import com.robodreamz.density.screen.ScreenSizeResolver;
 
 public final class ResolutionListFragmentSetup {
 
@@ -62,6 +58,36 @@ public final class ResolutionListFragmentSetup {
 
         void doOnItemClick(final int position) {
             densityResultCalculator.calculateDensity(position, resolutionList);
+        }
+    }
+
+    public static class ResolutionListSelectListener implements AdapterView.OnItemSelectedListener  {
+
+        private final ListViewDelegate listView;
+        private DensityResultCalculator calculator;
+        private final DefaultDensity defaultDensity;
+
+        public ResolutionListSelectListener(final ListViewDelegate listView, final DensityResultCalculator calculator,
+                                            final DefaultDensity defaultDensity) {
+            this.listView = listView;
+            this.calculator = calculator;
+            this.defaultDensity = defaultDensity;
+        }
+
+        @Override public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
+            doOnItemSelected(position);
+        }
+
+        @Override public void onNothingSelected(final AdapterView<?> parent) {
+            doOnNothingSelected();
+        }
+
+        public void doOnNothingSelected() {
+            defaultDensity.setValue();
+        }
+
+        public void doOnItemSelected(final int position) {
+            calculator.calculateDensity(position, listView);
         }
     }
 }
