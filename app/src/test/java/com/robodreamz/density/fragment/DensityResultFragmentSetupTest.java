@@ -4,36 +4,26 @@
  */
 package com.robodreamz.density.fragment;
 
-import com.robodreamz.density.R;
-import com.robodreamz.density.delegate.ActivityDelegate;
-import com.robodreamz.density.delegate.TextViewDelegate;
+import com.robodreamz.density.screen.DefaultDensity;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public final class DensityResultFragmentSetupTest {
 
     private DensityResultFragmentSetup fragmentSetup;
-    private ActivityDelegate mockActivity;
+    private DefaultDensity mockDensity;
+
 
     @Before public void setup() {
-        mockActivity = mock(ActivityDelegate.class);
-        fragmentSetup = new DensityResultFragmentSetup(mockActivity);
+        mockDensity = mock(DefaultDensity.class);
+        fragmentSetup = new DensityResultFragmentSetup(mockDensity);
     }
 
     @Test public void shouldInitializeDensityValues() {
-        final TextViewDelegate mockValue = mock(TextViewDelegate.class);
-        final TextViewDelegate mockCategory = mock(TextViewDelegate.class);
-
-        when(mockActivity.findViewById(R.id.density_result_density_value_text)).thenReturn(mockValue);
-        when(mockActivity.findViewById(R.id.density_result_density_value_category)).thenReturn(mockCategory);
-
         fragmentSetup.setup();
-
-        verify(mockValue).setText("0");
-        verify(mockCategory).setText("NODPI");
+        verify(mockDensity).setValue();
     }
 }

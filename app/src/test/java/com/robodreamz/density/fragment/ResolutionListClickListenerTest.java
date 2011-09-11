@@ -20,7 +20,7 @@ public final class ResolutionListClickListenerTest {
 
 
     @Before public void setup() throws Exception {
-         mockListView = mock(ListViewDelegate.class);
+        mockListView = mock(ListViewDelegate.class);
         mockCalculator = mock(DensityResultCalculator.class);
         listener = new ResolutionListFragmentSetup.ResolutionListClickListener(mockCalculator, mockListView);
     }

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.robodreamz.density.calc.DensityCalculator;
 import com.robodreamz.density.calc.DensitySifter;
 import com.robodreamz.density.delegate.DelegateFactory;
+import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.ScreenSizeResolver;
 
 import java.util.concurrent.atomic.AtomicBoolean;

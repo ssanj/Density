@@ -4,25 +4,17 @@
  */
 package com.robodreamz.density.fragment;
 
-import com.robodreamz.density.R;
-import com.robodreamz.density.calc.DensitySifter;
-import com.robodreamz.density.delegate.ActivityDelegate;
-import com.robodreamz.density.delegate.TextViewDelegate;
+import com.robodreamz.density.screen.DefaultDensity;
 
 public final class DensityResultFragmentSetup {
 
+    private DefaultDensity defaultDensity;
 
-    private ActivityDelegate activity;
-
-    public DensityResultFragmentSetup(final ActivityDelegate activity) {
-        this.activity = activity;
+    public DensityResultFragmentSetup(final DefaultDensity defaultDensity) {
+        this.defaultDensity = defaultDensity;
     }
 
     public void setup() {
-        final TextViewDelegate value = (TextViewDelegate) activity.findViewById(R.id.density_result_density_value_text);
-        final TextViewDelegate category = (TextViewDelegate) activity.findViewById(R.id.density_result_density_value_category);
-
-        value.setText("0");
-        category.setText(DensitySifter.DPI.NODPI.toString());
+        defaultDensity.setValue();
     }
 }
