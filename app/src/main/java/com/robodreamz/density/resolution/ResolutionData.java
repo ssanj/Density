@@ -19,6 +19,9 @@ public final class ResolutionData {
         resolutionElement(1200, 800)
     };
 
+    public static final IndexPair INDEX_PAIR = new IndexPair(-1, -1);
+
+
     private static ResolutionItem resolutionHeader() {
         return new ResolutionHeader();
     }

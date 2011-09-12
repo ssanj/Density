@@ -6,6 +6,7 @@ package com.robodreamz.density.resolution;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
@@ -43,6 +44,33 @@ public final class ResolutionListAdapter extends BaseAdapter {
     @Override public View getView(final int position, final View convertView, final ViewGroup parent) {
         final ResolutionItem resolution = resolutions[position];
         return resolution.getView(layoutInflater, delegateFactory.createViewDelegate(convertView)).getDelegate();
+    }
+
+    public void setSelectedItem(int position) {
+        final IndexPair indexPair = ResolutionData.INDEX_PAIR;
+        if (indexPair.isNew(position)) {
+            final int currentIndex = indexPair.getCurrentIndex();
+            if (currentIndex != AdapterView.INVALID_POSITION) {
+                resolutions[currentIndex].uncheck();
+            }
+
+            resolutions[position].check();
+            indexPair.update(position);
+            notifyDataSetChanged();
+        }
+    }
+
+    public void unselectItem(int position) {
+        final IndexPair indexPair = ResolutionData.INDEX_PAIR;
+        if (indexPair.isNew(position)) {
+            final int currentIndex = indexPair.getCurrentIndex();
+            if (currentIndex != AdapterView.INVALID_POSITION) {
+                resolutions[currentIndex].uncheck();
+            }
+
+            indexPair.update(AdapterView.INVALID_POSITION);
+            notifyDataSetChanged();
+        }
     }
 
     @Override public boolean isEnabled(final int position) {
