@@ -46,6 +46,7 @@ public final class ResolutionListAdapter extends BaseAdapter implements Clickabl
         return resolution.getView(layoutInflater, delegateFactory.createViewDelegate(convertView)).getDelegate();
     }
 
+    //TODO: Test
     public void clickedItem(int position) {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
         if (indexPair.isNew(position)) {
@@ -60,6 +61,7 @@ public final class ResolutionListAdapter extends BaseAdapter implements Clickabl
         }
     }
 
+    //TODO: Test
     public void resetClick() {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
         final int currentIndex = indexPair.getCurrentIndex();

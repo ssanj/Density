@@ -42,12 +42,17 @@ public final class ResolutionListFragmentSetup {
         resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator, defaultDensity));
     }
 
-    public void onResume() {
+    //TODO: Test
+    public void onResume(final DensityResultCalculator densityResultCalcualtor) {
         final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
         final int currentIndex = ResolutionData.INDEX_PAIR.getCurrentIndex();
         if (currentIndex != AdapterView.INVALID_POSITION) {
-            resolutionList.setSelection(currentIndex); //set the selection
-            ((ClickableItems) resolutionList.getAdapter()).clickedItem(currentIndex); //set the click index.
+            resolutionList.setSelection(currentIndex); //set the selection for track mode.
+            ((ClickableItems) resolutionList.getAdapter()).clickedItem(currentIndex); //set the click index for touch mode.
+
+            if (resolutionList.isInTouchMode()) {//in touch mode the density result text is not updated automatically.
+                densityResultCalcualtor.calculateDensity(currentIndex, resolutionList);
+            } else { /*  density result text is updated automatically for track mode.*/ }
         }
     }
 
@@ -94,6 +99,7 @@ public final class ResolutionListFragmentSetup {
 
         public void doOnNothingSelected() {
             defaultDensity.setValue();
+            ((ClickableItems) listView.getAdapter()).resetClick();
         }
 
         public void doOnItemSelected(final int position) {

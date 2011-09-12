@@ -40,7 +40,5 @@ public final class DefaultDensityTest {
 
         verify(mockValue).setText("0");
         verify(mockCategory).setText("NODPI");
-        verify(mockAdapter).resetClick();
     }
-
 }

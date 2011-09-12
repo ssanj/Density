@@ -9,7 +9,6 @@ import com.robodreamz.density.calc.DensitySifter;
 import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
-import com.robodreamz.density.resolution.ClickableItems;
 
 public class DefaultDensity {
 
@@ -26,6 +25,5 @@ public class DefaultDensity {
 
         value.setText("0");
         category.setText(DensitySifter.DPI.NODPI.toString());
-        ((ClickableItems) list.getAdapter()).resetClick();
     }
 }

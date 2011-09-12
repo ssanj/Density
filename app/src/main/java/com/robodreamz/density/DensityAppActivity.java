@@ -36,10 +36,13 @@ public final class DensityAppActivity extends AbstractDensityActivty {
 
     @Override protected void onResume() {
         super.onResume();
+        final ActivityDelegate activity = createActivityDelegate(DensityApplication.getFactory());
+        final DensityResultCalculator densityResultCalcualtor = createDensityResultCalcualtor(activity);
         if (resolutionListFragmentSetup == null) {
-            final ActivityDelegate activity = createActivityDelegate(DensityApplication.getFactory());
-            new ResolutionListFragmentSetup(activity, createDensityResultCalcualtor(activity), createDefaultDensity(activity)).onResume();
+            resolutionListFragmentSetup = new ResolutionListFragmentSetup(activity, densityResultCalcualtor, createDefaultDensity(activity));
         }
+
+        resolutionListFragmentSetup.onResume(densityResultCalcualtor);
     }
 
     private ActivityDelegate createActivityDelegate(final DelegateFactory factory) {

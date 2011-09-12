@@ -6,6 +6,7 @@ package com.robodreamz.density.fragment;
 
 import android.widget.AdapterView;
 import com.robodreamz.density.delegate.ListViewDelegate;
+import com.robodreamz.density.screen.ClickableItemsListAdapter;
 import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.DensityResultCalculator;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public final class ResolutionListSelectListener {
 
@@ -40,7 +42,11 @@ public final class ResolutionListSelectListener {
     }
 
     @Test public void shouldUpdateDisplayWhenThereIsNoSelection() {
+        final ClickableItemsListAdapter mockAdapter = mock(ClickableItemsListAdapter.class);
+        when(mockListViewDelegate.getAdapter()).thenReturn(mockAdapter);
+
         listener.doOnNothingSelected();
         verify(mockDefaultDensity).setValue();
+        verify(mockAdapter).resetClick();
     }
 }

@@ -44,6 +44,10 @@ public class ViewDelegate implements Delegate<View> {
         }
     }
 
+    public boolean isInTouchMode() {
+        return !isNull() && (view).isInTouchMode();
+    }
+
     public boolean isNull() {
         return view == null;
     }
