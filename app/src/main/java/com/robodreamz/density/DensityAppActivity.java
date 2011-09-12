@@ -42,7 +42,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
             resolutionListFragmentSetup = new ResolutionListFragmentSetup(activity, densityResultCalcualtor, createDefaultDensity(activity));
         }
 
-        resolutionListFragmentSetup.onResume(densityResultCalcualtor);
+        resolutionListFragmentSetup.onResume(densityResultCalcualtor, DensityApplication.getConstants());
     }
 
     private ActivityDelegate createActivityDelegate(final DelegateFactory factory) {

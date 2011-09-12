@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import com.robodreamz.density.DensityApplication;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.ActivityDelegate;
+import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ListViewDelegate;
@@ -42,11 +43,10 @@ public final class ResolutionListFragmentSetup {
         resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator, defaultDensity));
     }
 
-    //TODO: Test
-    public void onResume(final DensityResultCalculator densityResultCalcualtor) {
+    public void onResume(final DensityResultCalculator densityResultCalcualtor, final Constants contants) {
         final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
         final int currentIndex = ResolutionData.INDEX_PAIR.getCurrentIndex();
-        if (currentIndex != AdapterView.INVALID_POSITION) {
+        if (!contants.isInvalidPosition(currentIndex)) {
             resolutionList.setSelection(currentIndex); //set the selection for track mode.
             ((ClickableItems) resolutionList.getAdapter()).clickedItem(currentIndex); //set the click index for touch mode.
 

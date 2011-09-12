@@ -8,6 +8,8 @@ import android.app.Application;
 import android.util.Log;
 import com.robodreamz.density.calc.DensityCalculator;
 import com.robodreamz.density.calc.DensitySifter;
+import com.robodreamz.density.delegate.AndroidConstants;
+import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.ScreenSizeResolver;
@@ -17,11 +19,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class DensityApplication extends Application {
 
+    public static final String TAG = "DensityApplication";
     private static final DelegateFactory FACTORY = new DelegateFactory();
     private static final DensityCalculator CALCUALTOR = new DensityCalculator();
     private static final DensitySifter SIFTER = new DensitySifter();
     private static final ScreenSizeResolver RESOLVER = new ScreenSizeResolver();
-    public static final String TAG = "DensityApplication";
+    private static final Constants CONSTANTS = new AndroidConstants();
 
     private final AtomicInteger windowCount = new AtomicInteger(0);
     private final AtomicBoolean appLaunched = new AtomicBoolean(false);
@@ -67,5 +70,9 @@ public final class DensityApplication extends Application {
 
     public static ScreenSizeResolver getResolver() {
         return RESOLVER;
+    }
+
+    public static Constants getConstants() {
+        return CONSTANTS;
     }
 }
