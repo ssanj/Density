@@ -41,10 +41,6 @@ public final class ResolutionListAdapterTest {
         adapter = new ResolutionListAdapter(mockLayoutInflater, mockDelegateFactory, createResolutionItems());
     }
 
-    private ResolutionItem[] createResolutionItems() {
-        return new ResolutionItem[] {mockResolutionItemHeader, mockResolutionItemElement0, mockResolutionItemElement1};
-    }
-
     @Test public void shouldReturnTheNumberOfDataItems() throws Exception {
         assertThat("number of items returned is wrong.", adapter.getCount(), equalTo(3));
     }
@@ -68,6 +64,14 @@ public final class ResolutionListAdapterTest {
     @Test public void shouldReuseAnExistingView() throws Exception {
         final View mockViewInput = mock(View.class);
         assertCreatesView(mockViewInput);
+    }
+
+    @Test public void shouldDisabledAllItemsExceptThoseEnabledExplicitly() {
+        assertFalse("All items should be disabled except those that return true from isEnabled.", adapter.areAllItemsEnabled());
+    }
+
+    private ResolutionItem[] createResolutionItems() {
+        return new ResolutionItem[] {mockResolutionItemHeader, mockResolutionItemElement0, mockResolutionItemElement1};
     }
 
     private void assertCreatesView(final View viewInput) {

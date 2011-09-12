@@ -61,7 +61,7 @@ public final class ResolutionListFragmentSetup {
         }
     }
 
-    public static class ResolutionListSelectListener implements AdapterView.OnItemSelectedListener  {
+    static class ResolutionListSelectListener implements AdapterView.OnItemSelectedListener  {
 
         private final ListViewDelegate listView;
         private DensityResultCalculator calculator;

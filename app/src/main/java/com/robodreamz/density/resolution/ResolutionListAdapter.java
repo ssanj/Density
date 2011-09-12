@@ -36,6 +36,10 @@ public final class ResolutionListAdapter extends BaseAdapter {
         return position;
     }
 
+    @Override public boolean areAllItemsEnabled() {
+        return false;
+    }
+
     @Override public View getView(final int position, final View convertView, final ViewGroup parent) {
         final ResolutionItem resolution = resolutions[position];
         return resolution.getView(layoutInflater, delegateFactory.createViewDelegate(convertView)).getDelegate();
