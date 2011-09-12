@@ -33,6 +33,7 @@ public final class ResolutionListFragmentSetup {
         this.defaultDensity = defaultDensity;
     }
 
+    //TODO: Pass all the instances in through this method.
     public void setup() {
         final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
         final DelegateFactory factory = DensityApplication.getFactory();
@@ -43,7 +44,7 @@ public final class ResolutionListFragmentSetup {
         resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator, defaultDensity));
     }
 
-    public void onResume(final DensityResultCalculator densityResultCalcualtor, final Constants contants) {
+    public void onResume(final Constants contants) {
         final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
         final int currentIndex = ResolutionData.INDEX_PAIR.getCurrentIndex();
         if (!contants.isInvalidPosition(currentIndex)) {
@@ -51,7 +52,7 @@ public final class ResolutionListFragmentSetup {
             ((ClickableItems) resolutionList.getAdapter()).clickedItem(currentIndex); //set the click index for touch mode.
 
             if (resolutionList.isInTouchMode()) {//in touch mode the density result text is not updated automatically.
-                densityResultCalcualtor.calculateDensity(currentIndex, resolutionList);
+                densityResultCalculator.calculateDensity(currentIndex, resolutionList);
             } else { /*  density result text is updated automatically for track mode.*/ }
         }
     }

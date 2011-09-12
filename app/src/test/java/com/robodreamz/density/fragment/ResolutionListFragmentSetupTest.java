@@ -75,7 +75,7 @@ public final class ResolutionListFragmentSetupTest {
         when(mockList.getAdapter()).thenReturn(mockAdapter);
         when(mockList.isInTouchMode()).thenReturn(true);
 
-        fragmentSetup.onResume(mockDensityResultCalculator, mockConstants);
+        fragmentSetup.onResume(mockConstants);
 
         verify(mockList).setSelection(SELECTED_INDEX);
         verify(mockAdapter).clickedItem(SELECTED_INDEX);
@@ -92,7 +92,7 @@ public final class ResolutionListFragmentSetupTest {
         when(mockList.getAdapter()).thenReturn(mockAdapter);
         when(mockList.isInTouchMode()).thenReturn(false);
 
-        fragmentSetup.onResume(mockDensityResultCalculator, mockConstants);
+        fragmentSetup.onResume(mockConstants);
 
         verify(mockList).setSelection(SELECTED_INDEX);
         verify(mockAdapter).clickedItem(SELECTED_INDEX);
@@ -106,7 +106,7 @@ public final class ResolutionListFragmentSetupTest {
 
         when(mockActivity.findViewById(R.id.app_screen_resolution_list)).thenReturn(mockList);
         when(mockConstants.isInvalidPosition(SELECTED_INDEX)).thenReturn(true);
-        fragmentSetup.onResume(mockDensityResultCalculator, mockConstants);
+        fragmentSetup.onResume(mockConstants);
 
         verifyZeroInteractions(mockList);
         verifyZeroInteractions(mockAdapter);
