@@ -42,7 +42,7 @@ public final class ResolutionListFragmentSetup {
         resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData(),
                 DensityApplication.getConstants()));
         resolutionList.setOnItemClickListener(new ResolutionListClickListener(densityResultCalculator, resolutionList));
-        resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator, defaultDensity));
+        resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator));
     }
 
     public void onResume(final Constants contants) {
@@ -82,13 +82,10 @@ public final class ResolutionListFragmentSetup {
 
         private final ListViewDelegate listView;
         private DensityResultCalculator calculator;
-        private final DefaultDensity defaultDensity;
 
-        public ResolutionListSelectListener(final ListViewDelegate listView, final DensityResultCalculator calculator,
-                                            final DefaultDensity defaultDensity) {
+        public ResolutionListSelectListener(final ListViewDelegate listView, final DensityResultCalculator calculator) {
             this.listView = listView;
             this.calculator = calculator;
-            this.defaultDensity = defaultDensity;
         }
 
         @Override public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
@@ -99,10 +96,7 @@ public final class ResolutionListFragmentSetup {
             doOnNothingSelected();
         }
 
-        public void doOnNothingSelected() {
-            defaultDensity.setValue();
-            ((ClickableItems) listView.getAdapter()).resetClick();
-        }
+        public void doOnNothingSelected() { /* do nothing */ }
 
         public void doOnItemSelected(final int position) {
             calculator.calculateDensity(position, listView);

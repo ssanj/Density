@@ -15,20 +15,19 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
-public final class ResolutionListSelectListener {
+public final class ResolutionListSelectListenerTest {
 
     private ResolutionListFragmentSetup.ResolutionListSelectListener listener;
     private ListViewDelegate mockListViewDelegate;
-    private DefaultDensity mockDefaultDensity;
     private DensityResultCalculator mockCalculator;
 
     @Before public void setup() {
         mockListViewDelegate = mock(ListViewDelegate.class);
-        mockDefaultDensity = mock(DefaultDensity.class);
         mockCalculator = mock(DensityResultCalculator.class);
-        listener = new ResolutionListFragmentSetup.ResolutionListSelectListener(mockListViewDelegate, mockCalculator, mockDefaultDensity);
+        listener = new ResolutionListFragmentSetup.ResolutionListSelectListener(mockListViewDelegate, mockCalculator);
     }
 
     @Test public void shouldImplementOnItemSelected() {
@@ -41,12 +40,10 @@ public final class ResolutionListSelectListener {
         verify(mockCalculator).calculateDensity(10, mockListViewDelegate);
     }
 
-    @Test public void shouldUpdateDisplayWhenThereIsNoSelection() {
-        final ClickableItemsListAdapter mockAdapter = mock(ClickableItemsListAdapter.class);
-        when(mockListViewDelegate.getAdapter()).thenReturn(mockAdapter);
-
+    @Test public void shouldDoNothingWhenThereIsNoSelection() {
         listener.doOnNothingSelected();
-        verify(mockDefaultDensity).setValue();
-        verify(mockAdapter).resetClick();
+
+        verifyZeroInteractions(mockListViewDelegate);
+        verifyZeroInteractions(mockCalculator);
     }
 }
