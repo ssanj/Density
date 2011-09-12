@@ -4,6 +4,7 @@
  */
 package com.robodreamz.density.resolution;
 
+import android.graphics.Color;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
@@ -44,18 +45,25 @@ public class ResolutionElement implements ResolutionItem {
         TextViewDelegate heightDelegate = (TextViewDelegate) viewDelegate.findViewById(R.id.resolution_list_view_height);
         widthDelegate.setText(String.valueOf(width));
         heightDelegate.setText(String.valueOf(height));
+
+        if (checked) {
+            viewDelegate.setBackground(Color.GREEN);
+        } else {
+            viewDelegate.setBackground(Color.BLACK);
+        }
+
         return viewDelegate;
     }
 
-    public void check() {
+    @Override public void check() {
         checked = true;
     }
 
-    public boolean isChecked() {
+    @Override public boolean isChecked() {
         return checked;
     }
 
-    public void uncheck() {
+    @Override public void uncheck() {
         checked = false;
     }
 }

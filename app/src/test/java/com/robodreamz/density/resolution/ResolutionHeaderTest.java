@@ -68,4 +68,13 @@ public final class ResolutionHeaderTest {
         assertThat("Incorrect ViewDelegate returned.",
                 header.getView(mockLayoutInflaterDelegate, mockViewDelegateInput), IsSame.sameInstance(mockViewDelegateInput));
     }
+
+    @Test public void shouldNotImplementCheckedState() {
+        assertFalse("Header should not be checked", header.isChecked());
+        header.check();
+        assertFalse("Header should not be checked", header.isChecked());
+        header.uncheck();
+        assertFalse("Header should not be checked", header.isChecked());
+    }
+
 }

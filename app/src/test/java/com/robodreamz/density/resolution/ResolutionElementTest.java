@@ -4,6 +4,7 @@
  */
 package com.robodreamz.density.resolution;
 
+import android.graphics.Color;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
@@ -31,27 +32,54 @@ public final class ResolutionElementTest {
         assertTrue("Element should be enabled.", element.isEnabled());
     }
 
-    @Test public void shouldReturnANewViewWhenViewIsNull() throws Exception {
+    @Test public void shouldReturnANewViewWhenViewIsNulAndElementIsNotChecked() throws Exception {
+        assertReturnANewViewWhenViewIsNull(Color.BLACK);
+    }
+
+    @Test public void shouldReturnANewViewWhenViewIsNullAndElementIsChecked() throws Exception {
+        element.check();
+        assertReturnANewViewWhenViewIsNull(Color.GREEN);
+    }
+
+    @Test public void shouldReturnANewViewWhenViewIsOfTheWrongTagAndNotChecked() throws Exception {
+        assertReturnANewViewWhenViewIsOfTheWrongTag(Color.BLACK);
+    }
+
+    @Test public void shouldReturnANewViewWhenViewIsOfTheWrongTagAndIsChecked() throws Exception {
+        element.check();
+        assertReturnANewViewWhenViewIsOfTheWrongTag(Color.GREEN);
+    }
+
+    @Test public void shouldReuseViewIfViewIsNotNullAndOfCorrectTagAndIsNotChecked() {
+        assertReuseViewIfViewIsNotNullAndOfCorrectTag(Color.BLACK);
+    }
+
+    @Test public void shouldReuseViewIfViewIsNotNullAndOfCorrectTagAndIsChecked() {
+        element.check();
+        assertReuseViewIfViewIsNotNullAndOfCorrectTag(Color.GREEN);
+    }
+
+    private void assertReuseViewIfViewIsNotNullAndOfCorrectTag(final int background) {
         final LayoutInflaterDelegate mockLayoutInflaterDelegate = mock(LayoutInflaterDelegate.class);
         final ViewDelegate mockViewDelegateInput = mock(ViewDelegate.class);
-        final ViewDelegate mockViewDelegateOutput = mock(ViewDelegate.class);
         final TextViewDelegate mockWidthText = mock(TextViewDelegate.class);
         final TextViewDelegate mockHeightText = mock(TextViewDelegate.class);
 
-        when(mockViewDelegateInput.isNull()).thenReturn(true);
-        when(mockLayoutInflaterDelegate.inflate(R.layout.resolution_list_view)).thenReturn(mockViewDelegateOutput);
-        when(mockViewDelegateOutput.findViewById(R.id.resolution_list_view_width)).thenReturn(mockWidthText);
-        when(mockViewDelegateOutput.findViewById(R.id.resolution_list_view_height)).thenReturn(mockHeightText);
+        when(mockViewDelegateInput.isNull()).thenReturn(false);
+        when(mockViewDelegateInput.hasTag(ResolutionItem.ViewType.ELEMENT)).thenReturn(true);
+
+        when(mockViewDelegateInput.findViewById(R.id.resolution_list_view_width)).thenReturn(mockWidthText);
+        when(mockViewDelegateInput.findViewById(R.id.resolution_list_view_height)).thenReturn(mockHeightText);
 
         assertThat("Incorrect ViewDelegate instance returned",
-                element.getView(mockLayoutInflaterDelegate, mockViewDelegateInput), sameInstance(mockViewDelegateOutput));
+                element.getView(mockLayoutInflaterDelegate, mockViewDelegateInput), sameInstance(mockViewDelegateInput));
 
-                verify(mockViewDelegateOutput).setTag(ResolutionItem.ViewType.ELEMENT);
         verify(mockWidthText).setText("100");
         verify(mockHeightText).setText("200");
+        verify(mockViewDelegateInput).setBackground(background);
     }
 
-    @Test public void shouldReturnANewViewWhenViewIsOfTheWrongTag() throws Exception {
+    private void assertReturnANewViewWhenViewIsOfTheWrongTag(final int background) {
         final LayoutInflaterDelegate mockLayoutInflaterDelegate = mock(LayoutInflaterDelegate.class);
         final ViewDelegate mockViewDelegateInput = mock(ViewDelegate.class);
         final ViewDelegate mockViewDelegateOutput = mock(ViewDelegate.class);
@@ -70,25 +98,28 @@ public final class ResolutionElementTest {
         verify(mockViewDelegateOutput).setTag(ResolutionItem.ViewType.ELEMENT);
         verify(mockWidthText).setText("100");
         verify(mockHeightText).setText("200");
+        verify(mockViewDelegateOutput).setBackground(background);
     }
 
-    @Test public void shouldReuseViewIfViewIsNotNullAndOfCorrectTag() {
+    private void assertReturnANewViewWhenViewIsNull(final int background) {
         final LayoutInflaterDelegate mockLayoutInflaterDelegate = mock(LayoutInflaterDelegate.class);
         final ViewDelegate mockViewDelegateInput = mock(ViewDelegate.class);
+        final ViewDelegate mockViewDelegateOutput = mock(ViewDelegate.class);
         final TextViewDelegate mockWidthText = mock(TextViewDelegate.class);
         final TextViewDelegate mockHeightText = mock(TextViewDelegate.class);
 
-        when(mockViewDelegateInput.isNull()).thenReturn(false);
-        when(mockViewDelegateInput.hasTag(ResolutionItem.ViewType.ELEMENT)).thenReturn(true);
-
-        when(mockViewDelegateInput.findViewById(R.id.resolution_list_view_width)).thenReturn(mockWidthText);
-        when(mockViewDelegateInput.findViewById(R.id.resolution_list_view_height)).thenReturn(mockHeightText);
+        when(mockViewDelegateInput.isNull()).thenReturn(true);
+        when(mockLayoutInflaterDelegate.inflate(R.layout.resolution_list_view)).thenReturn(mockViewDelegateOutput);
+        when(mockViewDelegateOutput.findViewById(R.id.resolution_list_view_width)).thenReturn(mockWidthText);
+        when(mockViewDelegateOutput.findViewById(R.id.resolution_list_view_height)).thenReturn(mockHeightText);
 
         assertThat("Incorrect ViewDelegate instance returned",
-                element.getView(mockLayoutInflaterDelegate, mockViewDelegateInput), sameInstance(mockViewDelegateInput));
+                element.getView(mockLayoutInflaterDelegate, mockViewDelegateInput), sameInstance(mockViewDelegateOutput));
 
+        verify(mockViewDelegateOutput).setTag(ResolutionItem.ViewType.ELEMENT);
         verify(mockWidthText).setText("100");
         verify(mockHeightText).setText("200");
+        verify(mockViewDelegateOutput).setBackground(background);
     }
 
     @Test public void shouldStoreItsCheckedState() {

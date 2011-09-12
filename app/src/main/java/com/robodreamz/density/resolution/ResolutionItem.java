@@ -19,4 +19,9 @@ public interface ResolutionItem {
 
     ViewDelegate getView(LayoutInflaterDelegate layoutInflater, ViewDelegate view);
 
+    void check();
+
+    boolean isChecked();
+
+    void uncheck();
 }

@@ -16,7 +16,7 @@ public final class ResolutionData {
         resolutionElement(854, 480),
         resolutionElement(960, 540),
         resolutionElement(1024, 600) /* Samsung Galaxy Tab*/,
-        resolutionElement(1200, 800),
+        resolutionElement(1200, 800)
     };
 
     private static ResolutionItem resolutionHeader() {

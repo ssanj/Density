@@ -38,6 +38,12 @@ public class ViewDelegate implements Delegate<View> {
         }
     }
 
+    public void setBackground(int colour) {
+        if (!isNull()) {
+            view.setBackgroundColor(colour);
+        }
+    }
+
     public boolean isNull() {
         return view == null;
     }

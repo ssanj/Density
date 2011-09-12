@@ -33,4 +33,12 @@ public final class ResolutionHeader implements ResolutionItem {
 
         return viewDelegate;
     }
+
+    @Override public void check() { }
+
+    @Override public boolean isChecked() {
+        return false;
+    }
+
+    @Override public void uncheck() { }
 }
