@@ -39,4 +39,10 @@ public class ListViewDelegate extends ViewDelegate {
             ((ListView) view).setOnItemSelectedListener(listener);
         }
     }
+
+    public void setSelection(int position) {
+        if (!isNull()) {
+            ((ListView) view).setSelection(position);
+        }
+    }
 }

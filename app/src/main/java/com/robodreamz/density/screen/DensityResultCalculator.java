@@ -11,6 +11,7 @@ import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.resolution.ResolutionElement;
+import com.robodreamz.density.resolution.ClickableItems;
 
 public class DensityResultCalculator {
 
@@ -34,12 +35,13 @@ public class DensityResultCalculator {
         TextViewDelegate category = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_category);
 
         final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(position);
-        final DensityCalculator.DensityCaluclation caluclation =
+        final DensityCalculator.DensityCaluclation calculation =
                 calculator.getDensityFor(item.width, item.height, resolver.getScreenDiagonal(delegate));
 
-        if (caluclation.isValid()) {
-            value.setText(String.valueOf(caluclation.getResult()));
-            category.setText(sifter.sift(caluclation.getResult()).toString());
+        if (calculation.isValid()) {
+            value.setText(String.valueOf(calculation.getResult()));
+            category.setText(sifter.sift(calculation.getResult()).toString());
+            ((ClickableItems) resolutionList.getAdapter()).clickedItem(position);
         } else {
             delegate.makeLongToast("Invalid values chosen for screen size and/or resolution.");
         }

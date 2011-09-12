@@ -4,7 +4,6 @@
  */
 package com.robodreamz.density.screen;
 
-import android.widget.ListAdapter;
 import com.robodreamz.density.R;
 import com.robodreamz.density.calc.DensityCalculator;
 import com.robodreamz.density.calc.DensitySifter;
@@ -16,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -33,7 +33,7 @@ public final class DensityResultCalculatorTest {
     private TextViewDelegate mockDensityCategory;
     private DensityCalculator.DensityCaluclation mockCalculation;
 
-    private ListAdapter mockListAdapter;
+    private ClickableItemsListAdapter mockListAdapter;
     private final int itemPosition = 100;
     private final int density = 280;
     private final double screenSize = 3.5;
@@ -52,7 +52,7 @@ public final class DensityResultCalculatorTest {
         mockDensityValue = mock(TextViewDelegate.class);
         mockDensityCategory = mock(TextViewDelegate.class);
         mockCalculation = mock(DensityCalculator.DensityCaluclation.class);
-        mockListAdapter = mock(ListAdapter.class);
+        mockListAdapter = mock(ClickableItemsListAdapter.class);
 
         calc = new DensityResultCalculator(mockActivity, mockCalculator, mockResolver, mockSifter);
     }
@@ -65,12 +65,12 @@ public final class DensityResultCalculatorTest {
         assertDensityCategory();
 
         final DensityResultCalculator calc = new DensityResultCalculator(mockActivity, mockCalculator, mockResolver, mockSifter);
-
         calc.calculateDensity(itemPosition, mockListView);
 
         verify(mockCalculation).isValid();
         verify(mockDensityValue).setText(String.valueOf(density));
         verify(mockDensityCategory).setText(densityCategory.toString());
+        verify(mockListAdapter).clickedItem(itemPosition);
     }
 
     @Test public void shouldToastWhenCalculationIsInvalid() {
@@ -79,13 +79,13 @@ public final class DensityResultCalculatorTest {
         assertScreenSize();
         assertDensityValueWithInvalidCalculation();
 
-
         calc.calculateDensity(itemPosition, mockListView);
 
         verify(mockCalculation).isValid();
         verify(mockActivity).makeLongToast("Invalid values chosen for screen size and/or resolution.");
         verifyZeroInteractions(mockDensityValue);
         verifyZeroInteractions(mockDensityCategory);
+        verify(mockListAdapter, never()).clickedItem(itemPosition);
     }
 
     private void assertDensityWidgets() {
@@ -117,5 +117,4 @@ public final class DensityResultCalculatorTest {
         when(mockCalculation.isValid()).thenReturn(false);
         when(mockCalculation.getError()).thenReturn(CALC_ERROR);
     }
-
 }

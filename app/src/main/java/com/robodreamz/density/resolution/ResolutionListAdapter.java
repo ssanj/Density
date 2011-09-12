@@ -12,7 +12,7 @@ import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 
 //TODO: Reuse this class by providing a type-annotation.
-public final class ResolutionListAdapter extends BaseAdapter {
+public final class ResolutionListAdapter extends BaseAdapter implements ClickableItems {
 
     private ResolutionItem[] resolutions;
     private DelegateFactory delegateFactory;
@@ -46,7 +46,7 @@ public final class ResolutionListAdapter extends BaseAdapter {
         return resolution.getView(layoutInflater, delegateFactory.createViewDelegate(convertView)).getDelegate();
     }
 
-    public void setSelectedItem(int position) {
+    public void clickedItem(int position) {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
         if (indexPair.isNew(position)) {
             final int currentIndex = indexPair.getCurrentIndex();
@@ -60,14 +60,11 @@ public final class ResolutionListAdapter extends BaseAdapter {
         }
     }
 
-    public void unselectItem(int position) {
+    public void resetClick() {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
-        if (indexPair.isNew(position)) {
-            final int currentIndex = indexPair.getCurrentIndex();
-            if (currentIndex != AdapterView.INVALID_POSITION) {
-                resolutions[currentIndex].uncheck();
-            }
-
+        final int currentIndex = indexPair.getCurrentIndex();
+        if (currentIndex != AdapterView.INVALID_POSITION) {
+            resolutions[currentIndex].uncheck();
             indexPair.update(AdapterView.INVALID_POSITION);
             notifyDataSetChanged();
         }

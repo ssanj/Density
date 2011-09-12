@@ -14,6 +14,7 @@ import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
+import com.robodreamz.density.resolution.ClickableItems;
 import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.DensityResultCalculator;
 
@@ -39,6 +40,15 @@ public final class ResolutionListFragmentSetup {
         resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
         resolutionList.setOnItemClickListener(new ResolutionListClickListener(densityResultCalculator, resolutionList));
         resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator, defaultDensity));
+    }
+
+    public void onResume() {
+        final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
+        final int currentIndex = ResolutionData.INDEX_PAIR.getCurrentIndex();
+        if (currentIndex != AdapterView.INVALID_POSITION) {
+            resolutionList.setSelection(currentIndex); //set the selection
+            ((ClickableItems) resolutionList.getAdapter()).clickedItem(currentIndex); //set the click index.
+        }
     }
 
     final static class ResolutionListClickListener implements AdapterView.OnItemClickListener {

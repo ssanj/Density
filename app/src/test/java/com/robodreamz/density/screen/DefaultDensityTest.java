@@ -6,6 +6,7 @@ package com.robodreamz.density.screen;
 
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.ActivityDelegate;
+import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +28,19 @@ public final class DefaultDensityTest {
     @Test public void shouldInitializeDensityValues() {
         final TextViewDelegate mockValue = mock(TextViewDelegate.class);
         final TextViewDelegate mockCategory = mock(TextViewDelegate.class);
+        final ListViewDelegate mockList = mock(ListViewDelegate.class);
+        final ClickableItemsListAdapter mockAdapter = mock(ClickableItemsListAdapter.class);
 
         when(mockActivity.findViewById(R.id.density_result_density_value_text)).thenReturn(mockValue);
         when(mockActivity.findViewById(R.id.density_result_density_value_category)).thenReturn(mockCategory);
+        when(mockActivity.findViewById(R.id.app_screen_resolution_list)).thenReturn(mockList);
+        when(mockList.getAdapter()).thenReturn(mockAdapter);
 
         density.setValue();
 
         verify(mockValue).setText("0");
         verify(mockCategory).setText("NODPI");
+        verify(mockAdapter).resetClick();
     }
 
 }
