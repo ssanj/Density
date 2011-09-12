@@ -27,7 +27,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         final DensityResultCalculator densityResultCalculator = createDensityResultCalcualtor(activityDelegate);
 
         //We need to maintain the order of these "fragments" mainly because, multiple fragments can use the resolution list and update the
-        //find density. So we must ensure that the resolution list and the density widgets are created before they are used.
+        //final density. So we must ensure that the resolution list and the density widgets are created before they are used.
         resolutionListFragmentSetup = new ResolutionListFragmentSetup(activityDelegate, densityResultCalculator);
         resolutionListFragmentSetup.setup();
         new DensityResultFragmentSetup(defaultDensity).setup();
