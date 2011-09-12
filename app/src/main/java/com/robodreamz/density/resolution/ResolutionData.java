@@ -19,6 +19,7 @@ public final class ResolutionData {
         resolutionElement(1200, 800)
     };
 
+    //TODO: We should get the -1 from Constants.
     public static final IndexPair INDEX_PAIR = new IndexPair(-1, -1);
 
 

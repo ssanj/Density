@@ -26,7 +26,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         final DefaultDensity defaultDensity = createDefaultDensity(activityDelegate);
         final DensityResultCalculator densityResultCalculator = createDensityResultCalcualtor(activityDelegate);
 
-        new ScreenSizeFragmentSetup(activityDelegate, factory).setup();
+        new ScreenSizeFragmentSetup(activityDelegate, factory).setup(densityResultCalculator, DensityApplication.getConstants());
         resolutionListFragmentSetup = new ResolutionListFragmentSetup(activityDelegate, densityResultCalculator);
         resolutionListFragmentSetup.setup();
         new DensityResultFragmentSetup(defaultDensity).setup();
