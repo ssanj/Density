@@ -10,8 +10,9 @@ import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
 
 public class ResolutionElement implements ResolutionItem {
-    public int width;
-    public int height;
+    public final int width;
+    public final int height;
+    private boolean checked;
 
     public ResolutionElement(final int width, final int height) {
         this.width = width;
@@ -44,5 +45,17 @@ public class ResolutionElement implements ResolutionItem {
         widthDelegate.setText(String.valueOf(width));
         heightDelegate.setText(String.valueOf(height));
         return viewDelegate;
+    }
+
+    public void check() {
+        checked = true;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void uncheck() {
+        checked = false;
     }
 }
