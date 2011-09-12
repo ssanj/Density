@@ -6,7 +6,6 @@ package com.robodreamz.density.fragment;
 
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.ActivityDelegate;
-import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.delegate.SeekBarDelegate;
@@ -18,7 +17,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -30,33 +28,33 @@ public final class ScreenSizeFragmentSetupTest {
     private ScreenSizeFragmentSetup fragmentSetup;
     private ActivityDelegate mockActivity;
     private DelegateFactory mockDelegateFactory;
-    private int oldCurrentIndex;
+    private TextViewDelegate mockScreenSizeValue;
+    private SeekBarDelegate mockIntegralBar;
+    private SeekBarDelegate mockDecimalBar;
+    private DensityResultCalculator mockCalc;
+    private ListViewDelegate mockResolutionList;
+    private ScreenSizeResolver mockResolver;
 
     @Before public void setup() {
         mockActivity = mock(ActivityDelegate.class);
         mockDelegateFactory = mock(DelegateFactory.class);
-        fragmentSetup = new ScreenSizeFragmentSetup(mockActivity, mockDelegateFactory);
-        oldCurrentIndex = ResolutionData.INDEX_PAIR.getCurrentIndex();
-    }
 
-    @After public void teardown() {
-        ResolutionData.INDEX_PAIR.update(oldCurrentIndex);
+        mockScreenSizeValue = mock(TextViewDelegate.class);
+        mockIntegralBar = mock(SeekBarDelegate.class);
+        mockDecimalBar = mock(SeekBarDelegate.class);
+        mockResolutionList = mock(ListViewDelegate.class);
+        mockCalc = mock(DensityResultCalculator.class);
+        mockResolver = mock(ScreenSizeResolver.class);
+        fragmentSetup = new ScreenSizeFragmentSetup(mockActivity, mockDelegateFactory);
     }
 
     @Test public void shouldSetupInitialValues() throws Exception {
-        final TextViewDelegate mockScreenSizeValue = mock(TextViewDelegate.class);
-        final SeekBarDelegate mockIntegralBar = mock(SeekBarDelegate.class);
-        final SeekBarDelegate mockDecimalBar = mock(SeekBarDelegate.class);
-        final ListViewDelegate mockList = mock(ListViewDelegate.class);
-        final DensityResultCalculator mockCalculator = mock(DensityResultCalculator.class);
-        final Constants mockConstants = mock(Constants.class);
-
         when(mockActivity.findViewById(R.id.app_screen_screensize_value_text)).thenReturn(mockScreenSizeValue);
         when(mockActivity.findViewById(R.id.app_screen_screensize_integer_progress)).thenReturn(mockIntegralBar);
         when(mockActivity.findViewById(R.id.app_screen_screensize_decimal_progress)).thenReturn(mockDecimalBar);
-        when(mockActivity.findViewById(R.id.app_screen_resolution_list)).thenReturn(mockList);
+        when(mockActivity.findViewById(R.id.app_screen_resolution_list)).thenReturn(mockResolutionList);
 
-        fragmentSetup.setup(mockCalculator, mockConstants);
+        fragmentSetup.setup(mockCalc);
 
         verify(mockIntegralBar).setOnSeekBarChangeListener(isA(ScreenSizeFragmentSetup.IntegralBarChangeListener.class));
         verify(mockDecimalBar).setOnSeekBarChangeListener(isA(ScreenSizeFragmentSetup.DecimalBarChangeListener.class));
@@ -64,74 +62,37 @@ public final class ScreenSizeFragmentSetupTest {
         verify(mockDecimalBar).setProgress(5);
     }
 
-    @Test public void shouldUpdateScreenSizeAndDensityResultWhenIntegralSeekBarIsMovedWhenThereIsAListSelection() {
+    @Test public void shouldUpdateScreenSizeWhenIntegralSeekBarIsMoved() {
         final String densityResult = "2.5";
-        final SeekBarDelegate mockIntegralBar = mock(SeekBarDelegate.class);
-        final SeekBarDelegate mockDecimalBar = mock(SeekBarDelegate.class);
-        final TextViewDelegate mockScreenSize = mock(TextViewDelegate.class);
-        final ScreenSizeResolver mockResolver = mock(ScreenSizeResolver.class);
-        final ListViewDelegate mockList = mock(ListViewDelegate.class);
-        final DensityResultCalculator mockCalc = mock(DensityResultCalculator.class);
-        final Constants mockConstants = mock(Constants.class);
 
         final ScreenSizeFragmentSetup.IntegralBarChangeListener listener = new ScreenSizeFragmentSetup.IntegralBarChangeListener(mockDecimalBar,
-                mockScreenSize, mockDelegateFactory, mockList, mockCalc, mockConstants);
+                mockScreenSizeValue, mockCalc, mockResolutionList, mockDelegateFactory);
 
         when(mockDecimalBar.getProgress()).thenReturn(5);
-        ResolutionData.INDEX_PAIR.update(2); //selected index
-        when(mockConstants.isInvalidPosition(2)).thenReturn(false);
         when(mockResolver.convertProgressValueToActualString(2, 5)).thenReturn(densityResult);
 
         listener.onProgressChanged(mockResolver, mockIntegralBar, 2, true);
 
-        verify(mockScreenSize).setText(densityResult);
-        verify(mockCalc).calculateDensity(2, mockList);
+        verify(mockScreenSizeValue).setText(densityResult);
         verify(mockDecimalBar).getProgress();
-        verifyZeroInteractions(mockIntegralBar);
-    }
-
-    @Test public void shouldOnlyUpdateScreenSizeWhenIntegralSeekBarIsMovedWhenThereIsNoListSelection() {
-        final String densityResult = "2.5";
-        final SeekBarDelegate mockIntegralBar = mock(SeekBarDelegate.class);
-        final SeekBarDelegate mockDecimalBar = mock(SeekBarDelegate.class);
-        final TextViewDelegate mockScreenSize = mock(TextViewDelegate.class);
-        final ScreenSizeResolver mockResolver = mock(ScreenSizeResolver.class);
-        final ListViewDelegate mockList = mock(ListViewDelegate.class);
-        final DensityResultCalculator mockCalc = mock(DensityResultCalculator.class);
-        final Constants mockConstants = mock(Constants.class);
-
-        final ScreenSizeFragmentSetup.IntegralBarChangeListener listener = new ScreenSizeFragmentSetup.IntegralBarChangeListener(mockDecimalBar,
-                mockScreenSize, mockDelegateFactory, mockList, mockCalc, mockConstants);
-
-        when(mockDecimalBar.getProgress()).thenReturn(5);
-        when(mockConstants.isInvalidPosition(anyInt())).thenReturn(true);
-        when(mockResolver.convertProgressValueToActualString(2, 5)).thenReturn(densityResult);
-
-        listener.onProgressChanged(mockResolver, mockIntegralBar, 2, true);
-
-        verify(mockScreenSize).setText(densityResult);
-        verifyZeroInteractions(mockCalc);
-        verify(mockDecimalBar).getProgress();
+        verify(mockCalc).calculateDensity(mockResolutionList);
         verifyZeroInteractions(mockIntegralBar);
     }
 
     @Test public void shouldUpdateScreenSizeWhenDecimalSeekBarIsMoved() {
         final String densityResult = "10.2";
-        final SeekBarDelegate mockIntegralBar = mock(SeekBarDelegate.class);
-        final SeekBarDelegate mockDecimalBar = mock(SeekBarDelegate.class);
-        final TextViewDelegate mockScreenSize = mock(TextViewDelegate.class);
-        final ScreenSizeResolver mockResolver = mock(ScreenSizeResolver.class);
 
         final ScreenSizeFragmentSetup.DecimalBarChangeListener listener = new ScreenSizeFragmentSetup.DecimalBarChangeListener(mockIntegralBar,
-                mockScreenSize, mockDelegateFactory);
+                mockScreenSizeValue, mockCalc, mockResolutionList, mockDelegateFactory);
 
         when(mockIntegralBar.getProgress()).thenReturn(1);
         when(mockResolver.convertProgressValueToActualString(1, 3)).thenReturn(densityResult);
 
         listener.onProgressChanged(mockResolver, mockDecimalBar, 3, true);
 
-        verify(mockScreenSize).setText(densityResult);
+        verify(mockScreenSizeValue).setText(densityResult);
         verify(mockIntegralBar).getProgress();
+        verify(mockCalc).calculateDensity(mockResolutionList);
         verifyZeroInteractions(mockDecimalBar);
     }
 }

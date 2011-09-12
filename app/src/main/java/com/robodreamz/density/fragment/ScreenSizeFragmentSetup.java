@@ -8,12 +8,10 @@ import com.robodreamz.density.DefaultSeekBarChangeListener;
 import com.robodreamz.density.DensityApplication;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.ActivityDelegate;
-import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.delegate.SeekBarDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
-import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.screen.DensityResultCalculator;
 import com.robodreamz.density.screen.ScreenSizeResolver;
 
@@ -27,15 +25,16 @@ public final class ScreenSizeFragmentSetup {
         this.delegateFactory = delegateFactory;
     }
 
-    public void setup(final DensityResultCalculator densityResultCalculator, final Constants constants) {
+    public void setup(final DensityResultCalculator densityResultCalculator) {
         final TextViewDelegate screenSizeTextView = (TextViewDelegate) delegate.findViewById(R.id.app_screen_screensize_value_text);
         final SeekBarDelegate integerBar = (SeekBarDelegate) delegate.findViewById(R.id.app_screen_screensize_integer_progress);
         final SeekBarDelegate decimalBar = (SeekBarDelegate) delegate.findViewById(R.id.app_screen_screensize_decimal_progress);
-        final ListViewDelegate listView = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
+        final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
 
-        integerBar.setOnSeekBarChangeListener(new IntegralBarChangeListener(decimalBar, screenSizeTextView, delegateFactory, listView,
-                densityResultCalculator, constants));
-        decimalBar.setOnSeekBarChangeListener(new DecimalBarChangeListener(integerBar, screenSizeTextView, delegateFactory));
+        integerBar.setOnSeekBarChangeListener(new IntegralBarChangeListener(decimalBar, screenSizeTextView, densityResultCalculator,
+                resolutionList, delegateFactory));
+        decimalBar.setOnSeekBarChangeListener(new DecimalBarChangeListener(integerBar, screenSizeTextView, densityResultCalculator,
+                resolutionList, delegateFactory));
 
         setInitialProgress(integerBar, decimalBar);
     }
@@ -48,44 +47,46 @@ public final class ScreenSizeFragmentSetup {
     static final class IntegralBarChangeListener extends DefaultSeekBarChangeListener {
         private final SeekBarDelegate decimalBar;
         private final TextViewDelegate screenSizeValue;
-        private ListViewDelegate resolutionList;
-        private DensityResultCalculator densityResultCalculator;
-        private Constants constants;
+        private final DensityResultCalculator densityResultCalculator;
+        private final ListViewDelegate resolutionList;
 
         public IntegralBarChangeListener(final SeekBarDelegate decimalBar, final TextViewDelegate screenSizeValue,
-                                         final DelegateFactory delegateFactory, final ListViewDelegate resolutionList,
-                                         final DensityResultCalculator densityResultCalculator, final Constants constants) {
+                                         final DensityResultCalculator densityResultCalculator,
+                                         final ListViewDelegate resolutionList, final DelegateFactory delegateFactory) {
             super(delegateFactory);
             this.decimalBar = decimalBar;
             this.screenSizeValue = screenSizeValue;
-            this.resolutionList = resolutionList;
             this.densityResultCalculator = densityResultCalculator;
-            this.constants = constants;
+            this.resolutionList = resolutionList;
         }
 
         @Override public void onProgressChanged(final ScreenSizeResolver resolver, final SeekBarDelegate seekBar, final int progress,
                                                 final boolean fromUser) {
             screenSizeValue.setText(resolver.convertProgressValueToActualString(progress, decimalBar.getProgress()));
-            final int currentIndex = ResolutionData.INDEX_PAIR.getCurrentIndex();
-            if (!constants.isInvalidPosition(currentIndex)) {
-                 densityResultCalculator.calculateDensity(currentIndex, resolutionList);
-             }
+            densityResultCalculator.calculateDensity(resolutionList);
         }
     }
 
     static final class DecimalBarChangeListener extends DefaultSeekBarChangeListener {
         private final SeekBarDelegate integralBar;
         private final TextViewDelegate screenSizeValue;
+        private final DensityResultCalculator densityResultCalculator;
+        private final ListViewDelegate resolutionList;
 
-        DecimalBarChangeListener(final SeekBarDelegate integralBar, final TextViewDelegate screenSizeValue, final DelegateFactory delegateFactory) {
+        DecimalBarChangeListener(final SeekBarDelegate integralBar, final TextViewDelegate screenSizeValue,
+                                 final DensityResultCalculator densityResultCalculator, final ListViewDelegate resolutionList,
+                                 final DelegateFactory delegateFactory) {
             super(delegateFactory);
             this.integralBar = integralBar;
             this.screenSizeValue = screenSizeValue;
+            this.densityResultCalculator = densityResultCalculator;
+            this.resolutionList = resolutionList;
         }
 
         @Override public void onProgressChanged(final ScreenSizeResolver resolver, final SeekBarDelegate seekBar, final int progress,
                                                 final boolean fromUser) {
             screenSizeValue.setText(resolver.convertProgressValueToActualString(integralBar.getProgress(), progress));
+            densityResultCalculator.calculateDensity(resolutionList);
         }
     }
 }

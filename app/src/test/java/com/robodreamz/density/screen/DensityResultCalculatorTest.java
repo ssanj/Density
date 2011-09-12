@@ -8,6 +8,7 @@ import com.robodreamz.density.R;
 import com.robodreamz.density.calc.DensityCalculator;
 import com.robodreamz.density.calc.DensitySifter;
 import com.robodreamz.density.delegate.ActivityDelegate;
+import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
 import com.robodreamz.density.resolution.ResolutionElement;
@@ -41,6 +42,7 @@ public final class DensityResultCalculatorTest {
     private final int height = 240;
     private final DensitySifter.DPI densityCategory = DensitySifter.DPI.XHDPI;
     private DensityResultCalculator calc;
+    private Constants mockConstants;
 
     @Before public void setup() throws Exception {
         mockActivity = mock(ActivityDelegate.class);
@@ -53,8 +55,9 @@ public final class DensityResultCalculatorTest {
         mockDensityCategory = mock(TextViewDelegate.class);
         mockCalculation = mock(DensityCalculator.DensityCaluclation.class);
         mockListAdapter = mock(ClickableItemsListAdapter.class);
+        mockConstants = mock(Constants.class);
 
-        calc = new DensityResultCalculator(mockActivity, mockCalculator, mockResolver, mockSifter);
+        calc = new DensityResultCalculator(mockActivity, mockCalculator, mockResolver, mockSifter, mockConstants);
     }
 
     @Test public void shouldUpdateDensityTextWhenAListItemIsClicked() {
@@ -64,7 +67,6 @@ public final class DensityResultCalculatorTest {
         assertDensityValue();
         assertDensityCategory();
 
-        final DensityResultCalculator calc = new DensityResultCalculator(mockActivity, mockCalculator, mockResolver, mockSifter);
         calc.calculateDensity(itemPosition, mockListView);
 
         verify(mockCalculation).isValid();
