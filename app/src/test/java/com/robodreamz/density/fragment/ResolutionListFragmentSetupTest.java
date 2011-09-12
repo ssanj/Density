@@ -12,7 +12,6 @@ import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
 import com.robodreamz.density.screen.ClickableItemsListAdapter;
-import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.DensityResultCalculator;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.After;
@@ -20,7 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -34,17 +32,15 @@ public final class ResolutionListFragmentSetupTest {
 
     private ActivityDelegate mockActivity;
     private ResolutionListFragmentSetup fragmentSetup;
-    private DefaultDensity mockDefaultDensity;
     private DensityResultCalculator mockDensityResultCalculator;
     private int oldCurrentIndex;
 
     @Before public void setup() throws Exception {
         mockActivity = mock(ActivityDelegate.class);
-        mockDefaultDensity = mock(DefaultDensity.class);
         mockDensityResultCalculator = mock(DensityResultCalculator.class);
         oldCurrentIndex = ResolutionData.INDEX_PAIR.getCurrentIndex();
         ResolutionData.INDEX_PAIR.update(SELECTED_INDEX);
-        fragmentSetup = new ResolutionListFragmentSetup(mockActivity, mockDensityResultCalculator, mockDefaultDensity);
+        fragmentSetup = new ResolutionListFragmentSetup(mockActivity, mockDensityResultCalculator);
     }
 
     @After public void teardown() {

@@ -69,6 +69,9 @@ public final class ScreenSizeFragmentSetup {
         @Override public void onProgressChanged(final ScreenSizeResolver resolver, final SeekBarDelegate seekBar, final int progress,
                                                 final boolean fromUser) {
             screenSizeValue.setText(resolver.convertProgressValueToActualString(integralBar.getProgress(), progress));
+            //find current selection
+            //if valid then update density
+            //else no nothing with density.
         }
     }
 }

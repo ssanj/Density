@@ -13,24 +13,20 @@ import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ListViewDelegate;
+import com.robodreamz.density.resolution.ClickableItems;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
-import com.robodreamz.density.resolution.ClickableItems;
-import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.DensityResultCalculator;
 
 public final class ResolutionListFragmentSetup {
 
     private final ActivityDelegate delegate;
     private DensityResultCalculator densityResultCalculator;
-    private DefaultDensity defaultDensity;
 
 
-    public ResolutionListFragmentSetup(final ActivityDelegate delegate, final DensityResultCalculator densityResultCalculator,
-                                       final DefaultDensity defaultDensity) {
+    public ResolutionListFragmentSetup(final ActivityDelegate delegate, final DensityResultCalculator densityResultCalculator) {
         this.delegate = delegate;
         this.densityResultCalculator = densityResultCalculator;
-        this.defaultDensity = defaultDensity;
     }
 
     //TODO: Pass all the instances in through this method.
