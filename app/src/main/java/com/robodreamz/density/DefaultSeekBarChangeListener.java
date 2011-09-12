@@ -7,6 +7,7 @@ package com.robodreamz.density;
 import android.widget.SeekBar;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.SeekBarDelegate;
+import com.robodreamz.density.screen.ScreenSizeResolver;
 
 public abstract class DefaultSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
@@ -17,10 +18,10 @@ public abstract class DefaultSeekBarChangeListener implements SeekBar.OnSeekBarC
     }
 
     @Override public void onProgressChanged(final SeekBar seekBar, final int progress, final boolean fromUser) {
-        onProgressChanged((SeekBarDelegate) delegateFactory.createViewDelegate(seekBar), progress, fromUser);
+        onProgressChanged(DensityApplication.getResolver(),(SeekBarDelegate) delegateFactory.createViewDelegate(seekBar), progress, fromUser);
     }
 
-    public abstract void onProgressChanged(final SeekBarDelegate seekBar, final int progress, final boolean fromUser);
+    public abstract void onProgressChanged(ScreenSizeResolver resolver, SeekBarDelegate seekBar, int progress, boolean fromUser);
 
     @Override public void onStartTrackingTouch(final SeekBar seekBar) { }
 

@@ -11,6 +11,7 @@ import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.SeekBarDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
+import com.robodreamz.density.screen.ScreenSizeResolver;
 
 public final class ScreenSizeFragmentSetup {
 
@@ -49,8 +50,9 @@ public final class ScreenSizeFragmentSetup {
             this.screenSizeValue = screenSizeValue;
         }
 
-        @Override public void onProgressChanged(final SeekBarDelegate seekBar, final int progress, final boolean fromUser) {
-            screenSizeValue.setText(DensityApplication.getResolver().convertProgressValueToActualString(progress, decimalBar.getProgress()));
+        @Override public void onProgressChanged(final ScreenSizeResolver resolver, final SeekBarDelegate seekBar, final int progress,
+                                                final boolean fromUser) {
+            screenSizeValue.setText(resolver.convertProgressValueToActualString(progress, decimalBar.getProgress()));
         }
     }
 
@@ -64,8 +66,9 @@ public final class ScreenSizeFragmentSetup {
             this.screenSizeValue = screenSizeValue;
         }
 
-        @Override public void onProgressChanged(final SeekBarDelegate seekBar, final int progress, final boolean fromUser) {
-            screenSizeValue.setText(DensityApplication.getResolver().convertProgressValueToActualString(integralBar.getProgress(), progress));
+        @Override public void onProgressChanged(final ScreenSizeResolver resolver, final SeekBarDelegate seekBar, final int progress,
+                                                final boolean fromUser) {
+            screenSizeValue.setText(resolver.convertProgressValueToActualString(integralBar.getProgress(), progress));
         }
     }
 }

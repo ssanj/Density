@@ -9,6 +9,7 @@ import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.SeekBarDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
+import com.robodreamz.density.screen.ScreenSizeResolver;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,32 +49,41 @@ public final class ScreenSizeFragmentSetupTest {
     }
 
     @Test public void shouldUpdateScreenSizeWhenIntegralSeekBarIsMoved() {
+        final String densityResult = "2.5";
         final SeekBarDelegate mockIntegralBar = mock(SeekBarDelegate.class);
         final SeekBarDelegate mockDecimalBar = mock(SeekBarDelegate.class);
         final TextViewDelegate mockScreenSize = mock(TextViewDelegate.class);
+        final ScreenSizeResolver mockResolver = mock(ScreenSizeResolver.class);
 
         final ScreenSizeFragmentSetup.IntegralBarChangeListener listener = new ScreenSizeFragmentSetup.IntegralBarChangeListener(mockDecimalBar,
                 mockScreenSize, mockDelegateFactory);
 
         when(mockDecimalBar.getProgress()).thenReturn(5);
-        listener.onProgressChanged(mockIntegralBar, 2, true);
+        when(mockResolver.convertProgressValueToActualString(2, 5)).thenReturn(densityResult);
 
-        verify(mockScreenSize).setText("4.5");
+        listener.onProgressChanged(mockResolver, mockIntegralBar, 2, true);
+
+        verify(mockScreenSize).setText(densityResult);
         verify(mockDecimalBar).getProgress();
         verifyZeroInteractions(mockIntegralBar);
     }
 
     @Test public void shouldUpdateScreenSizeWhenDecimalSeekBarIsMoved() {
+        final String densityResult = "10.2";
         final SeekBarDelegate mockIntegralBar = mock(SeekBarDelegate.class);
         final SeekBarDelegate mockDecimalBar = mock(SeekBarDelegate.class);
         final TextViewDelegate mockScreenSize = mock(TextViewDelegate.class);
+        final ScreenSizeResolver mockResolver = mock(ScreenSizeResolver.class);
+
         final ScreenSizeFragmentSetup.DecimalBarChangeListener listener = new ScreenSizeFragmentSetup.DecimalBarChangeListener(mockIntegralBar,
                 mockScreenSize, mockDelegateFactory);
 
         when(mockIntegralBar.getProgress()).thenReturn(1);
-        listener.onProgressChanged(mockDecimalBar, 3, true);
+        when(mockResolver.convertProgressValueToActualString(1, 3)).thenReturn(densityResult);
 
-        verify(mockScreenSize).setText("3.3");
+        listener.onProgressChanged(mockResolver, mockDecimalBar, 3, true);
+
+        verify(mockScreenSize).setText(densityResult);
         verify(mockIntegralBar).getProgress();
         verifyZeroInteractions(mockDecimalBar);
     }
