@@ -33,4 +33,10 @@ public class ListViewDelegate extends ViewDelegate {
             ((ListView) view).setOnItemClickListener(listener);
         }
     }
+
+    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener listener) {
+        if (!isNull()) {
+            ((ListView) view).setOnItemSelectedListener(listener);
+        }
+    }
 }

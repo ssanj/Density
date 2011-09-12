@@ -11,6 +11,7 @@ import com.robodreamz.density.fragment.DensityResultFragmentSetup;
 import com.robodreamz.density.fragment.ResolutionListFragmentSetup;
 import com.robodreamz.density.fragment.ScreenSizeFragmentSetup;
 import com.robodreamz.density.screen.DefaultDensity;
+import com.robodreamz.density.screen.DensityResultCalculator;
 
 public final class DensityAppActivity extends AbstractDensityActivty {
 
@@ -21,9 +22,15 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         final DelegateFactory factory = DensityApplication.getFactory();
         final ActivityDelegate activityDelegate = factory.createActivityDelegate(this);
         final DefaultDensity defaultDensity = new DefaultDensity(activityDelegate);
+        final DensityResultCalculator densityResultCalculator = new DensityResultCalculator(
+                activityDelegate,
+                DensityApplication.getCalcualtor(),
+                DensityApplication.getResolver(),
+                DensityApplication.getSifter());
+
 
         new ScreenSizeFragmentSetup(activityDelegate, factory).setup();
-        new ResolutionListFragmentSetup(activityDelegate).setup();
+        new ResolutionListFragmentSetup(activityDelegate, densityResultCalculator, defaultDensity).setup();
         new DensityResultFragmentSetup(defaultDensity).setup();
     }
 }

@@ -20,25 +20,25 @@ import com.robodreamz.density.screen.DensityResultCalculator;
 public final class ResolutionListFragmentSetup {
 
     private final ActivityDelegate delegate;
+    private DensityResultCalculator densityResultCalculator;
+    private DefaultDensity defaultDensity;
 
 
-    public ResolutionListFragmentSetup(final ActivityDelegate delegate) {
+    public ResolutionListFragmentSetup(final ActivityDelegate delegate, final DensityResultCalculator densityResultCalculator,
+                                       final DefaultDensity defaultDensity) {
         this.delegate = delegate;
+        this.densityResultCalculator = densityResultCalculator;
+        this.defaultDensity = defaultDensity;
     }
 
     public void setup() {
         final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
         final DelegateFactory factory = DensityApplication.getFactory();
         final LayoutInflaterDelegate layoutInflater = delegate.getLayoutInflater();
-        final DensityResultCalculator densityResultCalculator =
-                new DensityResultCalculator(
-                        delegate,
-                        DensityApplication.getCalcualtor(),
-                        DensityApplication.getResolver(),
-                        DensityApplication.getSifter());
 
         resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
         resolutionList.setOnItemClickListener(new ResolutionListClickListener(densityResultCalculator, resolutionList));
+        resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator, defaultDensity));
     }
 
     final static class ResolutionListClickListener implements AdapterView.OnItemClickListener {

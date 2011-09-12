@@ -9,6 +9,8 @@ import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
+import com.robodreamz.density.screen.DefaultDensity;
+import com.robodreamz.density.screen.DensityResultCalculator;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,10 +27,14 @@ public final class ResolutionListFragmentSetupTest {
 
     private ActivityDelegate mockActivity;
     private ResolutionListFragmentSetup fragmentSetup;
+    private DefaultDensity mockDefaultDensity;
+    private DensityResultCalculator mockDensityResultCalculator;
 
     @Before public void setup() throws Exception {
         mockActivity = mock(ActivityDelegate.class);
-        fragmentSetup = new ResolutionListFragmentSetup(mockActivity);
+        mockDefaultDensity = mock(DefaultDensity.class);
+        mockDensityResultCalculator = mock(DensityResultCalculator.class);
+        fragmentSetup = new ResolutionListFragmentSetup(mockActivity, mockDensityResultCalculator, mockDefaultDensity);
     }
 
     @Test public void shouldInitializeResolutionList() throws Exception {
@@ -41,6 +47,7 @@ public final class ResolutionListFragmentSetupTest {
 
         verify(mockList).setAdapter(isA(ResolutionListAdapter.class));
         verify(mockList).setOnItemClickListener(isA(ResolutionListFragmentSetup.ResolutionListClickListener.class));
+        verify(mockList).setOnItemSelectedListener(isA(ResolutionListFragmentSetup.ResolutionListSelectListener.class));
         verifyZeroInteractions(mockLayoutInflater);
     }
 }
