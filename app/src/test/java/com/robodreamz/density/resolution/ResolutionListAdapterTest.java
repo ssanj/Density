@@ -6,10 +6,12 @@ package com.robodreamz.density.resolution;
 
 import android.view.View;
 import android.view.ViewGroup;
+import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
@@ -32,6 +35,7 @@ public final class ResolutionListAdapterTest {
     private ResolutionItem mockResolutionItemHeader;
     private ResolutionItem mockResolutionItemElement0;
     private ResolutionItem mockResolutionItemElement1;
+    private Constants mockConstants;
 
     @Before public void setUp() throws Exception {
         mockLayoutInflater = mock(LayoutInflaterDelegate.class);
@@ -39,8 +43,10 @@ public final class ResolutionListAdapterTest {
         mockResolutionItemHeader = mock(ResolutionItem.class);
         mockResolutionItemElement0 = mock(ResolutionItem.class);
         mockResolutionItemElement1 = mock(ResolutionItem.class);
-        adapter = new ResolutionListAdapter(mockLayoutInflater, mockDelegateFactory, createResolutionItems());
+        mockConstants = mock(Constants.class);
+        adapter = new ResolutionListAdapter(mockLayoutInflater, mockDelegateFactory, createResolutionItems(), mockConstants);
     }
+
 
     @Test public void shouldReturnTheNumberOfDataItems() throws Exception {
         assertThat("number of items returned is wrong.", adapter.getCount(), equalTo(3));

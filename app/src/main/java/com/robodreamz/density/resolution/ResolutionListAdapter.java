@@ -8,21 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 
 //TODO: Reuse this class by providing a type-annotation.
-public final class ResolutionListAdapter extends BaseAdapter implements ClickableItems {
+public class ResolutionListAdapter extends BaseAdapter implements ClickableItems {
 
     private ResolutionItem[] resolutions;
     private DelegateFactory delegateFactory;
     private LayoutInflaterDelegate layoutInflater;
+    private Constants constants;
 
     public ResolutionListAdapter(final LayoutInflaterDelegate layoutInflater, final DelegateFactory delegateFactory,
-                                 final ResolutionItem[] resolutions) {
+                                 final ResolutionItem[] resolutions, final Constants constants) {
         this.resolutions = resolutions;
         this.delegateFactory = delegateFactory;
         this.layoutInflater = layoutInflater;
+        this.constants = constants;
     }
 
     @Override public int getCount() {
@@ -46,12 +49,11 @@ public final class ResolutionListAdapter extends BaseAdapter implements Clickabl
         return resolution.getView(layoutInflater, delegateFactory.createViewDelegate(convertView)).getDelegate();
     }
 
-    //TODO: Test
     public void clickedItem(int position) {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
         if (indexPair.isNew(position)) {
             final int currentIndex = indexPair.getCurrentIndex();
-            if (currentIndex != AdapterView.INVALID_POSITION) {
+            if (!constants.isInvalidPosition(currentIndex)) {
                 resolutions[currentIndex].uncheck();
             }
 
@@ -61,13 +63,12 @@ public final class ResolutionListAdapter extends BaseAdapter implements Clickabl
         }
     }
 
-    //TODO: Test
     public void resetClick() {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
         final int currentIndex = indexPair.getCurrentIndex();
-        if (currentIndex != AdapterView.INVALID_POSITION) {
+        if (!constants.isInvalidPosition(currentIndex)) {
             resolutions[currentIndex].uncheck();
-            indexPair.update(AdapterView.INVALID_POSITION);
+            indexPair.update(constants.getInvalidPositionIndex());
             notifyDataSetChanged();
         }
     }

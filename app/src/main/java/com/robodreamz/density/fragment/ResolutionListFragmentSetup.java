@@ -39,7 +39,8 @@ public final class ResolutionListFragmentSetup {
         final DelegateFactory factory = DensityApplication.getFactory();
         final LayoutInflaterDelegate layoutInflater = delegate.getLayoutInflater();
 
-        resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData()));
+        resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData(),
+                DensityApplication.getConstants()));
         resolutionList.setOnItemClickListener(new ResolutionListClickListener(densityResultCalculator, resolutionList));
         resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator, defaultDensity));
     }
