@@ -18,10 +18,9 @@ import com.robodreamz.density.test.common.ScreenSize;
 
 import java.util.List;
 
-//TODO: Renamed class to include state changes by select and click.
-public final class DensityAppWithDensityResultOnRotationRobTest extends AbstractDensityAppTest {
+public final class DensityAppWithDensityResultWithClicksAndSelectsOnRotationRobTest extends AbstractDensityAppTest {
 
-    public void testShouldCalculateDensityWhenResolutionIsChosenByClick() throws Throwable {
+    public void testShouldCalculateDensityWhenResolutionIsChosenByClickAndRotated() throws Throwable {
         waitForApplicationActivity();
         assertResolutionChangesAreMaintainedOnOrientationWhenClicked(
                 1, new ScreenSize(3, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
@@ -33,7 +32,7 @@ public final class DensityAppWithDensityResultOnRotationRobTest extends Abstract
                 8, new ScreenSize(3, 5), new Resolution(1024, 600), new DensityResult(339, "XHDPI"));
     }
 
-    public void testShouldCalculateDensityWhenResolutionIsChosenBySelection() throws Throwable {
+    public void testShouldCalculateDensityWhenResolutionIsChosenBySelectionAndRotated() throws Throwable {
         assertResolutionChangesAreMaintainedOnOrientationWhenSelected(
                 1, new ScreenSize(3, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
         assertResolutionChangesAreMaintainedOnOrientationWhenSelected(
@@ -44,7 +43,7 @@ public final class DensityAppWithDensityResultOnRotationRobTest extends Abstract
                 8, new ScreenSize(3, 5), new Resolution(1024, 600), new DensityResult(339, "XHDPI"));
     }
 
-    public void testShouldMaintainDensityWithAMixOfClicksSelectionsAndRotations() throws Throwable {
+    public void testShouldCalculateDensityWhenResolutionIsChosenByAMixOfClicksAndSelectionsAndRotations() throws Throwable {
         waitForApplicationActivity();
         //select item 4, in portrait mode
         final ScreenSize screenSize = new ScreenSize(3, 6);
