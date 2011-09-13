@@ -5,6 +5,8 @@
 package com.robodreamz.density.test;
 
 import android.content.pm.ActivityInfo;
+import android.test.suitebuilder.annotation.Suppress;
+import android.view.KeyEvent;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,32 +21,76 @@ import java.util.List;
 
 public final class DensityAppWithDensityResultOnRotationRobTest extends AbstractDensityAppTest {
 
-    public void testShouldCalculateDensityWhenResolutionIsChosen() throws Throwable {
+    @Suppress public void testShouldCalculateDensityWhenResolutionIsChosenByClick() throws Throwable {
         waitForApplicationActivity();
-        assertResolutionChangesAreMaintainedOnOrientation(1, new ScreenSize(3, 2), new DensityResult(125, "LDPI"), new Resolution(320, 240));
-        assertResolutionChangesAreMaintainedOnOrientation(3, new ScreenSize(3, 1), new DensityResult(186, "MDPI"), new Resolution(480, 320));
-        assertResolutionChangesAreMaintainedOnOrientation(5, new ScreenSize(3, 1), new DensityResult(301, "HDPI"), new Resolution(800, 480));
-        assertResolutionChangesAreMaintainedOnOrientation(8, new ScreenSize(3, 5), new DensityResult(339, "XHDPI"), new Resolution(1024, 600));
+        assertResolutionChangesAreMaintainedOnOrientationWhenClicked(
+                1, new ScreenSize(3, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
+        assertResolutionChangesAreMaintainedOnOrientationWhenClicked(
+                3, new ScreenSize(3, 1), new Resolution(480, 320), new DensityResult(186, "MDPI"));
+        assertResolutionChangesAreMaintainedOnOrientationWhenClicked(
+                5, new ScreenSize(3, 1), new Resolution(800, 480), new DensityResult(301, "HDPI"));
+        assertResolutionChangesAreMaintainedOnOrientationWhenClicked(
+                8, new ScreenSize(3, 5), new Resolution(1024, 600), new DensityResult(339, "XHDPI"));
     }
 
-    private void assertResolutionChangesAreMaintainedOnOrientation(final int index, final ScreenSize screenSize, final DensityResult densityResult,
-                                                                   final Resolution resolution) throws Throwable {
-        final List<ListView> currentListViews = solo.getCurrentListViews();
-        assertEquals("The number of ListsViews on the screen is incorrect", 1, currentListViews.size());
-        assertTrue("The number of resolutions is incorrect", currentListViews.get(0).getCount() > 1);
+    public void testShouldCalculateDensityWhenResolutionIsChosenBySelection() throws Throwable {
+        assertResolutionChangesAreMaintainedOnOrientationWhenSelected(
+                1, new ScreenSize(3, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
+        assertResolutionChangesAreMaintainedOnOrientationWhenSelected(
+                3, new ScreenSize(3, 1), new Resolution(480, 320), new DensityResult(186, "MDPI"));
+        assertResolutionChangesAreMaintainedOnOrientationWhenSelected(
+                5, new ScreenSize(3, 1), new Resolution(800, 480), new DensityResult(301, "HDPI"));
+        assertResolutionChangesAreMaintainedOnOrientationWhenSelected(
+                8, new ScreenSize(3, 5), new Resolution(1024, 600), new DensityResult(339, "XHDPI"));
+    }
 
+    private void assertResolutionChangesAreMaintainedOnOrientationWhenSelected(final int index, final ScreenSize screenSize,
+                                                                   final Resolution resolution, final DensityResult densityResult) throws Throwable {
+        waitForApplicationActivity();
+
+        setAndAssertSliders(screenSize);
+        selectListItemAndAssert(index, resolution);
+        assertDensityCalc(densityResult);
+        assertDensityResultOnOrientationForSelects(index, screenSize, densityResult, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        assertDensityResultOnOrientationForSelects(index, screenSize, densityResult, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    private void selectListItemAndAssert(final int index, final Resolution resolution) throws Throwable {
+        final ListView resolutionList = getResolutionList();
+        runTestOnUiThread(new Runnable() {
+            @Override public void run() {
+                resolutionList.requestFocus();
+                resolutionList.setSelection(0); //select first item.
+            }
+        });
+
+        //send index -1 key strokes because we start @ the first list item above.
+        sendRepeatedKeys(index - 1, KeyEvent.KEYCODE_DPAD_DOWN);
+        assertResolutionSelectState(resolutionList, index);
+    }
+
+    private void assertResolutionChangesAreMaintainedOnOrientationWhenClicked(final int index, final ScreenSize screenSize, final Resolution resolution, final DensityResult densityResult) throws Throwable {
         setAndAssertSliders(screenSize);
         clickOnListAndAssert(index, resolution);
         assertDensityCalc(densityResult);
 
-        assertDensityResultOnOrientation(index, screenSize, densityResult, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        assertDensityResultOnOrientation(index, screenSize, densityResult, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        assertDensityResultOnOrientationForClicks(index, screenSize, densityResult, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        assertDensityResultOnOrientationForClicks(index, screenSize, densityResult, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    private void assertDensityResultOnOrientation(final int index, final ScreenSize screenSize, final DensityResult densityResult, final int screenOrientationLandscape) {
+    private void assertDensityResultOnOrientationForClicks(final int index, final ScreenSize screenSize, final DensityResult densityResult,
+                                                           final int screenOrientationLandscape) {
         solo.setActivityOrientation(screenOrientationLandscape);
         assertSliders(screenSize);
         assertResolutionCheckState((ListView) solo.getCurrentActivity().findViewById(R.id.app_screen_resolution_list), index);
+        assertDensityCalc(densityResult);
+    }
+
+    private void assertDensityResultOnOrientationForSelects(final int index, final ScreenSize screenSize, final DensityResult densityResult,
+                                                           final int screenOrientationLandscape) {
+        solo.setActivityOrientation(screenOrientationLandscape);
+        assertSliders(screenSize);
+        assertResolutionSelectState((ListView) solo.getCurrentActivity().findViewById(R.id.app_screen_resolution_list), index);
         assertDensityCalc(densityResult);
     }
 
@@ -57,9 +103,17 @@ public final class DensityAppWithDensityResultOnRotationRobTest extends Abstract
 
     private void assertResolutionCheckState(final ListView listView, final int index) {
         waitFor(50);//wait here for selections to be updated
-        //we reduce the index by 1 here because robotium list click indexes are 1-based and our list selections are 0-based! What tha?
+
         assertEquals("Incorrect resolution selected", index, ResolutionData.INDEX_PAIR.getCurrentIndex());
         final ResolutionElement element = (ResolutionElement) listView.getAdapter().getItem(ResolutionData.INDEX_PAIR.getCurrentIndex());
+        assertTrue("Incorrect resolution item: " + index + ", is not checked", element.isChecked());
+    }
+
+    private void assertResolutionSelectState(final ListView listView, final int index) {
+        waitFor(50);//wait here for selections to be updated
+        //we reduce the index by 1 here because we give focus to the first list item by default. So the number of items to move is reduced by 1.
+        assertEquals("Incorrect resolution selected", index, listView.getSelectedItemPosition());
+        final ResolutionElement element = (ResolutionElement) listView.getAdapter().getItem(index);
         assertTrue("Incorrect resolution item: " + index + ", is not checked", element.isChecked());
     }
 
@@ -68,8 +122,7 @@ public final class DensityAppWithDensityResultOnRotationRobTest extends Abstract
     }
 
     private void clickOnListAndAssert(final int index, final Resolution resolution) throws Throwable {
-        final ListView listView = (ListView) solo.getCurrentActivity().findViewById(R.id.app_screen_resolution_list);
-        assertNotNull("ResolutionList is null", listView);
+        final ListView listView = getResolutionList();
 
         this.runTestOnUiThread(new Runnable() {
             @Override public void run() {
@@ -80,13 +133,10 @@ public final class DensityAppWithDensityResultOnRotationRobTest extends Abstract
         assertResolutionCheckState(listView, index);
     }
 
-    private String getText(final List<TextView> textViews) {
-        final StringBuilder sb = new StringBuilder();
-        for (TextView tv :  textViews) {
-            sb.append(tv.getId()).append("-").append(tv.getText()).append(", ");
-        }
-
-        return sb.toString();
+    private ListView getResolutionList() {
+        final ListView listView = (ListView) solo.getCurrentActivity().findViewById(R.id.app_screen_resolution_list);
+        assertNotNull("ResolutionList is null", listView);
+        return listView;
     }
 
     private void setAndAssertSliders(final ScreenSize screenSize) {
