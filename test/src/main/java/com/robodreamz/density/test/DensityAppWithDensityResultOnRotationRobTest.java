@@ -5,7 +5,6 @@
 package com.robodreamz.density.test;
 
 import android.content.pm.ActivityInfo;
-import android.test.suitebuilder.annotation.Suppress;
 import android.view.KeyEvent;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -19,9 +18,10 @@ import com.robodreamz.density.test.common.ScreenSize;
 
 import java.util.List;
 
+//TODO: Renamed class to include state changes by select and click.
 public final class DensityAppWithDensityResultOnRotationRobTest extends AbstractDensityAppTest {
 
-    @Suppress public void testShouldCalculateDensityWhenResolutionIsChosenByClick() throws Throwable {
+    public void testShouldCalculateDensityWhenResolutionIsChosenByClick() throws Throwable {
         waitForApplicationActivity();
         assertResolutionChangesAreMaintainedOnOrientationWhenClicked(
                 1, new ScreenSize(3, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
@@ -42,6 +42,40 @@ public final class DensityAppWithDensityResultOnRotationRobTest extends Abstract
                 5, new ScreenSize(3, 1), new Resolution(800, 480), new DensityResult(301, "HDPI"));
         assertResolutionChangesAreMaintainedOnOrientationWhenSelected(
                 8, new ScreenSize(3, 5), new Resolution(1024, 600), new DensityResult(339, "XHDPI"));
+    }
+
+    public void testShouldMaintainDensityWithAMixOfClicksSelectionsAndRotations() throws Throwable {
+        waitForApplicationActivity();
+        //select item 4, in portrait mode
+        final ScreenSize screenSize = new ScreenSize(3, 6);
+        setAndAssertSliders(screenSize);
+        selectListItemAndAssert(4, new Resolution(540, 960));
+        assertDensityCalc(new DensityResult(306, "HDPI"));
+
+        //click on item 6, in portrait mode
+        clickOnListAndAssert(6, new Resolution(854, 480));
+        final DensityResult densityResult1 = new DensityResult(272, "HDPI");
+        assertDensityCalc(densityResult1);
+
+        //rotate to landscape mode
+        assertDensityResultOnOrientationForClicks(6, screenSize, densityResult1, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        //select item 3 (which is 3 items above item 6)
+        final ListView resolutionList = getResolutionList();
+        runTestOnUiThread(new Runnable() {
+            @Override public void run() {
+                resolutionList.requestFocus();
+            }
+        });
+
+        sendRepeatedKeys(3, KeyEvent.KEYCODE_DPAD_UP);
+        assertResolutionValues(resolutionList, 3, new Resolution(480, 320));
+        assertResolutionSelectState(resolutionList, 3);
+        final DensityResult densityResult2 = new DensityResult(160, "MDPI");
+        assertDensityCalc(densityResult2);
+
+        //rotate back to portrait mode
+        assertDensityResultOnOrientationForSelects(3, screenSize, densityResult2, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     private void assertResolutionChangesAreMaintainedOnOrientationWhenSelected(final int index, final ScreenSize screenSize,
@@ -66,6 +100,7 @@ public final class DensityAppWithDensityResultOnRotationRobTest extends Abstract
 
         //send index -1 key strokes because we start @ the first list item above.
         sendRepeatedKeys(index - 1, KeyEvent.KEYCODE_DPAD_DOWN);
+        assertResolutionValues(resolutionList, index, resolution);
         assertResolutionSelectState(resolutionList, index);
     }
 
@@ -130,7 +165,14 @@ public final class DensityAppWithDensityResultOnRotationRobTest extends Abstract
             }
         });
 
+        assertResolutionValues(listView, index, resolution);
         assertResolutionCheckState(listView, index);
+    }
+
+    private void assertResolutionValues(final ListView listView, final int index, final Resolution resolution) {
+        ResolutionElement item = (ResolutionElement) listView.getAdapter().getItem(index);
+        assertEquals("Incorrect width", resolution.width, item.width);
+        assertEquals("Incorrect height", resolution.height, item.height);
     }
 
     private ListView getResolutionList() {
