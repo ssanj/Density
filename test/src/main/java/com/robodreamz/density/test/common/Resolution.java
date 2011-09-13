@@ -20,4 +20,11 @@ public final class Resolution {
     public String getHeightAsString() {
         return String.valueOf(height);
     }
+
+    @Override public String toString() {
+        return "Resolution{" +
+                "width=" + width +
+                ", height=" + height +
+                '}';
+    }
 }
