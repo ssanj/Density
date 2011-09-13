@@ -5,13 +5,13 @@
 package com.robodreamz.density.test;
 
 import android.test.suitebuilder.annotation.Suppress;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.robodreamz.density.DensityApplication;
 import com.robodreamz.density.R;
-import com.robodreamz.density.screen.ScreenSizeResolver;
+import com.robodreamz.density.test.common.DensityResult;
+import com.robodreamz.density.test.common.Resolution;
+import com.robodreamz.density.test.common.ScreenSize;
 
 import java.util.List;
 
@@ -56,51 +56,5 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         assertEquals("Incorrect Height returned: " + reso.getHeightAsString(), reso.getHeightAsString(), textViews.get(2).getText());
         assertTrue("Incorrect density value: " + densityResult.getValueAsString(), solo.waitForText(densityResult.getValueAsString(), 1, 2000));
         assertTrue("Incorrect density value category: " + densityResult.category, solo.waitForText(densityResult.category, 1, 2000));
-    }
-
-    private final static class ScreenSize {
-        private final int integral;
-        private final int decimal;
-
-        private ScreenSize(final int integral, final int decimal) {
-            this.integral = integral - ScreenSizeResolver.INTEGRAL_SCREENSIZE_OFFSET;
-            this.decimal = decimal;
-        }
-
-        String getScreenSize() {
-            return DensityApplication.getResolver().convertProgressValueToActualString(integral, decimal).toString();
-        }
-    }
-
-    private final static class Resolution {
-        private final int width;
-        private final int height;
-
-        private Resolution(final int width, final int height) {
-            this.width = width;
-            this.height = height;
-        }
-
-        String getWidthAsString() {
-            return String.valueOf(width);
-        }
-
-        String getHeightAsString() {
-            return String.valueOf(height);
-        }
-    }
-
-    private static final class DensityResult {
-        private final int value;
-        private final String category;
-
-        private DensityResult(final int value, final String category) {
-            this.value = value;
-            this.category = category;
-        }
-
-        String getValueAsString() {
-            return String.valueOf(value);
-        }
     }
 }
