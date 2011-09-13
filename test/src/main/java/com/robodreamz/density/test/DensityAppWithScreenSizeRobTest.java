@@ -7,11 +7,16 @@ package com.robodreamz.density.test;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.jayway.android.robotium.solo.Solo;
 import com.robodreamz.density.DensityAppActivity;
+import com.robodreamz.density.R;
+import com.robodreamz.density.calc.DensitySifter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //TODO: This class can't extend AbstractDensityAppTest. It current segfaults.Seems to work this way though.
 public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentationTestCase2<DensityAppActivity> {
@@ -77,6 +82,23 @@ public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentati
         }
 
         assertTrue("Did not find expected screen size of 7.4", solo.searchText("3.2"));
+    }
+
+    public void testShouldUpdateDensityIfAResolutionItemIsSelected() {
+        final List<ProgressBar> currentProgressBars = waitForActivityAndAssertProgressBars();
+
+        final List<TextView> textViews = solo.clickInList(4);
+        assertEquals("Incorrect width", "480", textViews.get(0).getText());
+        assertEquals("Incorrect height", "320", textViews.get(2).getText());
+
+        solo.setProgressBar(currentProgressBars.get(0), 1);//3
+        solo.setProgressBar(currentProgressBars.get(1), 5);//.5
+
+        final TextView densityValue = (TextView) solo.getCurrentActivity().findViewById(R.id.density_result_density_value_text);
+        final TextView densityCategory = (TextView) solo.getCurrentActivity().findViewById(R.id.density_result_density_value_category);
+
+        assertEquals("Incorrect density value", "165", densityValue.getText());
+        assertEquals("Incorrect density category", DensitySifter.DPI.MDPI.toString(), densityCategory.getText());
     }
 
     @Override protected void tearDown() throws Exception {
