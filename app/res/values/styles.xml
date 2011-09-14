@@ -5,6 +5,17 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="ScreenSizeFragment">
+        <item name="android:layout_margin">@dimen/screen_size_fragment_margin</item>
+    </style>
+
+    <style name="ScreenSizeLabel" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/screen_size_text_label</item>
+        <item name="android:padding">@dimen/screen_size_text_label_padding</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
     <style name="ScreenSizeText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/white</item>
         <item name="android:paddingLeft">@dimen/screen_size_text_padding</item>
