@@ -26,5 +26,7 @@
 
     <style name="DensityProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:minHeight">@dimen/main_seekbar_height</item>
+        <item name="android:maxHeight">@dimen/main_seekbar_height</item>
+        <item name="android:padding">@dimen/screen_size_fragment_margin</item>
     </style>
 </resources>
