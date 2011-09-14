@@ -8,13 +8,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/app_screen_screensize_container">
+        <include layout="@layout/app_screen_screen_size_text"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+        />
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/app_screen_screensize_label_text"
                 android:text="@string/screen_size_label_text"
         />
-        <include layout="@layout/app_screen_screen_size"
+        <include layout="@layout/app_screen_screen_size_sliders"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
         />

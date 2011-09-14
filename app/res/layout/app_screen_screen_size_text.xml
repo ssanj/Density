@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ScreenSizeFrame"
+        android:orientation="horizontal">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ScreenSizeText"
+            android:id="@+id/app_screen_screensize_value_text"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_screen_screensize_unit_text"
+            style="@style/ScreenSizeInches"
+            android:id="@+id/app_screen_screensize_unit_text"
+            />
+</LinearLayout>
