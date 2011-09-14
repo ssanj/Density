@@ -28,6 +28,7 @@
         <include layout="@layout/app_screen_resolution"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/screen_size_fragment_margin"
                 android:layout_weight="1"
         />
         <include layout="@layout/density_result"
