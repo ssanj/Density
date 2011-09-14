@@ -13,7 +13,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/app_screen_screensize_integer_progress"
                     android:max="@integer/app_screen_screensize_integer_progress_max_value"
-                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    style="@style/DensityProgressBar"
                 />
                 <SeekBar
                     android:layout_width="fill_parent"
