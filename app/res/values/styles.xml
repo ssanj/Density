@@ -28,13 +28,14 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/resolution_value_size</item>
         <item name="android:padding">@dimen/resolution_value_padding</item>
+        <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ResolutionMultiplier" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/resolution_multiplier_size</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
 
