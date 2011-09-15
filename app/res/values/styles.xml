@@ -45,9 +45,31 @@
         <item name="android:textSize">@dimen/loading_screen_text_size</item>
     </style>
 
+    <style name="DensityResultText" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/density_result_text_size</item>
+    </style>
+
     <style name="DensityProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:minHeight">@dimen/main_seekbar_height</item>
         <item name="android:maxHeight">@dimen/main_seekbar_height</item>
         <item name="android:padding">@dimen/screen_size_fragment_margin</item>
+    </style>
+
+    <style name="DensityResultTop">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:background">@drawable/density_result_top</item>
+        <!--<item name="android:layout_width">fill_parent"</item>-->
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="DensityResultBottom">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:background">@drawable/density_result_bottom</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
