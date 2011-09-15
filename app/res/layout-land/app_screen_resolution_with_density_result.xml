@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:layout_margin="5dp"
+              android:orientation="horizontal"  >
+    <include layout="@layout/app_screen_resolution"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_margin="@dimen/screen_size_fragment_margin"
+            android:layout_weight="1"
+            android:gravity="top|center_horizontal"
+    />
+    <include layout="@layout/density_result"
+             android:layout_width="wrap_content"
+             android:layout_height="fill_parent"
+             android:gravity="top|center_horizontal"
+    />
+</LinearLayout>
