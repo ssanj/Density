@@ -45,6 +45,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="DensityResultLayout">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
     <style name="DensityResultText" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/density_result_text_size</item>
     </style>
