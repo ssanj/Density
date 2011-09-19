@@ -5,5 +5,6 @@
     <string name="app_screen_screensize_unit_text">\"</string>
     <string name="resolution_separator">X</string>
     <string name="resolution_list_header_element_title">Common</string>
+    <string name="resolution_list_header_element_customization">C</string>
     <string name="density_result_density_value_unit">dpi</string>
 </resources>
