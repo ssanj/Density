@@ -41,10 +41,10 @@ public final class ResolutionListFragmentSetup {
         resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator));
     }
 
-    public void onResume(final Constants contants) {
+    public void onResume(final Constants constants) {
         final ListViewDelegate resolutionList = (ListViewDelegate) delegate.findViewById(R.id.app_screen_resolution_list);
         final int currentIndex = ResolutionData.INDEX_PAIR.getCurrentIndex();
-        if (!contants.isInvalidPosition(currentIndex)) {
+        if (!constants.isInvalidPosition(currentIndex)) {
             resolutionList.setSelection(currentIndex); //set the selection for track mode.
             ((ClickableItems) resolutionList.getAdapter()).clickedItem(currentIndex); //set the click index for touch mode.
 

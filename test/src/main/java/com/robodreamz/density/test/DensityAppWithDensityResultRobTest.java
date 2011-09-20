@@ -38,8 +38,7 @@ public final class DensityAppWithDensityResultRobTest extends AbstractDensityApp
         assertTrue("The number of resolutions is incorrect", currentListViews.get(0).getCount() > 1);
         assertDensityCalc(2, new ScreenSize(3, 2), new Resolution(320, 240), new DensityResult(125, "LDPI"));
         assertDensityCalc(4, new ScreenSize(3, 1), new Resolution(480, 320), new DensityResult(186, "MDPI"));
-        assertDensityCalc(6, new ScreenSize(3, 1), new Resolution(800, 480), new DensityResult(301, "HDPI"));
-        assertDensityCalc(9, new ScreenSize(3, 5), new Resolution(1024, 600), new DensityResult(339, "XHDPI"));
+        assertDensityCalc(4, new ScreenSize(2, 2), new Resolution(480, 320), new DensityResult(262, "HDPI"));
     }
 
     private void assertDensityCalc(final int index, final ScreenSize screenSize, final Resolution reso, final DensityResult densityResult) {
