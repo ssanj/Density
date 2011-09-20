@@ -15,6 +15,7 @@ import com.jayway.android.robotium.solo.Solo;
 import com.robodreamz.density.DensityAppActivity;
 import com.robodreamz.density.R;
 import com.robodreamz.density.calc.DensitySifter;
+import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionElement;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentati
     }
 
     @Override protected void setUp() throws Exception {
+        ResolutionData.reset();
         super.setUp();
         solo = new Solo(getInstrumentation(), getActivity());
     }
@@ -119,6 +121,7 @@ public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentati
     @Override protected void tearDown() throws Exception {
         try {
             solo.finalize();
+            ResolutionData.reset();
         } catch (Throwable e) {
             e.printStackTrace();
         }

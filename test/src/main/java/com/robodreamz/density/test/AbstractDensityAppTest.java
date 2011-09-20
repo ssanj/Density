@@ -20,8 +20,8 @@ public abstract class AbstractDensityAppTest extends ActivityInstrumentationTest
     }
 
     @Override protected void setUp() throws Exception {
-        super.setUp();
         ResolutionData.reset();
+        super.setUp();
         solo = new Solo(getInstrumentation(), getActivity());
     }
 
