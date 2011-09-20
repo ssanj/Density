@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.jayway.android.robotium.solo.Solo;
 import com.robodreamz.density.DensityAppActivity;
 import com.robodreamz.density.R;
+import com.robodreamz.density.resolution.ResolutionData;
 
 public abstract class AbstractDensityAppTest extends ActivityInstrumentationTestCase2<DensityAppActivity> {
 
@@ -20,6 +21,7 @@ public abstract class AbstractDensityAppTest extends ActivityInstrumentationTest
 
     @Override protected void setUp() throws Exception {
         super.setUp();
+        ResolutionData.reset();
         solo = new Solo(getInstrumentation(), getActivity());
     }
 
@@ -36,6 +38,7 @@ public abstract class AbstractDensityAppTest extends ActivityInstrumentationTest
    @Override protected void tearDown() throws Exception {
         try {
             solo.finalize();
+            ResolutionData.reset();
         } catch (Throwable e) {
             e.printStackTrace();
         }

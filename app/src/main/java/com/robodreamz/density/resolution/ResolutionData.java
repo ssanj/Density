@@ -34,4 +34,12 @@ public final class ResolutionData {
     public static ResolutionItem[] getData() {
         return RESOLUTIONS;
     }
+
+    public static void reset() {
+        INDEX_PAIR.update(-1);
+
+        for (int index = 1; index < RESOLUTIONS.length; index++) {
+            RESOLUTIONS[index].uncheck();
+        }
+    }
 }
