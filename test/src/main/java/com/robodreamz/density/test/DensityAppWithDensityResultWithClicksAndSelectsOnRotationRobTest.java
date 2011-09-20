@@ -158,7 +158,7 @@ public final class DensityAppWithDensityResultWithClicksAndSelectsOnRotationRobT
     private void clickOnListAndAssert(final int index, final Resolution resolution) throws Throwable {
         final ListView listView = getResolutionList();
 
-        this.runTestOnUiThread(new Runnable() {
+        runTestOnUiThread(new Runnable() {
             @Override public void run() {
                 listView.performItemClick(null, index, index);
             }
@@ -172,12 +172,6 @@ public final class DensityAppWithDensityResultWithClicksAndSelectsOnRotationRobT
         ResolutionElement item = (ResolutionElement) listView.getAdapter().getItem(index);
         assertEquals("Incorrect width", resolution.width, item.width);
         assertEquals("Incorrect height", resolution.height, item.height);
-    }
-
-    private ListView getResolutionList() {
-        final ListView listView = (ListView) solo.getCurrentActivity().findViewById(R.id.app_screen_resolution_list);
-        assertNotNull("ResolutionList is null", listView);
-        return listView;
     }
 
     private void setAndAssertSliders(final ScreenSize screenSize) {

@@ -8,12 +8,14 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.Suppress;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.jayway.android.robotium.solo.Solo;
 import com.robodreamz.density.DensityAppActivity;
 import com.robodreamz.density.R;
 import com.robodreamz.density.calc.DensitySifter;
+import com.robodreamz.density.resolution.ResolutionElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,12 +86,19 @@ public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentati
         assertTrue("Did not find expected screen size of 7.4", solo.searchText("3.2"));
     }
 
-    @Suppress public void testShouldUpdateDensityIfAResolutionItemIsSelected() {
+    public void testShouldUpdateDensityIfAResolutionItemIsSelected() throws Throwable {
         final List<ProgressBar> currentProgressBars = waitForActivityAndAssertProgressBars();
+        final int index = 3;
+        final ListView resolutionList = getResolutionList();
+        runTestOnUiThread(new Runnable() {
+            @Override public void run() {
+                resolutionList.performItemClick(null, index, index);
+            }
+        });
 
-        final List<TextView> textViews = solo.clickInList(4);
-        assertEquals("Incorrect width", "480", textViews.get(0).getText());
-        assertEquals("Incorrect height", "320", textViews.get(2).getText());
+        final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(index);
+        assertEquals("Incorrect width", "480", String.valueOf(item.width));
+        assertEquals("Incorrect height", "320", String.valueOf(item.height));
 
         solo.setProgressBar(currentProgressBars.get(0), 1);//3
         solo.setProgressBar(currentProgressBars.get(1), 5);//.5
@@ -99,6 +108,12 @@ public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentati
 
         assertEquals("Incorrect density value", "165", densityValue.getText());
         assertEquals("Incorrect density category", DensitySifter.DPI.MDPI.toString(), densityCategory.getText());
+    }
+
+    protected ListView getResolutionList() {
+        final ListView listView = (ListView) solo.getCurrentActivity().findViewById(R.id.app_screen_resolution_list);
+        assertNotNull("ResolutionList is null", listView);
+        return listView;
     }
 
     @Override protected void tearDown() throws Exception {
