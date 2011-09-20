@@ -4,6 +4,7 @@
  */
 package com.robodreamz.density.test;
 
+import android.test.suitebuilder.annotation.Suppress;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.robodreamz.density.R;
@@ -12,9 +13,8 @@ import java.util.List;
 
 public final class DensityAppWithResolutionListRobTest extends AbstractDensityAppTest {
 
-    public void testResolutionsAreDisplayed() {
+    @Suppress public void testResolutionsAreDisplayed() {
         waitForApplicationActivity();
-        assertTrue("Did not find header text", solo.waitForText("Common", 1, 2000, true));
 
         final List<ListView> currentListViews = solo.getCurrentListViews();
         assertEquals("The number of ListsViews on the screen is incorrect", 1, currentListViews.size());

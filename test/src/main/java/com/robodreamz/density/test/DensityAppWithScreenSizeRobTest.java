@@ -7,7 +7,7 @@ package com.robodreamz.density.test;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
+import android.test.suitebuilder.annotation.Suppress;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.jayway.android.robotium.solo.Solo;
@@ -84,7 +84,7 @@ public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentati
         assertTrue("Did not find expected screen size of 7.4", solo.searchText("3.2"));
     }
 
-    public void testShouldUpdateDensityIfAResolutionItemIsSelected() {
+    @Suppress public void testShouldUpdateDensityIfAResolutionItemIsSelected() {
         final List<ProgressBar> currentProgressBars = waitForActivityAndAssertProgressBars();
 
         final List<TextView> textViews = solo.clickInList(4);
