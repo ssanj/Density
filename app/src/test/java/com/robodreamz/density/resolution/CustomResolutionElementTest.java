@@ -9,6 +9,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public final class CustomResolutionElementTest {
 
@@ -16,9 +19,11 @@ public final class CustomResolutionElementTest {
     private static final int HEIGHT = 400;
 
     private CustomResolutionElement element;
+    private ResolutionElement mockResolutionElement;
 
     @Before public void setup() {
-        element = new CustomResolutionElement(WIDTH, HEIGHT);
+        mockResolutionElement = mock(ResolutionElement.class);
+        element = new CustomResolutionElement(WIDTH, HEIGHT, mockResolutionElement);
     }
 
     @Test public void shouldImplementResolutionItem() {
@@ -27,10 +32,14 @@ public final class CustomResolutionElementTest {
     }
 
     @Test public void shouldReturnHeight() {
+        when(mockResolutionElement.getHeight()).thenReturn(HEIGHT);
         assertEquals("Incorrect height returned", HEIGHT, element.getHeight());
+        verify(mockResolutionElement).getHeight();
     }
 
     @Test public void shouldReturnWidth() {
+        when(mockResolutionElement.getWidth()).thenReturn(WIDTH);
         assertEquals("Incorrect width returned", WIDTH, element.getWidth());
+        verify(mockResolutionElement).getWidth();
     }
 }

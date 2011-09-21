@@ -9,12 +9,10 @@ import com.robodreamz.density.delegate.ViewDelegate;
 
 public final class CustomResolutionElement implements ResolutionItem {
 
-    private int width;
-    private int height;
+    private ResolutionElement delegate;
 
-    public CustomResolutionElement(final int width, final int height) {
-        this.width = width;
-        this.height = height;
+    public CustomResolutionElement(final int width, final int height, final ResolutionElement delegate) {
+        this.delegate = delegate;
     }
 
     @Override public boolean isEnabled() {
@@ -46,10 +44,10 @@ public final class CustomResolutionElement implements ResolutionItem {
     }
 
     public int getHeight() {
-        return height;
+        return delegate.getHeight();
     }
 
     public int getWidth() {
-        return width;
+        return delegate.getWidth();
     }
 }
