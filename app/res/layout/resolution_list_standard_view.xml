@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="center"
+              android:orientation="horizontal">
+    <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              style="@style/ResolutionValue"
+              android:id="@+id/resolution_list_view_width"
+    />
+    <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              android:text="@string/resolution_separator"
+              style="@style/ResolutionMultiplier"
+              android:id="@+id/resolution_list_view_separator"
+    />
+    <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              style="@style/ResolutionValue"
+              android:id="@+id/resolution_list_view_height"
+    />
+</LinearLayout>

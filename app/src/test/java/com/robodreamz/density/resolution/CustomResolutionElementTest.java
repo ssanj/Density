@@ -4,6 +4,7 @@
  */
 package com.robodreamz.density.resolution;
 
+import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 public final class CustomResolutionElementTest {
@@ -84,6 +86,11 @@ public final class CustomResolutionElementTest {
 
     @Test public void shouldDelegateIsNotChecked() {
         assertChecked(false);
+    }
+
+    @Test public void shouldNotDelegateElementLayout() {
+        assertEquals("Incorrect layoutid returned", R.layout.resolution_list_custom_view, element.getElementLayoutId());
+        verifyZeroInteractions(mockResolutionElement);
     }
 
     private void assertChecked(final boolean checked) {

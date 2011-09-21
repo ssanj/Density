@@ -105,7 +105,7 @@ public final class StandardResolutionElementTest {
 
         when(mockViewDelegateInput.isNull()).thenReturn(false);
         when(mockViewDelegateInput.hasTag(ResolutionItem.ViewType.ELEMENT)).thenReturn(false);
-        when(mockLayoutInflaterDelegate.inflate(R.layout.resolution_list_view)).thenReturn(mockViewDelegateOutput);
+        when(mockLayoutInflaterDelegate.inflate(R.layout.resolution_list_standard_view)).thenReturn(mockViewDelegateOutput);
         when(mockViewDelegateOutput.findViewById(R.id.resolution_list_view_width)).thenReturn(mockWidthText);
         when(mockViewDelegateOutput.findViewById(R.id.resolution_list_view_height)).thenReturn(mockHeightText);
 
@@ -126,7 +126,7 @@ public final class StandardResolutionElementTest {
         final TextViewDelegate mockHeightText = mock(TextViewDelegate.class);
 
         when(mockViewDelegateInput.isNull()).thenReturn(true);
-        when(mockLayoutInflaterDelegate.inflate(R.layout.resolution_list_view)).thenReturn(mockViewDelegateOutput);
+        when(mockLayoutInflaterDelegate.inflate(R.layout.resolution_list_standard_view)).thenReturn(mockViewDelegateOutput);
         when(mockViewDelegateOutput.findViewById(R.id.resolution_list_view_width)).thenReturn(mockWidthText);
         when(mockViewDelegateOutput.findViewById(R.id.resolution_list_view_height)).thenReturn(mockHeightText);
 

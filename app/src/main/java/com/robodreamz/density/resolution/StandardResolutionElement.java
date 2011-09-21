@@ -30,7 +30,7 @@ public class StandardResolutionElement implements ResolutionElement {
     }
 
     @Override public int getElementLayoutId() {
-        return R.layout.resolution_list_view;
+        return R.layout.resolution_list_standard_view;
     }
 
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {

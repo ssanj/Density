@@ -4,6 +4,7 @@
  */
 package com.robodreamz.density.resolution;
 
+import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
 
@@ -24,7 +25,7 @@ public final class CustomResolutionElement implements ResolutionItem {
     }
 
     @Override public int getElementLayoutId() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return R.layout.resolution_list_custom_view;
     }
 
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
