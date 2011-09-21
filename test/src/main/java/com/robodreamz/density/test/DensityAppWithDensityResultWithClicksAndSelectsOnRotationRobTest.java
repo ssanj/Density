@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.robodreamz.density.R;
 import com.robodreamz.density.resolution.ResolutionData;
-import com.robodreamz.density.resolution.ResolutionElement;
+import com.robodreamz.density.resolution.StandardResolutionElement;
 import com.robodreamz.density.test.common.DensityResult;
 import com.robodreamz.density.test.common.Resolution;
 import com.robodreamz.density.test.common.ScreenSize;
@@ -139,7 +139,7 @@ public final class DensityAppWithDensityResultWithClicksAndSelectsOnRotationRobT
         waitFor(50);//wait here for selections to be updated
 
         assertEquals("Incorrect resolution selected", index, ResolutionData.INDEX_PAIR.getCurrentIndex());
-        final ResolutionElement element = (ResolutionElement) listView.getAdapter().getItem(ResolutionData.INDEX_PAIR.getCurrentIndex());
+        final StandardResolutionElement element = (StandardResolutionElement) listView.getAdapter().getItem(ResolutionData.INDEX_PAIR.getCurrentIndex());
         assertTrue("Incorrect resolution item: " + index + ", is not checked", element.isChecked());
     }
 
@@ -147,7 +147,7 @@ public final class DensityAppWithDensityResultWithClicksAndSelectsOnRotationRobT
         waitFor(50);//wait here for selections to be updated
         //we reduce the index by 1 here because we give focus to the first list item by default. So the number of items to move is reduced by 1.
         assertEquals("Incorrect resolution selected", index, listView.getSelectedItemPosition());
-        final ResolutionElement element = (ResolutionElement) listView.getAdapter().getItem(index);
+        final StandardResolutionElement element = (StandardResolutionElement) listView.getAdapter().getItem(index);
         assertTrue("Incorrect resolution item: " + index + ", is not checked", element.isChecked());
     }
 
@@ -169,7 +169,7 @@ public final class DensityAppWithDensityResultWithClicksAndSelectsOnRotationRobT
     }
 
     private void assertResolutionValues(final ListView listView, final int index, final Resolution resolution) {
-        ResolutionElement item = (ResolutionElement) listView.getAdapter().getItem(index);
+        StandardResolutionElement item = (StandardResolutionElement) listView.getAdapter().getItem(index);
         assertEquals("Incorrect width", resolution.width, item.width);
         assertEquals("Incorrect height", resolution.height, item.height);
     }

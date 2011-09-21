@@ -7,7 +7,6 @@ package com.robodreamz.density.test;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.suitebuilder.annotation.Suppress;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import com.robodreamz.density.DensityAppActivity;
 import com.robodreamz.density.R;
 import com.robodreamz.density.calc.DensitySifter;
 import com.robodreamz.density.resolution.ResolutionData;
-import com.robodreamz.density.resolution.ResolutionElement;
+import com.robodreamz.density.resolution.StandardResolutionElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +97,7 @@ public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentati
             }
         });
 
-        final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(index);
+        final StandardResolutionElement item = (StandardResolutionElement) resolutionList.getAdapter().getItem(index);
         assertEquals("Incorrect width", "480", String.valueOf(item.width));
         assertEquals("Incorrect height", "320", String.valueOf(item.height));
 

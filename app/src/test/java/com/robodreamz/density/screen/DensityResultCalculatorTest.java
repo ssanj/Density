@@ -11,7 +11,7 @@ import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
-import com.robodreamz.density.resolution.ResolutionElement;
+import com.robodreamz.density.resolution.StandardResolutionElement;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -97,7 +97,7 @@ public final class DensityResultCalculatorTest {
 
     private void assertListAdapter() {
         when(mockListView.getAdapter()).thenReturn(mockListAdapter);
-        when(mockListAdapter.getItem(itemPosition)).thenReturn(new ResolutionElement(width, height));
+        when(mockListAdapter.getItem(itemPosition)).thenReturn(new StandardResolutionElement(width, height));
     }
 
     private void assertScreenSize() {

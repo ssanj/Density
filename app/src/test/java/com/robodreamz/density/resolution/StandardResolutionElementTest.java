@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.core.IsSame.sameInstance;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -20,12 +21,28 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public final class ResolutionElementTest {
+public final class StandardResolutionElementTest {
 
-    private ResolutionElement element;
+    private static final int WIDTH = 100;
+    private static final int HEIGHT = 200;
+
+    private StandardResolutionElement element;
 
     @Before public void setup() throws Exception {
-        element = new ResolutionElement(100, 200);
+        element = new StandardResolutionElement(WIDTH, HEIGHT);
+    }
+
+    @Test public void shouldImplementResolutionElemen() {
+        assertTrue("StandardResolutionElement does not implements ResolutionElement",
+                ResolutionElement.class.isAssignableFrom(StandardResolutionElement.class));
+    }
+
+    @Test public void shouldReturnWidth() {
+        assertEquals("Incorrect Width returned", WIDTH, element.getWidth());
+    }
+
+    @Test public void shouldReturnHeight() {
+        assertEquals("Incorrect Height returned", HEIGHT, element.getHeight());
     }
 
     @Test public void shouldBeEnabled() throws Exception {

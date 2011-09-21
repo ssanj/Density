@@ -29,8 +29,8 @@ public final class ResolutionData {
         return new ResolutionHeader();
     }
 
-    private static ResolutionElement resolutionElement(int width, int height) {
-        return new ResolutionElement(width, height);
+    private static StandardResolutionElement resolutionElement(int width, int height) {
+        return new StandardResolutionElement(width, height);
     }
 
     public static ResolutionItem[] getData() {
