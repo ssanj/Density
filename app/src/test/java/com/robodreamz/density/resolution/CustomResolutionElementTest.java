@@ -4,6 +4,8 @@
  */
 package com.robodreamz.density.resolution;
 
+import com.robodreamz.density.delegate.LayoutInflaterDelegate;
+import com.robodreamz.density.delegate.ViewDelegate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +25,7 @@ public final class CustomResolutionElementTest {
 
     @Before public void setup() {
         mockResolutionElement = mock(ResolutionElement.class);
-        element = new CustomResolutionElement(WIDTH, HEIGHT, mockResolutionElement);
+        element = new CustomResolutionElement(mockResolutionElement);
     }
 
     @Test public void shouldImplementResolutionItem() {
@@ -41,5 +43,58 @@ public final class CustomResolutionElementTest {
         when(mockResolutionElement.getWidth()).thenReturn(WIDTH);
         assertEquals("Incorrect width returned", WIDTH, element.getWidth());
         verify(mockResolutionElement).getWidth();
+    }
+
+    @Test public void shouldDelegateIsEnabled() {
+        assertIsEnabled(true);
+    }
+
+    @Test public void shouldDelegateIsNotEnabled() {
+        assertIsEnabled(false);
+    }
+
+    @Test public void shouldDelegateViewCreation() {
+        final LayoutInflaterDelegate mockInflater = mock(LayoutInflaterDelegate.class);
+        final ViewDelegate mockOldView = mock(ViewDelegate.class);
+        final ViewDelegate mockNewView = mock(ViewDelegate.class);
+        when(mockResolutionElement.getView(mockInflater, mockOldView)).thenReturn(mockNewView);
+        assertEquals("Incorrect ViewDelegate returned", mockNewView, element.getView(mockInflater, mockOldView));
+        verify(mockResolutionElement).getView(mockInflater, mockOldView);
+    }
+
+    @Test public void shouldDelegateViewType() {
+        when(mockResolutionElement.getViewType()).thenReturn(ResolutionItem.ViewType.ELEMENT);
+        assertEquals("Incorrect view type returned", ResolutionItem.ViewType.ELEMENT, element.getViewType());
+        verify(mockResolutionElement).getViewType();
+    }
+
+    @Test public void shouldDelegateCheck() {
+        element.check();
+        verify(mockResolutionElement).check();
+    }
+
+    @Test public void shouldDelegateUnCheck() {
+        element.uncheck();
+        verify(mockResolutionElement).uncheck();
+    }
+
+    @Test public void shouldDelegateIsChecked() {
+        assertChecked(true);
+    }
+
+    @Test public void shouldDelegateIsNotChecked() {
+        assertChecked(false);
+    }
+
+    private void assertChecked(final boolean checked) {
+        when(mockResolutionElement.isChecked()).thenReturn(checked);
+        assertEquals("Incorrect checked status returned", checked, element.isChecked());
+        verify(mockResolutionElement).isChecked();
+    }
+
+    private void assertIsEnabled(final boolean enabled) {
+        when(mockResolutionElement.isEnabled()).thenReturn(enabled);
+        assertEquals("Should have been enabled", enabled, element.isEnabled());
+        verify(mockResolutionElement).isEnabled();
     }
 }

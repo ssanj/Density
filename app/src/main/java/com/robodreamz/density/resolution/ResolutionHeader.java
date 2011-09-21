@@ -14,7 +14,7 @@ public final class ResolutionHeader implements ResolutionItem {
         return false;
     }
 
-    @Override public ViewType getElementType() {
+    @Override public ViewType getViewType() {
         return ViewType.HEADER;
     }
 
@@ -24,9 +24,9 @@ public final class ResolutionHeader implements ResolutionItem {
 
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
         ViewDelegate viewDelegate;
-        if (view.isNull() || !view.hasTag(getElementType())) {
+        if (view.isNull() || !view.hasTag(getViewType())) {
             viewDelegate = layoutInflater.inflate(getElementLayoutId());
-            viewDelegate.setTag(getElementType());
+            viewDelegate.setTag(getViewType());
         } else {
             viewDelegate = view;
         }

@@ -25,7 +25,7 @@ public class StandardResolutionElement implements ResolutionElement {
         return true;
     }
 
-    @Override public ViewType getElementType() {
+    @Override public ViewType getViewType() {
         return ViewType.ELEMENT;
     }
 
@@ -35,9 +35,9 @@ public class StandardResolutionElement implements ResolutionElement {
 
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
         ViewDelegate viewDelegate;
-        if (view.isNull() || !view.hasTag(getElementType())) {
+        if (view.isNull() || !view.hasTag(getViewType())) {
             viewDelegate = layoutInflater.inflate(getElementLayoutId());
-            viewDelegate.setTag(getElementType());
+            viewDelegate.setTag(getViewType());
         } else {
             viewDelegate = view;
         }

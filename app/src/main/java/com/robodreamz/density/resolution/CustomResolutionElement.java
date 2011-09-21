@@ -11,16 +11,16 @@ public final class CustomResolutionElement implements ResolutionItem {
 
     private ResolutionElement delegate;
 
-    public CustomResolutionElement(final int width, final int height, final ResolutionElement delegate) {
+    public CustomResolutionElement(final ResolutionElement delegate) {
         this.delegate = delegate;
     }
 
     @Override public boolean isEnabled() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return delegate.isEnabled();
     }
 
-    @Override public ViewType getElementType() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    @Override public ViewType getViewType() {
+        return delegate.getViewType();
     }
 
     @Override public int getElementLayoutId() {
@@ -28,19 +28,19 @@ public final class CustomResolutionElement implements ResolutionItem {
     }
 
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return delegate.getView(layoutInflater, view);
     }
 
     @Override public void check() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        delegate.check();
     }
 
     @Override public boolean isChecked() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return delegate.isChecked();
     }
 
     @Override public void uncheck() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        delegate.uncheck();
     }
 
     public int getHeight() {
