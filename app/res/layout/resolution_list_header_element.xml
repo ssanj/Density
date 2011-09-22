@@ -3,13 +3,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              style="@style/ResolutionCommonHeaderLayout"
               >
     <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:layout_weight="1"
-              style="@style/ResolutionCommonHeader"
+              style="@style/ResolutionCommonHeaderLabel"
               android:id="@+id/resolution_list_header_element_title"
               android:text="@string/resolution_list_header_element_title"
     />
@@ -18,7 +15,6 @@
               android:layout_height="wrap_content"
               android:gravity="center"
               style="@style/CustomResolutionCommonHeader"
-
               android:id="@+id/resolution_list_header_element_customization"
               android:text="@string/resolution_list_header_element_customization"
     />
