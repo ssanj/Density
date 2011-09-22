@@ -51,6 +51,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ResolutionMultiplier.Custom">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
     <style name="DensityResultLayout">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
