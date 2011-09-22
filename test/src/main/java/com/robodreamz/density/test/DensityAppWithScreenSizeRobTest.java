@@ -15,7 +15,7 @@ import com.robodreamz.density.DensityAppActivity;
 import com.robodreamz.density.R;
 import com.robodreamz.density.calc.DensitySifter;
 import com.robodreamz.density.resolution.ResolutionData;
-import com.robodreamz.density.resolution.StandardResolutionElement;
+import com.robodreamz.density.resolution.ResolutionElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,9 +97,9 @@ public final class DensityAppWithScreenSizeRobTest extends ActivityInstrumentati
             }
         });
 
-        final StandardResolutionElement item = (StandardResolutionElement) resolutionList.getAdapter().getItem(index);
-        assertEquals("Incorrect width", "480", String.valueOf(item.width));
-        assertEquals("Incorrect height", "320", String.valueOf(item.height));
+        final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(index);
+        assertEquals("Incorrect width", "480", String.valueOf(item.getWidth()));
+        assertEquals("Incorrect height", "320", String.valueOf(item.getHeight()));
 
         solo.setProgressBar(currentProgressBars.get(0), 1);//3
         solo.setProgressBar(currentProgressBars.get(1), 5);//.5

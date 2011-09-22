@@ -4,16 +4,20 @@
  */
 package com.robodreamz.density.resolution;
 
+import android.view.View;
+import android.widget.Toast;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
 
-public final class CustomResolutionElement implements ResolutionItem {
+public final class CustomResolutionElement implements ResolutionElement {
 
     private ResolutionElement delegate;
 
     public CustomResolutionElement(final ResolutionElement delegate) {
         this.delegate = delegate;
+        delegate.setElementLayoutId(R.layout.resolution_list_custom_view);
+        delegate.setViewType(ViewType.CUSTOM_ELEMENT);
     }
 
     @Override public boolean isEnabled() {
@@ -25,7 +29,7 @@ public final class CustomResolutionElement implements ResolutionItem {
     }
 
     @Override public int getElementLayoutId() {
-        return R.layout.resolution_list_custom_view;
+        return delegate.getElementLayoutId();
     }
 
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
@@ -46,6 +50,14 @@ public final class CustomResolutionElement implements ResolutionItem {
 
     public int getHeight() {
         return delegate.getHeight();
+    }
+
+    @Override public void setElementLayoutId(final int layoutId) {
+        delegate.setElementLayoutId(layoutId);
+    }
+
+    @Override public void setViewType(final ViewType viewType) {
+        delegate.setViewType(viewType);
     }
 
     public int getWidth() {

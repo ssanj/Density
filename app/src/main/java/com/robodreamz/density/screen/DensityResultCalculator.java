@@ -11,9 +11,9 @@ import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.delegate.TextViewDelegate;
-import com.robodreamz.density.resolution.ResolutionData;
-import com.robodreamz.density.resolution.StandardResolutionElement;
 import com.robodreamz.density.resolution.ClickableItems;
+import com.robodreamz.density.resolution.ResolutionData;
+import com.robodreamz.density.resolution.ResolutionElement;
 
 public class DensityResultCalculator {
 
@@ -39,9 +39,9 @@ public class DensityResultCalculator {
         TextViewDelegate value = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_text);
         TextViewDelegate category = (TextViewDelegate) delegate.findViewById(R.id.density_result_density_value_category);
 
-        final StandardResolutionElement item = (StandardResolutionElement) resolutionList.getAdapter().getItem(position);
+        final ResolutionElement item = (ResolutionElement) resolutionList.getAdapter().getItem(position);
         final DensityCalculator.DensityCaluclation calculation =
-                calculator.getDensityFor(item.width, item.height, resolver.getScreenDiagonal(delegate));
+                calculator.getDensityFor(item.getWidth(), item.getHeight(), resolver.getScreenDiagonal(delegate));
 
         if (calculation.isValid()) {
             value.setText(String.valueOf(calculation.getResult()));

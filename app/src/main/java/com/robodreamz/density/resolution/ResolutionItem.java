@@ -9,7 +9,7 @@ import com.robodreamz.density.delegate.ViewDelegate;
 
 public interface ResolutionItem {
 
-    enum ViewType {ELEMENT, HEADER}
+    enum ViewType {ELEMENT, HEADER, CUSTOM_ELEMENT}
 
     boolean isEnabled();
 

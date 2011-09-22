@@ -17,8 +17,8 @@ public final class ResolutionData {
         resolutionElement(960, 540),
         resolutionElement(1024, 600) /* Samsung Galaxy Tab*/,
         resolutionElement(1200, 800),
-        resolutionElement(410, 360),
-        resolutionElement(873, 510),
+        customResolutionElement(410, 360),
+        customResolutionElement(873, 510),
     };
 
     //TODO: We should get the -1 from Constants.
@@ -31,6 +31,10 @@ public final class ResolutionData {
 
     private static StandardResolutionElement resolutionElement(int width, int height) {
         return new StandardResolutionElement(width, height);
+    }
+
+    private static CustomResolutionElement customResolutionElement(int width, int height) {
+        return new CustomResolutionElement(resolutionElement(width, height));
     }
 
     public static ResolutionItem[] getData() {

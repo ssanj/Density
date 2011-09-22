@@ -4,6 +4,7 @@
  */
 package com.robodreamz.density.delegate;
 
+import android.content.DialogInterface;
 import android.view.View;
 
 public class ViewDelegate implements Delegate<View> {
@@ -46,6 +47,12 @@ public class ViewDelegate implements Delegate<View> {
 
     public boolean isInTouchMode() {
         return !isNull() && (view).isInTouchMode();
+    }
+
+    public void setOnClickListener(final View.OnClickListener listener) {
+        if (!isNull()) {
+            view.setOnClickListener(listener);
+        }
     }
 
     public boolean isNull() {

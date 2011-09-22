@@ -7,6 +7,7 @@ package com.robodreamz.density.resolution;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,13 +15,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 public final class CustomResolutionElementTest {
 
     private static final int WIDTH = 300;
     private static final int HEIGHT = 400;
+    private static final ResolutionItem.ViewType ELEMENT_TYPE = ResolutionItem.ViewType.CUSTOM_ELEMENT;
+    private static final int LAYOUT_ID = R.layout.resolution_list_custom_view;
 
     private CustomResolutionElement element;
     private ResolutionElement mockResolutionElement;
@@ -30,9 +32,14 @@ public final class CustomResolutionElementTest {
         element = new CustomResolutionElement(mockResolutionElement);
     }
 
-    @Test public void shouldImplementResolutionItem() {
-        assertTrue("CustomResolutionElement does not implement ResolutionItem",
-                ResolutionItem.class.isAssignableFrom(CustomResolutionElement.class));
+    @After public void teardown() {
+        verify(mockResolutionElement).setViewType(ELEMENT_TYPE);
+        verify(mockResolutionElement).setElementLayoutId(LAYOUT_ID);
+    }
+
+    @Test public void shouldImplementResolutionElement() {
+        assertTrue("CustomResolutionElement does not implement ResolutionElement",
+                ResolutionElement.class.isAssignableFrom(CustomResolutionElement.class));
     }
 
     @Test public void shouldReturnHeight() {
@@ -65,8 +72,8 @@ public final class CustomResolutionElementTest {
     }
 
     @Test public void shouldDelegateViewType() {
-        when(mockResolutionElement.getViewType()).thenReturn(ResolutionItem.ViewType.ELEMENT);
-        assertEquals("Incorrect view type returned", ResolutionItem.ViewType.ELEMENT, element.getViewType());
+        when(mockResolutionElement.getViewType()).thenReturn(ELEMENT_TYPE);
+        assertEquals("Incorrect view type returned", ELEMENT_TYPE, element.getViewType());
         verify(mockResolutionElement).getViewType();
     }
 
@@ -88,9 +95,10 @@ public final class CustomResolutionElementTest {
         assertChecked(false);
     }
 
-    @Test public void shouldNotDelegateElementLayout() {
-        assertEquals("Incorrect layoutid returned", R.layout.resolution_list_custom_view, element.getElementLayoutId());
-        verifyZeroInteractions(mockResolutionElement);
+    @Test public void shouldDelegateElementLayout() {
+        when(mockResolutionElement.getElementLayoutId()).thenReturn(LAYOUT_ID);
+        assertEquals("Incorrect layoutid returned", LAYOUT_ID, element.getElementLayoutId());
+        verify(mockResolutionElement).getElementLayoutId();
     }
 
     private void assertChecked(final boolean checked) {

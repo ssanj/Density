@@ -15,6 +15,8 @@ public class StandardResolutionElement implements ResolutionElement {
     public final int width;
     public final int height;
     private boolean checked;
+    private int layoutId = R.layout.resolution_list_standard_view;
+    private ViewType viewType = ViewType.ELEMENT;
 
     public StandardResolutionElement(final int width, final int height) {
         this.width = width;
@@ -26,11 +28,11 @@ public class StandardResolutionElement implements ResolutionElement {
     }
 
     @Override public ViewType getViewType() {
-        return ViewType.ELEMENT;
+        return viewType;
     }
 
     @Override public int getElementLayoutId() {
-        return R.layout.resolution_list_standard_view;
+        return layoutId;
     }
 
     @Override public ViewDelegate getView(final LayoutInflaterDelegate layoutInflater, final ViewDelegate view) {
@@ -74,5 +76,13 @@ public class StandardResolutionElement implements ResolutionElement {
 
     @Override public int getHeight() {
         return height;
+    }
+
+    @Override public void setElementLayoutId(final int layoutId) {
+        this.layoutId = layoutId;
+    }
+
+    @Override public void setViewType(final ViewType viewType) {
+        this.viewType = viewType;
     }
 }

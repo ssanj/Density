@@ -26,7 +26,7 @@ public final class StandardResolutionElementTest {
     private static final int WIDTH = 100;
     private static final int HEIGHT = 200;
 
-    private StandardResolutionElement element;
+    private ResolutionElement element;
 
     @Before public void setup() throws Exception {
         element = new StandardResolutionElement(WIDTH, HEIGHT);

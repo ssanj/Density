@@ -9,4 +9,8 @@ public interface ResolutionElement extends ResolutionItem {
     int getWidth();
 
     int getHeight();
+
+    void setElementLayoutId(int layoutId);
+
+    void setViewType(ViewType viewType);
 }
