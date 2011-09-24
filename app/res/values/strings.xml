@@ -7,4 +7,7 @@
     <string name="resolution_list_header_element_title">Resolution</string>
     <string name="resolution_list_header_element_customization">+</string>
     <string name="density_result_density_value_unit">dpi</string>
+    <string name="delete_resolution_title">Delete Resolution</string>
+    <string name="yes_button_title">Yes</string>
+    <string name="no_button_title">No</string>
 </resources>
