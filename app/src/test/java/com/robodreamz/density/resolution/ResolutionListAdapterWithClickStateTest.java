@@ -13,6 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -37,7 +40,7 @@ public final class ResolutionListAdapterWithClickStateTest {
     private ResolutionItem mockResolutionItemElement5;
     private Constants mockConstants;
     private int oldCurrentIndex;
-    private ResolutionItem[] mockResolutionItems;
+    private List<ResolutionItem> mockResolutionItems;
 
     @Before public void setUp() throws Exception {
         mockLayoutInflater = mock(LayoutInflaterDelegate.class);
@@ -123,13 +126,13 @@ public final class ResolutionListAdapterWithClickStateTest {
         assertEquals("Incorrect current index position", PREVIOUSLY_SELECTED_INDEX, ResolutionData.INDEX_PAIR.getCurrentIndex());
     }
 
-    private ResolutionItem[] createResolutionItems() {
-        return new ResolutionItem[] {
+    private List<ResolutionItem> createResolutionItems() {
+        return Arrays.asList (
                 mockResolutionItemHeader,
                 mockResolutionItemElement1,
                 mockResolutionItemElement2,
                 mockResolutionItemElement3,
                 mockResolutionItemElement4,
-                mockResolutionItemElement5};
+                mockResolutionItemElement5);
     }
 }

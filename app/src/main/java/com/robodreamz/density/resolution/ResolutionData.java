@@ -4,6 +4,8 @@
  */
 package com.robodreamz.density.resolution;
 
+import com.robodreamz.density.DensityApplication;
+
 public final class ResolutionData {
 
     private static final ResolutionItem[] RESOLUTIONS = {
@@ -21,9 +23,9 @@ public final class ResolutionData {
         customResolutionElement(873, 510),
     };
 
-    //TODO: We should get the -1 from Constants.
-    public static final IndexPair INDEX_PAIR = new IndexPair(-1, -1);
+    private static int invalidPosition = DensityApplication.getConstants().getInvalidPositionIndex();
 
+    public static final IndexPair INDEX_PAIR = new IndexPair(invalidPosition, invalidPosition);
 
     private static ResolutionItem resolutionHeader() {
         return new ResolutionHeader();
@@ -42,7 +44,7 @@ public final class ResolutionData {
     }
 
     public static void reset() {
-        INDEX_PAIR.update(-1);
+        INDEX_PAIR.update(invalidPosition);
 
         for (int index = 1; index < RESOLUTIONS.length; index++) {
             RESOLUTIONS[index].uncheck();

@@ -41,4 +41,8 @@ public final class ResolutionHeader implements ResolutionItem {
     }
 
     @Override public void uncheck() { }
+
+    @Override public void markedForDeletion() { }
+
+    @Override public void unmarkForDeletion() { }
 }

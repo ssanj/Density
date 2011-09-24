@@ -16,6 +16,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertEquals;
@@ -77,8 +80,8 @@ public final class ResolutionListAdapterTest {
         assertFalse("All items should be disabled except those that return true from isEnabled.", adapter.areAllItemsEnabled());
     }
 
-    private ResolutionItem[] createResolutionItems() {
-        return new ResolutionItem[] {mockResolutionItemHeader, mockResolutionItemElement0, mockResolutionItemElement1};
+    private List<ResolutionItem> createResolutionItems() {
+        return Arrays.asList(mockResolutionItemHeader, mockResolutionItemElement0, mockResolutionItemElement1);
     }
 
     private void assertCreatesView(final View viewInput) {

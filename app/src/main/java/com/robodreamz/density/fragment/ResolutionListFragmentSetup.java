@@ -4,6 +4,8 @@
  */
 package com.robodreamz.density.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.AdapterView;
 import com.robodreamz.density.DensityApplication;
@@ -15,8 +17,14 @@ import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.resolution.ClickableItems;
 import com.robodreamz.density.resolution.ResolutionData;
+import com.robodreamz.density.resolution.ResolutionElement;
+import com.robodreamz.density.resolution.ResolutionItem;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
 import com.robodreamz.density.screen.DensityResultCalculator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public final class ResolutionListFragmentSetup {
 
@@ -35,10 +43,18 @@ public final class ResolutionListFragmentSetup {
         final DelegateFactory factory = DensityApplication.getFactory();
         final LayoutInflaterDelegate layoutInflater = delegate.getLayoutInflater();
 
-        resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, ResolutionData.getData(),
+        resolutionList.setAdapter(new ResolutionListAdapter(layoutInflater, factory, getResolutionItems(),
                 DensityApplication.getConstants()));
         resolutionList.setOnItemClickListener(new ResolutionListClickListener(densityResultCalculator, resolutionList));
         resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator));
+        resolutionList.setOnItemLongClickListener(new ResolutionListLongClickListener(resolutionList, delegate));
+    }
+
+    List<ResolutionItem> getResolutionItems() {
+        final List<ResolutionItem> resolutionItems = new ArrayList<ResolutionItem>();
+        resolutionItems.addAll(Arrays.asList(ResolutionData.getData()));
+        //TODO: later we would merge custom and standard resolutions here.
+        return resolutionItems;
     }
 
     public void onResume(final Constants constants) {
@@ -96,6 +112,27 @@ public final class ResolutionListFragmentSetup {
 
         public void doOnItemSelected(final int position) {
             calculator.calculateDensity(position, listView);
+        }
+    }
+
+    static class ResolutionListLongClickListener implements AdapterView.OnItemLongClickListener {
+
+        private ListViewDelegate resolutionList;
+        private ActivityDelegate delegate;
+
+        public ResolutionListLongClickListener(final ListViewDelegate resolutionList, final ActivityDelegate delegate) {
+            this.resolutionList = resolutionList;
+            this.delegate = delegate;
+        }
+
+        @Override public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+            final ResolutionListAdapter adapter = (ResolutionListAdapter) resolutionList.getAdapter();
+            final ResolutionElement element = (ResolutionElement) adapter.getItem(position);
+            if (element.getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
+                adapter.markForDeletion(position);
+                delegate.showDialog(1000 + position);
+            }
+            return true;
         }
     }
 }

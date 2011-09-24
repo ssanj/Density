@@ -5,10 +5,13 @@
 package com.robodreamz.density.delegate;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.text.Layout;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.util.Map;
 
 public class ActivityDelegate implements Delegate<Activity> {
 
@@ -56,9 +59,15 @@ public class ActivityDelegate implements Delegate<Activity> {
         makeToast(message, Toast.LENGTH_SHORT);
     }
 
+    public void showDialog(int id) {
+        if (!isNull()) {
+            getDelegate().showDialog(id);
+        }
+    }
+
     private void makeToast(String message, int length) {
         if (!isNull()) {
-            Toast.makeText(activityRef.get(), message, length);
+            Toast.makeText(activityRef.get(), message, length).show();
         }
     }
 }

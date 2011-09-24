@@ -24,4 +24,8 @@ public interface ResolutionItem {
     boolean isChecked();
 
     void uncheck();
+
+    void markedForDeletion();
+
+    void unmarkForDeletion();
 }

@@ -4,8 +4,6 @@
  */
 package com.robodreamz.density.resolution;
 
-import android.view.View;
-import android.widget.Toast;
 import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
@@ -46,6 +44,14 @@ public final class CustomResolutionElement implements ResolutionElement {
 
     @Override public void uncheck() {
         delegate.uncheck();
+    }
+
+    @Override public void markedForDeletion() {
+        delegate.markedForDeletion();
+    }
+
+    @Override public void unmarkForDeletion() {
+        delegate.unmarkForDeletion();
     }
 
     public int getHeight() {

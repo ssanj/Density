@@ -17,6 +17,7 @@ public class StandardResolutionElement implements ResolutionElement {
     private boolean checked;
     private int layoutId = R.layout.resolution_list_standard_view;
     private ViewType viewType = ViewType.ELEMENT;
+    private boolean longClicked;
 
     public StandardResolutionElement(final int width, final int height) {
         this.width = width;
@@ -49,10 +50,14 @@ public class StandardResolutionElement implements ResolutionElement {
         widthDelegate.setText(String.valueOf(width));
         heightDelegate.setText(String.valueOf(height));
 
-        if (checked) {
-            viewDelegate.setBackground(Color.GREEN);
+        if (longClicked) {
+            viewDelegate.setBackground(Color.RED);
         } else {
-            viewDelegate.setBackground(Color.BLACK);
+            if (checked) {
+                viewDelegate.setBackground(Color.GREEN);
+            } else {
+                viewDelegate.setBackground(Color.BLACK);
+            }
         }
 
         return viewDelegate;
@@ -68,6 +73,14 @@ public class StandardResolutionElement implements ResolutionElement {
 
     @Override public void uncheck() {
         checked = false;
+    }
+
+    @Override public void markedForDeletion() {
+        longClicked = true;
+    }
+
+    @Override public void unmarkForDeletion() {
+        longClicked = false;
     }
 
     @Override public int getWidth() {

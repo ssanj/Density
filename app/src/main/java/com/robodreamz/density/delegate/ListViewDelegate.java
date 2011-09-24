@@ -40,6 +40,12 @@ public class ListViewDelegate extends ViewDelegate {
         }
     }
 
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
+        if (!isNull()) {
+            ((ListView) view).setOnItemLongClickListener(listener);
+        }
+    }
+
     public void setSelection(int position) {
         if (!isNull()) {
             ((ListView) view).setSelection(position);
