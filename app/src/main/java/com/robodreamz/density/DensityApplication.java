@@ -11,6 +11,9 @@ import com.robodreamz.density.calc.DensitySifter;
 import com.robodreamz.density.delegate.AndroidConstants;
 import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
+import com.robodreamz.density.fragment.DeleteCustomResolutionDialogBuilder;
+import com.robodreamz.density.fragment.OnDeletionSelectedPositionFinder;
+import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.ScreenSizeResolver;
 
@@ -20,11 +23,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class DensityApplication extends Application {
 
     public static final String TAG = "DensityApplication";
+    public static final int DENSITY_APP_DELETE_RESOLUTION_DIALOG = 1000;
     private static final DelegateFactory FACTORY = new DelegateFactory();
     private static final DensityCalculator CALCUALTOR = new DensityCalculator();
     private static final DensitySifter SIFTER = new DensitySifter();
     private static final ScreenSizeResolver RESOLVER = new ScreenSizeResolver();
     private static final Constants CONSTANTS = new AndroidConstants();
+    private static final OnDeletionSelectedPositionFinder ON_DELETION_SELECTED_POSITION_FINDER =
+            new OnDeletionSelectedPositionFinder(CONSTANTS.getInvalidPositionIndex());
+    private static final DeleteCustomResolutionDialogBuilder DELETE_CUSTOM_RESOLUTION_DIALOG_BUILDER = new DeleteCustomResolutionDialogBuilder();
 
     private final AtomicInteger windowCount = new AtomicInteger(0);
     private final AtomicBoolean appLaunched = new AtomicBoolean(false);
@@ -74,5 +81,13 @@ public final class DensityApplication extends Application {
 
     public static Constants getConstants() {
         return CONSTANTS;
+    }
+
+    public static OnDeletionSelectedPositionFinder getOnDeleteSelectionFinder() {
+        return ON_DELETION_SELECTED_POSITION_FINDER;
+    }
+
+    public static DeleteCustomResolutionDialogBuilder getDeleteCustomResolutionDialogBuilder() {
+        return DELETE_CUSTOM_RESOLUTION_DIALOG_BUILDER;
     }
 }

@@ -4,8 +4,6 @@
  */
 package com.robodreamz.density.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.AdapterView;
 import com.robodreamz.density.DensityApplication;
@@ -129,8 +127,9 @@ public final class ResolutionListFragmentSetup {
             final ResolutionListAdapter adapter = (ResolutionListAdapter) resolutionList.getAdapter();
             final ResolutionElement element = (ResolutionElement) adapter.getItem(position);
             if (element.getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
+                ResolutionData.DELETION_INDEX.set(position);
                 adapter.markForDeletion(position);
-                delegate.showDialog(1000 + position);
+                delegate.showDialog(DensityApplication.DENSITY_APP_DELETE_RESOLUTION_DIALOG);
             }
             return true;
         }

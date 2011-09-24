@@ -26,20 +26,18 @@ import static org.mockito.Mockito.when;
 public final class DeleteCustomResolutionDialogBuilderTest {
 
     private DeleteCustomResolutionDialogBuilder builder;
-    private ResolutionElement mockResolutionItem;
-    private Activity context;
 
     @Before public void setup() {
-        mockResolutionItem = mock(ResolutionElement.class);
-        context = new Activity();
-        builder = new DeleteCustomResolutionDialogBuilder(context, mockResolutionItem);
+        builder = new DeleteCustomResolutionDialogBuilder();
     }
 
     @Test public void shouldBuildDeleteCustomResolutionDialog() {
+        ResolutionElement mockResolutionItem = mock(ResolutionElement.class);
+        Activity context = new Activity();
         when(mockResolutionItem.getWidth()).thenReturn(320);
         when(mockResolutionItem.getHeight()).thenReturn(480);
 
-        final AlertDialog dlg = builder.create();
+        final AlertDialog dlg = builder.create(context, mockResolutionItem, null, null);
         final ShadowAlertDialog shadowDlg = shadowOf(dlg);
         assertEquals("Incorrect title", shadowDlg.getTitle(), context.getString(R.string.delete_resolution_title));
         assertEquals("Incorrect message", "Delete Resolution 320x480 ?", shadowDlg.getMessage());

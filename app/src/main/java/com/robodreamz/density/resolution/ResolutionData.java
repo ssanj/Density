@@ -6,6 +6,8 @@ package com.robodreamz.density.resolution;
 
 import com.robodreamz.density.DensityApplication;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public final class ResolutionData {
 
     private static final ResolutionItem[] RESOLUTIONS = {
@@ -26,6 +28,7 @@ public final class ResolutionData {
     private static int invalidPosition = DensityApplication.getConstants().getInvalidPositionIndex();
 
     public static final IndexPair INDEX_PAIR = new IndexPair(invalidPosition, invalidPosition);
+    public static final AtomicInteger DELETION_INDEX = new AtomicInteger(invalidPosition);
 
     private static ResolutionItem resolutionHeader() {
         return new ResolutionHeader();
