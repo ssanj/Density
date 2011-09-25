@@ -47,12 +47,12 @@ public final class CancelDeleteCustomResolutionDialogListenerTest {
         resolutionItems = new ArrayList<ResolutionItem>();
         spyAdapter = spy(new ResolutionListAdapter(mockInflater, mockFactory, resolutionItems, mockConstants));
         listener = new CancelDeleteCustomResolutionDialogListener(spyAdapter);
-        oldDeletionIndex = ResolutionData.DELETION_INDEX.get();
-        ResolutionData.DELETION_INDEX.set(POSITION);
+        oldDeletionIndex = ResolutionData.DELETION_INDEX.getValue();
+        ResolutionData.DELETION_INDEX.update(POSITION);
     }
 
     @After public void teardown() {
-        ResolutionData.DELETION_INDEX.set(oldDeletionIndex);
+        ResolutionData.DELETION_INDEX.update(oldDeletionIndex);
     }
 
     @Test public void shouldImplementOnClickListener() {

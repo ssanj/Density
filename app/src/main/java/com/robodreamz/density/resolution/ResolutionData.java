@@ -28,7 +28,8 @@ public final class ResolutionData {
     private static int invalidPosition = DensityApplication.getConstants().getInvalidPositionIndex();
 
     public static final IndexPair INDEX_PAIR = new IndexPair(invalidPosition, invalidPosition);
-    public static final AtomicInteger DELETION_INDEX = new AtomicInteger(invalidPosition);
+
+    public static final DeletionItemIndex DELETION_INDEX = new DeletionItemIndex(invalidPosition);
 
     private static ResolutionItem resolutionHeader() {
         return new ResolutionHeader();

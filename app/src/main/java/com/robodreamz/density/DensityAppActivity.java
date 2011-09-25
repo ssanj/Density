@@ -6,26 +6,24 @@ package com.robodreamz.density;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.robodreamz.density.delegate.ActivityDelegate;
-import com.robodreamz.density.delegate.Constants;
 import com.robodreamz.density.delegate.DelegateFactory;
+import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.fragment.CancelDeleteCustomResolutionDialogListener;
-import com.robodreamz.density.fragment.DeleteCustomResolutionDialogBuilder;
 import com.robodreamz.density.fragment.DensityResultFragmentSetup;
 import com.robodreamz.density.fragment.OnDeletionSelectedPositionFinder;
+import com.robodreamz.density.fragment.OnYesDeleteCustomResolutionDialogListener;
 import com.robodreamz.density.fragment.ResolutionListFragmentSetup;
 import com.robodreamz.density.fragment.ScreenSizeFragmentSetup;
+import com.robodreamz.density.resolution.DeletionItemIndex;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionElement;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
 import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.DensityResultCalculator;
-import org.w3c.dom.Text;
 
 public final class DensityAppActivity extends AbstractDensityActivty {
 
@@ -75,16 +73,17 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         return createDeleteDialog(id);
     }
 
+    //TODO: Test
     @Override protected void onPrepareDialog(final int id, final Dialog dialog) {
         if (id == DELETE_RESOLUTION_DIALOG) {
             final TextView message = (TextView) dialog.findViewById(android.R.id.message);
             if (message != null) {
-                final int position = ResolutionData.DELETION_INDEX.get();
-                if (!DensityApplication.getConstants().isInvalidPosition(position)) {
+                final DeletionItemIndex deletionIndex = ResolutionData.DELETION_INDEX;
+                if (deletionIndex.isValid()) {
                     final ListView resolutionList = (ListView) findViewById(R.id.app_screen_resolution_list);
                     final ResolutionListAdapter adapter = (ResolutionListAdapter) resolutionList.getAdapter();
                     message.setText(DensityApplication.getDeleteCustomResolutionDialogBuilder().
-                            createResolutionText((ResolutionElement) adapter.getItem(position)));
+                            createResolutionText((ResolutionElement) adapter.getItem(deletionIndex.getValue())));
                 }
             }
         } else {
@@ -92,36 +91,20 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         }
     }
 
+    //TODO: Test
     private Dialog createDeleteDialog(final int id) {
         if (id == DELETE_RESOLUTION_DIALOG) {
             final ListView resolutionList = (ListView) findViewById(R.id.app_screen_resolution_list);
             final ResolutionListAdapter adapter = (ResolutionListAdapter) resolutionList.getAdapter();
-            final Constants constants = DensityApplication.getConstants();
-            int deletionIndex = ResolutionData.DELETION_INDEX.get();
-            if (!constants.isInvalidPosition(deletionIndex)) {
-                final ResolutionElement element = (ResolutionElement) adapter.getItem(deletionIndex);
+            final DeletionItemIndex deletionIndex = ResolutionData.DELETION_INDEX;
+            if (deletionIndex.isValid()) {
+                final ResolutionElement element = (ResolutionElement) adapter.getItem(deletionIndex.getValue());
+                final OnDeletionSelectedPositionFinder finder = DensityApplication.getOnDeleteSelectionFinder();
+                final ListViewDelegate resolutionListDelegate = (ListViewDelegate) DensityApplication.getFactory().createViewDelegate(resolutionList);
                 final AlertDialog dialog = DensityApplication.getDeleteCustomResolutionDialogBuilder().
-                        create(this, element, new DialogInterface.OnClickListener() {
-                            @Override public void onClick(final DialogInterface dialog, final int which) {
-                                int position = ResolutionData.DELETION_INDEX.get();
-                                if (!constants.isInvalidPosition(position)) {
-                                    adapter.removeItem(position);
-                                    final int listSizeAfterDeletion = adapter.getCount();
-                                    final OnDeletionSelectedPositionFinder finder = DensityApplication.getOnDeleteSelectionFinder();
-                                    final int newPosition = finder.findSelectionPosition(listSizeAfterDeletion, position);
-                                    adapter.resetState();
-
-                                    if (!constants.isInvalidPosition(newPosition)) {
-                                        resolutionList.performItemClick(null, newPosition, newPosition);
-                                    } else {
-                                        ResolutionData.INDEX_PAIR.update(constants.getInvalidPositionIndex()); //the list should be empty at this point.
-                                    }
-                                }
-
-                                ResolutionData.DELETION_INDEX.set(constants.getInvalidPositionIndex());
-                                dialog.dismiss();
-                            }
-                        }, new CancelDeleteCustomResolutionDialogListener(adapter));
+                        create(this, element,
+                                new OnYesDeleteCustomResolutionDialogListener(resolutionListDelegate, adapter, finder),
+                                new CancelDeleteCustomResolutionDialogListener(adapter));
 
                 return dialog;
             } else {

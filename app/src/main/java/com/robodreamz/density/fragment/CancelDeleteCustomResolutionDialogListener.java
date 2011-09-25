@@ -17,7 +17,7 @@ public final class CancelDeleteCustomResolutionDialogListener implements DialogI
     }
 
     @Override public void onClick(final DialogInterface dialog, final int which) {
-        adapter.unmarkForDeletion(ResolutionData.DELETION_INDEX.get());
+        adapter.unmarkForDeletion(ResolutionData.DELETION_INDEX.getValue());
         dialog.dismiss();
     }
 }

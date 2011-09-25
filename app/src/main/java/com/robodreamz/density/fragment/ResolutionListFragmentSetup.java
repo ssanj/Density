@@ -127,7 +127,7 @@ public final class ResolutionListFragmentSetup {
             final ResolutionListAdapter adapter = (ResolutionListAdapter) resolutionList.getAdapter();
             final ResolutionElement element = (ResolutionElement) adapter.getItem(position);
             if (element.getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
-                ResolutionData.DELETION_INDEX.set(position);
+                ResolutionData.DELETION_INDEX.update(position);
                 adapter.markForDeletion(position);
                 delegate.showDialog(DensityApplication.DENSITY_APP_DELETE_RESOLUTION_DIALOG);
             }

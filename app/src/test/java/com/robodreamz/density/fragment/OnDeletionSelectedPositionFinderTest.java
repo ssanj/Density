@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public final class OnDeletionSelectedPositionFinderTest {
 
@@ -19,26 +21,38 @@ public final class OnDeletionSelectedPositionFinderTest {
     }
 
     @Test public void shouldFindSelectPositionWhenDeletedItemIsTheFirstItem() {
-        assertEquals("Incorrect position returned", 0, finder.findSelectionPosition(2, 0));
+        assertValidPosition(0, finder.findSelectionPosition(2, 0));
     }
 
     @Test public void shouldFindSelectPositionWhenDeletedItemIsMiddleItem() {
-        assertEquals("Incorrect position returned", 1, finder.findSelectionPosition(2, 1));
+        assertValidPosition(1, finder.findSelectionPosition(2, 1));
     }
 
     @Test public void shouldFindSelectPositionWhenDeletedItemIsTheLastItem() {
-        assertEquals("Incorrect position returned", 1, finder.findSelectionPosition(2, 2));
+        assertValidPosition(1, finder.findSelectionPosition(2, 2));
     }
 
     @Test public void shouldFindSelectPositionWhenDeletedItemIsTheLastItemAndTheListIsEmpty() {
-        assertEquals("Incorrect position returned", INVALID_INDEX, finder.findSelectionPosition(0, 5));
+        assertInvalidPosition(finder.findSelectionPosition(0, 5));
     }
 
     @Test public void shouldFindSelectPositionWhenDeletedItemIsTheLastItemAndTheListIsNotEmpty() {
-        assertEquals("Incorrect position returned", 0, finder.findSelectionPosition(1, 1));
+        assertValidPosition(0, finder.findSelectionPosition(1, 1));
     }
 
     @Test public void shouldFindSelectPositionWhenDeletedItemIsTheFirstItemAndTheListIsNotEmpty() {
-        assertEquals("Incorrect position returned", 0, finder.findSelectionPosition(1, 0));
+        assertValidPosition(0, finder.findSelectionPosition(1, 0));
+    }
+
+    private void assertValidPosition(final int expected, final OnDeletionSelectedPositionFinder.OnDeletionSelectedPosition result) {
+        assertTrue("Should be valid", result.isValid());
+        assertFalse("Should be valid", result.isInvalid());
+        assertEquals("Incorrect position returned", expected, result.getPosition());
+    }
+
+    private void assertInvalidPosition(final OnDeletionSelectedPositionFinder.OnDeletionSelectedPosition result) {
+        assertTrue("Should be invalid", result.isInvalid());
+        assertFalse("Should be invalid", result.isValid());
+        assertEquals("Incorrect position returned", INVALID_INDEX, result.getPosition());
     }
 }

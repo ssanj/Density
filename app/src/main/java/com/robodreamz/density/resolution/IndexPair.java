@@ -10,8 +10,10 @@ public final class IndexPair {
 
     private final AtomicInteger prevIndex;
     private final AtomicInteger currentIndex;
+    private int invalidIndex;
 
     public IndexPair(final int prevIndex, final int currentIndex) {
+        invalidIndex = prevIndex;
         this.prevIndex = new AtomicInteger(prevIndex);
         this.currentIndex = new AtomicInteger(currentIndex);
     }
@@ -33,5 +35,18 @@ public final class IndexPair {
 
     public int getPreviousIndex() {
         return prevIndex.get();
+    }
+
+
+    public boolean isInvalid() {
+        return currentIndex.get() == invalidIndex;
+    }
+
+    public boolean isValid() {
+        return currentIndex.get() != invalidIndex;
+    }
+
+    public void resetCurrentIndex() {
+        update(invalidIndex);
     }
 }

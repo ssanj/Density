@@ -51,4 +51,10 @@ public class ListViewDelegate extends ViewDelegate {
             ((ListView) view).setSelection(position);
         }
     }
+
+    public void performItemClick(int position, int id) {
+        if (!isNull()) {
+             ((ListView) view).performItemClick(null, position, id);
+        }
+    }
 }
