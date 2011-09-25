@@ -38,12 +38,11 @@ public final class OnYesDeleteCustomResolutionDialogListener implements DialogIn
                 final int newPosition = newPositionToSelect.getPosition();
                 resolutionList.performItemClick(newPosition, newPosition);
             } else {
-                ResolutionData.INDEX_PAIR.resetCurrentIndex();
+                ResolutionData.INDEX_PAIR.reset();
             }
         }
 
         ResolutionData.DELETION_INDEX.reset();
         dialog.dismiss();
-
     }
 }

@@ -8,11 +8,11 @@ import android.content.DialogInterface;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
 
-public final class CancelDeleteCustomResolutionDialogListener implements DialogInterface.OnClickListener {
+public final class OnNoDeleteCustomResolutionDialogListener implements DialogInterface.OnClickListener {
 
     private ResolutionListAdapter adapter;
 
-    public CancelDeleteCustomResolutionDialogListener(final ResolutionListAdapter adapter) {
+    public OnNoDeleteCustomResolutionDialogListener(final ResolutionListAdapter adapter) {
         this.adapter = adapter;
     }
 

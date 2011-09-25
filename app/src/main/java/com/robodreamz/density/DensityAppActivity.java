@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.ListViewDelegate;
-import com.robodreamz.density.fragment.CancelDeleteCustomResolutionDialogListener;
+import com.robodreamz.density.fragment.OnNoDeleteCustomResolutionDialogListener;
 import com.robodreamz.density.fragment.DensityResultFragmentSetup;
 import com.robodreamz.density.fragment.OnDeletionSelectedPositionFinder;
 import com.robodreamz.density.fragment.OnYesDeleteCustomResolutionDialogListener;
@@ -101,12 +101,11 @@ public final class DensityAppActivity extends AbstractDensityActivty {
                 final ResolutionElement element = (ResolutionElement) adapter.getItem(deletionIndex.getValue());
                 final OnDeletionSelectedPositionFinder finder = DensityApplication.getOnDeleteSelectionFinder();
                 final ListViewDelegate resolutionListDelegate = (ListViewDelegate) DensityApplication.getFactory().createViewDelegate(resolutionList);
-                final AlertDialog dialog = DensityApplication.getDeleteCustomResolutionDialogBuilder().
-                        create(this, element,
-                                new OnYesDeleteCustomResolutionDialogListener(resolutionListDelegate, adapter, finder),
-                                new CancelDeleteCustomResolutionDialogListener(adapter));
-
-                return dialog;
+                return DensityApplication.getDeleteCustomResolutionDialogBuilder().create(
+                        this,
+                        element,
+                        new OnYesDeleteCustomResolutionDialogListener(resolutionListDelegate, adapter, finder),
+                        new OnNoDeleteCustomResolutionDialogListener(adapter));
             } else {
                return super.onCreateDialog(id);
             }

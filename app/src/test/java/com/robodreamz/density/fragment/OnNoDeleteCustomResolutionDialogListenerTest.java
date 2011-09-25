@@ -28,11 +28,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(RobolectricTestRunner.class)
-public final class CancelDeleteCustomResolutionDialogListenerTest {
+public final class OnNoDeleteCustomResolutionDialogListenerTest {
 
     private static final int POSITION = 10;
 
-    private CancelDeleteCustomResolutionDialogListener listener;
+    private OnNoDeleteCustomResolutionDialogListener listener;
     private ResolutionListAdapter spyAdapter;
     private LayoutInflaterDelegate mockInflater;
     private DelegateFactory mockFactory;
@@ -46,7 +46,7 @@ public final class CancelDeleteCustomResolutionDialogListenerTest {
         mockConstants = mock(Constants.class);
         resolutionItems = new ArrayList<ResolutionItem>();
         spyAdapter = spy(new ResolutionListAdapter(mockInflater, mockFactory, resolutionItems, mockConstants));
-        listener = new CancelDeleteCustomResolutionDialogListener(spyAdapter);
+        listener = new OnNoDeleteCustomResolutionDialogListener(spyAdapter);
         oldDeletionIndex = ResolutionData.DELETION_INDEX.getValue();
         ResolutionData.DELETION_INDEX.update(POSITION);
     }
@@ -57,7 +57,7 @@ public final class CancelDeleteCustomResolutionDialogListenerTest {
 
     @Test public void shouldImplementOnClickListener() {
         assertTrue("Listener should implement DialogInterface.OnClickListener",
-                DialogInterface.OnClickListener.class.isAssignableFrom(CancelDeleteCustomResolutionDialogListener.class));
+                DialogInterface.OnClickListener.class.isAssignableFrom(OnNoDeleteCustomResolutionDialogListener.class));
     }
 
     @Test public void shouldUnmarkItemWhenDialogIsCancelled() {

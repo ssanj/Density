@@ -49,4 +49,9 @@ public final class IndexPair {
     public void resetCurrentIndex() {
         update(invalidIndex);
     }
+
+    public void reset() {
+        prevIndex.set(invalidIndex);
+        currentIndex.set(invalidIndex);
+    }
 }

@@ -64,6 +64,13 @@ public final class IndexPairTest {
         assertPair(2, INVALID_INDEX);
     }
 
+    @Test public void shouldResetBothPreviousAndCurrentIndexes() {
+        indexPair.update(2);
+        assertPair(-1, 2);
+        indexPair.reset();
+        assertPair(INVALID_INDEX, INVALID_INDEX);
+    }
+
     private void assertPair(final int prev, final int cur) {
         assertEquals("Incorrect previous index", prev, indexPair.getPreviousIndex());
         assertEquals("Incorrect current index", cur, indexPair.getCurrentIndex());
