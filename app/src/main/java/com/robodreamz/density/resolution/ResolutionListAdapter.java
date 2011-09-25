@@ -14,7 +14,6 @@ import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Reuse this class by providing a type-annotation.
 public class ResolutionListAdapter extends BaseAdapter implements ClickableItems {
 
     private List<ResolutionItem> resolutions;
@@ -54,9 +53,8 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
     public void clickedItem(int position) {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
         if (indexPair.isNew(position)) {
-            final int currentIndex = indexPair.getCurrentIndex();
-            if (!constants.isInvalidPosition(currentIndex)) {
-                resolutions.get(currentIndex).uncheck();
+            if (indexPair.isValid()) {
+                resolutions.get(indexPair.getCurrentIndex()).uncheck();
             }
 
             resolutions.get(position).check();
@@ -75,6 +73,7 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         }
     }
 
+    //TODO: Test
     public void resetState() {
         for (ResolutionItem item : resolutions) {
             item.uncheck();
@@ -83,10 +82,12 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         notifyDataSetChanged();
     }
 
+    //TODO: Test
     @Override public boolean isEnabled(final int position) {
         return resolutions.get(position).isEnabled();
     }
 
+    //TODO: Test
     public void removeItem(final int position) {
         if (resolutions.get(position).getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
             resolutions.remove(position);
@@ -96,6 +97,7 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         }
     }
 
+    //TODO: Test
     public void markForDeletion(final int position) {
         if (resolutions.get(position).getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
             resolutions.get(position).markedForDeletion();
@@ -103,6 +105,7 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         }
     }
 
+    //TODO: Test
     public void unmarkForDeletion(final int position) {
         if (resolutions.get(position).getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
             resolutions.get(position).unmarkForDeletion();
