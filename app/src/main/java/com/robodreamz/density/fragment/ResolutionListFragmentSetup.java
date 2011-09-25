@@ -124,14 +124,20 @@ public final class ResolutionListFragmentSetup {
         }
 
         @Override public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+            return doOnItemLongClick(position);
+        }
+
+        public boolean doOnItemLongClick(final int position) {
             final ResolutionListAdapter adapter = (ResolutionListAdapter) resolutionList.getAdapter();
             final ResolutionElement element = (ResolutionElement) adapter.getItem(position);
             if (element.getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
                 ResolutionData.DELETION_INDEX.update(position);
                 adapter.markForDeletion(position);
                 delegate.showDialog(DensityApplication.DENSITY_APP_DELETE_RESOLUTION_DIALOG);
+                return true;
+            } else {
+                return false;
             }
-            return true;
         }
     }
 }
