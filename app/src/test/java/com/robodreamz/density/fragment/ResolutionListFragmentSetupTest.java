@@ -58,6 +58,7 @@ public final class ResolutionListFragmentSetupTest {
         verify(mockList).setAdapter(isA(ResolutionListAdapter.class));
         verify(mockList).setOnItemClickListener(isA(ResolutionListFragmentSetup.ResolutionListClickListener.class));
         verify(mockList).setOnItemSelectedListener(isA(ResolutionListFragmentSetup.ResolutionListSelectListener.class));
+        verify(mockList).setOnItemLongClickListener(isA(ResolutionListFragmentSetup.ResolutionListLongClickListener.class));
         verifyZeroInteractions(mockLayoutInflater);
     }
 

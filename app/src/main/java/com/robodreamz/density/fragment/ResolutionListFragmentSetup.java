@@ -45,7 +45,7 @@ public final class ResolutionListFragmentSetup {
                 DensityApplication.getConstants()));
         resolutionList.setOnItemClickListener(new ResolutionListClickListener(densityResultCalculator, resolutionList));
         resolutionList.setOnItemSelectedListener(new ResolutionListSelectListener(resolutionList, densityResultCalculator));
-        resolutionList.setOnItemLongClickListener(new ResolutionListLongClickListener(resolutionList, delegate));
+        resolutionList.setOnItemLongClickListener(new ResolutionListLongClickListener(resolutionList, delegate, densityResultCalculator));
     }
 
     List<ResolutionItem> getResolutionItems() {
@@ -117,10 +117,13 @@ public final class ResolutionListFragmentSetup {
 
         private ListViewDelegate resolutionList;
         private ActivityDelegate delegate;
+        private DensityResultCalculator calculator;
 
-        public ResolutionListLongClickListener(final ListViewDelegate resolutionList, final ActivityDelegate delegate) {
+        public ResolutionListLongClickListener(final ListViewDelegate resolutionList, final ActivityDelegate delegate,
+                                               final DensityResultCalculator calculator) {
             this.resolutionList = resolutionList;
             this.delegate = delegate;
+            this.calculator = calculator;
         }
 
         @Override public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
@@ -131,8 +134,9 @@ public final class ResolutionListFragmentSetup {
             final ResolutionListAdapter adapter = (ResolutionListAdapter) resolutionList.getAdapter();
             final ResolutionElement element = (ResolutionElement) adapter.getItem(position);
             if (element.getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
-                ResolutionData.DELETION_INDEX.update(position);
-                adapter.markForDeletion(position);
+                calculator.calculateDensity(position, resolutionList);
+                resolutionList.setSelection(position);//need to reset selection.
+                adapter.markForDeletion(position);// mark the new position for deletion.
                 delegate.showDialog(DensityApplication.DENSITY_APP_DELETE_RESOLUTION_DIALOG);
                 return true;
             } else {

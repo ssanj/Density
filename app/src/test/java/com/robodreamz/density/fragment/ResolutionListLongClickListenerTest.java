@@ -12,6 +12,7 @@ import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionElement;
 import com.robodreamz.density.resolution.ResolutionItem;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
+import com.robodreamz.density.screen.DensityResultCalculator;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.After;
 import org.junit.Before;
@@ -39,12 +40,14 @@ public final class ResolutionListLongClickListenerTest {
     private ListViewDelegate mockResolutionList;
     private ActivityDelegate mockActivity;
     private ResolutionListFragmentSetup.ResolutionListLongClickListener listener;
+    private DensityResultCalculator mockCalculator;
 
     @Before public void setup() {
         mockResolutionList = mock(ListViewDelegate.class);
         mockActivity = mock(ActivityDelegate.class);
+        mockCalculator = mock(DensityResultCalculator.class);
         ResolutionData.DELETION_INDEX.reset();
-        listener = new ResolutionListFragmentSetup.ResolutionListLongClickListener(mockResolutionList, mockActivity);
+        listener = new ResolutionListFragmentSetup.ResolutionListLongClickListener(mockResolutionList, mockActivity, mockCalculator);
     }
 
     @After public void teardown() {
@@ -68,9 +71,10 @@ public final class ResolutionListLongClickListenerTest {
         final boolean result = listener.doOnItemLongClick(CLICK_POSITION);
 
         assertTrue("Expected the event to be consumeed", result);
-        assertEquals("Incorrect deletion index", CLICK_POSITION, ResolutionData.DELETION_INDEX.getValue());
 
         verify(mockActivity).showDialog(DensityApplication.DENSITY_APP_DELETE_RESOLUTION_DIALOG);
+        verify(mockCalculator).calculateDensity(CLICK_POSITION, mockResolutionList);
+        verify(mockResolutionList).setSelection(CLICK_POSITION);
     }
 
     @Test public void shouldNotPerformLongItemClickOnOtherResolutions() {
@@ -89,5 +93,6 @@ public final class ResolutionListLongClickListenerTest {
 
         verifyZeroInteractions(mockActivity);
         verify(spyAdapter, never()).markForDeletion(CLICK_POSITION);
+        verifyZeroInteractions(mockCalculator);
     }
 }

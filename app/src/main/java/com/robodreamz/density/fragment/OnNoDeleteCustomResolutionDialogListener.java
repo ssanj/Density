@@ -5,6 +5,7 @@
 package com.robodreamz.density.fragment;
 
 import android.content.DialogInterface;
+import com.robodreamz.density.delegate.ListViewDelegate;
 import com.robodreamz.density.resolution.ResolutionData;
 import com.robodreamz.density.resolution.ResolutionListAdapter;
 

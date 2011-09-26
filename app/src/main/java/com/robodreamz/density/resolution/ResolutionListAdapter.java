@@ -63,6 +63,18 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         }
     }
 
+    public void clickedItemNoUpdate(int position) {
+        final IndexPair indexPair = ResolutionData.INDEX_PAIR;
+        if (indexPair.isNew(position)) {
+            if (indexPair.isValid()) {
+                resolutions.get(indexPair.getCurrentIndex()).uncheck();
+            }
+
+            resolutions.get(position).check();
+            indexPair.update(position);
+        }
+    }
+
     public void resetClick() {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
         final int currentIndex = indexPair.getCurrentIndex();
@@ -92,7 +104,8 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         if (resolutions.get(position).getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
             resolutions.remove(position);
             //once we remove the current selection, invalid the selected index.
-            ResolutionData.INDEX_PAIR.update(constants.getInvalidPositionIndex());
+            ResolutionData.INDEX_PAIR.reset();
+            ResolutionData.DELETION_INDEX.reset();
             notifyDataSetChanged();
         }
     }
@@ -101,6 +114,7 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
     public void markForDeletion(final int position) {
         if (resolutions.get(position).getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
             resolutions.get(position).markedForDeletion();
+            ResolutionData.DELETION_INDEX.update(position);
             notifyDataSetChanged();
         }
     }
@@ -109,6 +123,7 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
     public void unmarkForDeletion(final int position) {
         if (resolutions.get(position).getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
             resolutions.get(position).unmarkForDeletion();
+            ResolutionData.DELETION_INDEX.reset();
             notifyDataSetChanged();
         }
     }

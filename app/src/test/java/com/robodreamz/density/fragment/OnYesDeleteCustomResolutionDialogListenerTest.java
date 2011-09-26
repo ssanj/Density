@@ -75,7 +75,6 @@ public final class OnYesDeleteCustomResolutionDialogListenerTest {
         doNothing().when(spyAdapter).resetState();
 
         listener.onClick(mockDialogInterface, positiveButton);
-        assertTrue("Should be invalid", ResolutionData.DELETION_INDEX.isInvalid());
         assertEquals("Incorrect current selected index", SELECTED_INDEX, ResolutionData.INDEX_PAIR.getCurrentIndex());
 
         final InOrder inOrder = inOrder(spyAdapter, mockResolutionList, mockDialogInterface);
@@ -94,7 +93,6 @@ public final class OnYesDeleteCustomResolutionDialogListenerTest {
         doNothing().when(spyAdapter).resetState();
 
         listener.onClick(mockDialogInterface, positiveButton);
-        assertTrue("Should be invalid", ResolutionData.DELETION_INDEX.isInvalid());
         assertTrue("Should be invalid", ResolutionData.INDEX_PAIR.isInvalid());
 
         final InOrder inOrder = inOrder(spyAdapter, mockDialogInterface);

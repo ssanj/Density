@@ -42,7 +42,6 @@ public final class OnYesDeleteCustomResolutionDialogListener implements DialogIn
             }
         }
 
-        ResolutionData.DELETION_INDEX.reset();
         dialog.dismiss();
     }
 }
