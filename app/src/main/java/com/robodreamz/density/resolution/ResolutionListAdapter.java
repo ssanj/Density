@@ -63,18 +63,6 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         }
     }
 
-    public void clickedItemNoUpdate(int position) {
-        final IndexPair indexPair = ResolutionData.INDEX_PAIR;
-        if (indexPair.isNew(position)) {
-            if (indexPair.isValid()) {
-                resolutions.get(indexPair.getCurrentIndex()).uncheck();
-            }
-
-            resolutions.get(position).check();
-            indexPair.update(position);
-        }
-    }
-
     public void resetClick() {
         final IndexPair indexPair = ResolutionData.INDEX_PAIR;
         final int currentIndex = indexPair.getCurrentIndex();
@@ -85,7 +73,6 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         }
     }
 
-    //TODO: Test
     public void resetState() {
         for (ResolutionItem item : resolutions) {
             item.uncheck();
@@ -94,7 +81,6 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         notifyDataSetChanged();
     }
 
-    //TODO: Test
     @Override public boolean isEnabled(final int position) {
         return resolutions.get(position).isEnabled();
     }
