@@ -4,7 +4,6 @@
  */
 package com.robodreamz.density;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -12,9 +11,9 @@ import android.widget.TextView;
 import com.robodreamz.density.delegate.ActivityDelegate;
 import com.robodreamz.density.delegate.DelegateFactory;
 import com.robodreamz.density.delegate.ListViewDelegate;
-import com.robodreamz.density.fragment.OnNoDeleteCustomResolutionDialogListener;
 import com.robodreamz.density.fragment.DensityResultFragmentSetup;
 import com.robodreamz.density.fragment.OnDeletionSelectedPositionFinder;
+import com.robodreamz.density.fragment.OnNoDeleteCustomResolutionDialogListener;
 import com.robodreamz.density.fragment.OnYesDeleteCustomResolutionDialogListener;
 import com.robodreamz.density.fragment.ResolutionListFragmentSetup;
 import com.robodreamz.density.fragment.ScreenSizeFragmentSetup;
