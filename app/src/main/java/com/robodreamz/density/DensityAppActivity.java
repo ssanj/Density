@@ -24,7 +24,7 @@ import com.robodreamz.density.resolution.ResolutionListAdapter;
 import com.robodreamz.density.screen.DefaultDensity;
 import com.robodreamz.density.screen.DensityResultCalculator;
 
-public final class DensityAppActivity extends AbstractDensityActivty {
+public class DensityAppActivity extends AbstractDensityActivty {
 
     private static final int DELETE_RESOLUTION_DIALOG = DensityApplication.DENSITY_APP_DELETE_RESOLUTION_DIALOG;
     private ResolutionListFragmentSetup resolutionListFragmentSetup;
@@ -36,7 +36,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         final DelegateFactory factory = DensityApplication.getFactory();
         final ActivityDelegate activityDelegate = createActivityDelegate(factory);
         final DefaultDensity defaultDensity = createDefaultDensity(activityDelegate);
-        final DensityResultCalculator densityResultCalculator = createDensityResultCalcualtor(activityDelegate);
+        final DensityResultCalculator densityResultCalculator = createDensityResultCalculator(activityDelegate);
 
         //We need to maintain the order of these "fragments" mainly because, multiple fragments can use the resolution list and update the
         //final density. So we must ensure that the resolution list and the density widgets are created before they are used.
@@ -59,7 +59,7 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         return new DefaultDensity(activityDelegate);
     }
 
-    private DensityResultCalculator createDensityResultCalcualtor(final ActivityDelegate activityDelegate) {
+    private DensityResultCalculator createDensityResultCalculator(final ActivityDelegate activityDelegate) {
         return new DensityResultCalculator(
                 activityDelegate,
                 DensityApplication.getCalcualtor(),
@@ -72,7 +72,6 @@ public final class DensityAppActivity extends AbstractDensityActivty {
         return createDeleteDialog(id);
     }
 
-    //TODO: Test
     @Override protected void onPrepareDialog(final int id, final Dialog dialog) {
         if (id == DELETE_RESOLUTION_DIALOG) {
             final TextView message = (TextView) dialog.findViewById(android.R.id.message);
