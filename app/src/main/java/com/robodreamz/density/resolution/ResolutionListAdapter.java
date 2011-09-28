@@ -85,7 +85,6 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         return resolutions.get(position).isEnabled();
     }
 
-    //TODO: Test
     public void removeItem(final int position) {
         if (resolutions.get(position).getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
             resolutions.remove(position);
@@ -96,7 +95,6 @@ public class ResolutionListAdapter extends BaseAdapter implements ClickableItems
         }
     }
 
-    //TODO: Test
     public void markForDeletion(final int position) {
         if (resolutions.get(position).getViewType() == ResolutionItem.ViewType.CUSTOM_ELEMENT) {
             resolutions.get(position).markedForDeletion();
