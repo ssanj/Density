@@ -8,7 +8,7 @@ import com.robodreamz.density.R;
 import com.robodreamz.density.delegate.LayoutInflaterDelegate;
 import com.robodreamz.density.delegate.ViewDelegate;
 
-public final class CustomResolutionElement implements ResolutionElement {
+public class CustomResolutionElement implements ResolutionElement {
 
     private ResolutionElement delegate;
 
