@@ -98,4 +98,32 @@ public class StandardResolutionElement implements ResolutionElement {
     @Override public void setViewType(final ViewType viewType) {
         this.viewType = viewType;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final StandardResolutionElement that = (StandardResolutionElement) o;
+
+        if (checked != that.checked) return false;
+        if (height != that.height) return false;
+        if (layoutId != that.layoutId) return false;
+        if (markedForDeletion != that.markedForDeletion) return false;
+        if (width != that.width) return false;
+        if (viewType != that.viewType) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = width;
+        result = 31 * result + height;
+        result = 31 * result + (checked ? 1 : 0);
+        result = 31 * result + layoutId;
+        result = 31 * result + viewType.hashCode();
+        result = 31 * result + (markedForDeletion ? 1 : 0);
+        return result;
+    }
 }
